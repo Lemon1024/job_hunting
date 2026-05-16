@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>秋招投递助手</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主导航">
+        <div class="brand">
+          <div id="brandMark" class="brand-mark">秋</div>
+          <div>
+            <div class="brand-title-row">
+              <h1 id="brandTitle">秋招投递助手</h1>
+              <button id="editTitleBtn" class="title-edit-button" type="button" title="更改名称">✎</button>
+            </div>
+            <div id="brandTitleForm" class="brand-title-form hidden">
+              <input id="brandTitleInput" type="text" maxlength="24" aria-label="应用名称" />
+              <button id="saveTitleBtn" class="mini-button" type="button" title="保存">✓</button>
+              <button id="cancelTitleBtn" class="mini-button" type="button" title="取消">×</button>
+            </div>
+            <p id="todayLabel"></p>
+          </div>
+        </div>
+
+        <nav class="nav-stack">
+          <button class="nav-item active" data-status-filter="all" type="button">
+            <span aria-hidden="true">▦</span>
+            全部投递
+          </button>
+          <button class="nav-item" data-status-filter="active" type="button">
+            <span aria-hidden="true">◌</span>
+            进行中
+          </button>
+          <button class="nav-item" data-status-filter="follow" type="button">
+            <span aria-hidden="true">◇</span>
+            待跟进
+          </button>
+          <button class="nav-item" data-status-filter="offer" type="button">
+            <span aria-hidden="true">✓</span>
+            Offer
+          </button>
+          <button class="nav-item" data-status-filter="closed" type="button">
+            <span aria-hidden="true">×</span>
+            已结束
+          </button>
+        </nav>
+
+        <div class="sidebar-actions">
+          <div class="export-menu-wrap">
+            <button id="exportBtn" class="ghost-button" type="button" title="导出数据" aria-expanded="false" aria-controls="exportMenu">
+              <span aria-hidden="true">⇩</span>
+              导出
+            </button>
+            <div id="exportMenu" class="export-menu hidden" role="menu">
+              <button id="exportJsonBtn" type="button" role="menuitem">JSON</button>
+              <button id="exportExcelBtn" type="button" role="menuitem">Excel</button>
+            </div>
+          </div>
+          <label class="ghost-button file-button" title="导入数据">
+            <span aria-hidden="true">⇧</span>
+            导入
+            <input id="importInput" type="file" accept=".json,.xls,.xml,application/json,application/vnd.ms-excel,text/xml" />
+          </label>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Job Application Tracker</p>
+            <h2>投递工作台</h2>
+          </div>
+          <button id="addApplicationBtn" class="primary-button" type="button">
+            <span aria-hidden="true">＋</span>
+            新增投递
+          </button>
+        </header>
+
+        <section class="metric-grid" aria-label="投递概览">
+          <article class="metric-card">
+            <span>总投递</span>
+            <strong id="metricTotal">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>面试中</span>
+            <strong id="metricInterview">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>Offer</span>
+            <strong id="metricOffer">0</strong>
+          </article>
+          <article class="metric-card urgent">
+            <span>待跟进</span>
+            <strong id="metricFollow">0</strong>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <div class="panel list-panel">
+            <div class="toolbar">
+              <label class="search-box">
+                <span aria-hidden="true">⌕</span>
+                <input id="searchInput" type="search" placeholder="搜索公司、岗位、城市" />
+              </label>
+              <select id="statusSelect" aria-label="状态筛选">
+                <option value="all">全部状态</option>
+              </select>
+              <select id="sortSelect" aria-label="排序方式">
+                <option value="updated-desc">最近更新</option>
+                <option value="applied-desc">投递时间</option>
+                <option value="priority-desc">优先级</option>
+                <option value="follow-asc">跟进时间</option>
+              </select>
+            </div>
+
+            <div id="statusBoard" class="status-board" aria-label="状态分布"></div>
+            <div id="applicationList" class="application-list"></div>
+          </div>
+
+          <aside class="panel detail-panel">
+            <div id="detailEmpty" class="empty-state">
+              <div class="empty-icon">＋</div>
+              <h3>还没有选择投递记录</h3>
+              <p>从左侧选择一家公司，或新建第一条投递。</p>
+              <button class="primary-button" id="emptyAddBtn" type="button">新增投递</button>
+            </div>
+
+            <article id="detailView" class="detail-view hidden">
+              <div class="detail-header">
+                <div>
+                  <p id="detailCompanyMeta" class="eyebrow"></p>
+                  <h3 id="detailTitle"></h3>
+                </div>
+                <div class="detail-actions">
+                  <button id="editApplicationBtn" class="icon-button" type="button" title="编辑">
+                    ✎
+                  </button>
+                  <button id="deleteApplicationBtn" class="icon-button danger" type="button" title="删除">
+                    ×
+                  </button>
+                </div>
+              </div>
+
+              <div class="detail-status-row">
+                <label>
+                  当前状态
+                  <select id="detailStatusSelect"></select>
+                </label>
+                <label>
+                  下次跟进
+                  <input id="detailNextAction" type="date" />
+                </label>
+              </div>
+
+              <dl class="info-grid">
+                <div>
+                  <dt>投递渠道</dt>
+                  <dd id="detailChannel"></dd>
+                </div>
+                <div>
+                  <dt>投递日期</dt>
+                  <dd id="detailAppliedDate"></dd>
+                </div>
+                <div>
+                  <dt>优先级</dt>
+                  <dd id="detailPriority"></dd>
+                </div>
+                <div>
+                  <dt>简历版本</dt>
+                  <dd id="detailResume"></dd>
+                </div>
+              </dl>
+
+              <div id="detailNotesWrap" class="notes-wrap"></div>
+
+              <section class="event-composer" aria-label="添加进展">
+                <select id="eventTypeSelect" aria-label="事件类型">
+                  <option value="note">备注</option>
+                  <option value="exam">笔试</option>
+                  <option value="interview">面试</option>
+                  <option value="follow">跟进</option>
+                  <option value="result">结果</option>
+                </select>
+                <input id="eventTitleInput" type="text" placeholder="添加进展记录" />
+                <button id="addEventBtn" class="secondary-button" type="button">添加</button>
+              </section>
+
+              <section>
+                <div class="section-title">
+                  <h4>时间线</h4>
+                  <span id="eventCount"></span>
+                </div>
+                <div id="timeline" class="timeline"></div>
+              </section>
+            </article>
+          </aside>
+        </section>
+
+        <section class="panel stats-panel">
+          <div class="section-title">
+            <h4>复盘统计</h4>
+            <span id="statsSummary"></span>
+          </div>
+          <div id="statsGrid" class="stats-grid"></div>
+        </section>
+
+        <section class="panel calendar-panel">
+          <div class="calendar-header">
+            <div>
+              <p class="eyebrow">Calendar</p>
+              <h4 id="calendarTitle">日历视图</h4>
+            </div>
+            <div class="calendar-actions">
+              <button id="prevMonthBtn" class="icon-button" type="button" title="上个月">‹</button>
+              <button id="currentMonthBtn" class="ghost-button" type="button">本月</button>
+              <button id="nextMonthBtn" class="icon-button" type="button" title="下个月">›</button>
+            </div>
+          </div>
+          <div class="calendar-weekdays" aria-hidden="true">
+            <span>周一</span>
+            <span>周二</span>
+            <span>周三</span>
+            <span>周四</span>
+            <span>周五</span>
+            <span>周六</span>
+            <span>周日</span>
+          </div>
+          <div id="calendarGrid" class="calendar-grid" aria-label="日历"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="applicationDialog">
+      <form id="applicationForm" method="dialog" class="dialog-card">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow">Application</p>
+            <h3 id="dialogTitle">新增投递</h3>
+          </div>
+          <button class="icon-button" id="closeDialogBtn" type="button" title="关闭">×</button>
+        </div>
+
+        <input id="applicationId" type="hidden" />
+        <div class="form-grid">
+          <label>
+            公司名称
+            <input id="companyInput" name="company" type="text" required />
+          </label>
+          <label>
+            岗位名称
+            <input id="positionInput" name="position" type="text" required />
+          </label>
+          <label>
+            城市
+            <input id="cityInput" name="city" type="text" />
+          </label>
+          <label>
+            投递渠道
+            <input id="channelInput" name="channel" type="text" placeholder="官网 / 内推 / Boss" />
+          </label>
+          <label>
+            当前状态
+            <select id="statusInput" name="status"></select>
+          </label>
+          <label>
+            优先级
+            <select id="priorityInput" name="priority">
+              <option value="high">高</option>
+              <option value="medium" selected>中</option>
+              <option value="low">低</option>
+            </select>
+          </label>
+          <label>
+            投递日期
+            <input id="appliedDateInput" name="appliedDate" type="date" />
+          </label>
+          <label>
+            下次跟进
+            <input id="nextActionInput" name="nextAction" type="date" />
+          </label>
+          <label>
+            JD 链接
+            <input id="jobUrlInput" name="jobUrl" type="url" />
+          </label>
+          <label>
+            薪资范围
+            <input id="salaryInput" name="salary" type="text" />
+          </label>
+          <label>
+            简历版本
+            <input id="resumeInput" name="resume" type="text" />
+          </label>
+          <label>
+            联系人
+            <input id="contactInput" name="contact" type="text" />
+          </label>
+        </div>
+
+        <label class="wide-label">
+          备注
+          <textarea id="notesInput" name="notes" rows="4"></textarea>
+        </label>
+
+        <div class="dialog-footer">
+          <button id="cancelDialogBtn" class="ghost-button" type="button">取消</button>
+          <button class="primary-button" type="submit">保存</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
