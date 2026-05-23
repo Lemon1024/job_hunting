@@ -9,8 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eas:login": "pnpm dlx eas-cli login",
-    "android:apk": "pnpm dlx eas-cli build --platform android --profile preview",
-    "android:aab": "pnpm dlx eas-cli build --platform android --profile production",
+    "android:apk": "pnpm dlx eas-cli build --platform android --profile preview --clear-cache",
+    "android:aab": "pnpm dlx eas-cli build --platform android --profile production --clear-cache",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
