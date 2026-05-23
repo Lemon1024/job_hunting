@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "秋招投递助手",
+    "slug": "job-hunting-tracker",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jobtracker.mobile"
+    },
+    "android": {
+      "package": "com.jobtracker.mobile",
+      "versionCode": 1,
+      "permissions": []
+    },
+    "extra": {
+      "supabaseUrl": "$EXPO_PUBLIC_SUPABASE_URL",
+      "supabaseAnonKey": "$EXPO_PUBLIC_SUPABASE_ANON_KEY",
+      "eas": {
+        "projectId": "2714122b-75ab-49a9-9ff0-afa641502369"
+      }
+    }
+  }
+}

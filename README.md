@@ -1,35 +1,100 @@
-# 秋招投递助手
+# Job Hunting Tracker
 
-一个零依赖的本地 Web App，用来记录秋招投递公司、岗位、进度、跟进日期和复盘数据。
+A multi-platform job application tracker for campus recruiting and job hunting.
 
-## 使用方式
+The project is organized as a monorepo:
 
-直接用浏览器打开：
+- `apps/desktop`: Tauri + React + TypeScript desktop app.
+- `apps/mobile`: Expo React Native + TypeScript mobile app.
+- `packages/core`: shared types, constants, statistics, Supabase services, and export helpers.
+- `packages/ui`: shared UI tokens.
+- `supabase/migrations`: database schema and Row Level Security policies.
+- `legacy-static`: the original static web version kept as reference.
+
+## Features
+
+- Email/password login with Supabase Auth.
+- Private per-user application data.
+- Application CRUD.
+- Progress timeline add/delete.
+- Status filters, search, dashboard metrics, follow-up reminders, and calendar view.
+- JSON and Excel export.
+- Desktop client with Tauri.
+- Android build configuration with Expo EAS.
+
+## Environment
+
+Copy `.env.example` and fill in your Supabase project values.
+
+Desktop uses:
 
 ```text
-C:\Users\Lemon\Desktop\Codex\job_hunting\index.html
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
 ```
 
-数据保存在当前浏览器的 `localStorage` 中。换浏览器或清理浏览器数据会影响本地记录，建议定期使用左侧「导出」菜单备份 JSON 或 Excel。
+Mobile uses:
 
-## 当前功能
+```text
+EXPO_PUBLIC_SUPABASE_URL=
+EXPO_PUBLIC_SUPABASE_ANON_KEY=
+```
 
-- 新增、编辑、删除投递记录
-- 首次空数据打开时自动生成 10 条示例投递，方便测试列表、统计和日历
-- 自定义应用名称，刷新后保留
-- 按公司、岗位、城市、备注搜索
-- 按状态、进展、待跟进、Offer、已结束筛选
-- 修改状态时自动写入时间线
-- 设置下次跟进日期
-- 添加笔试、面试、跟进、结果等事件
-- 查看投递总数、面试中、Offer、待跟进和转化率
-- 导入 JSON 或本应用导出的 Excel `.xls` 数据
-- 通过导出菜单导出 JSON 或美化版 Excel `.xls` 报表
-- Excel 报表包含概览、投递记录、时间线三个工作表，并带状态配色、优先级配色和分布条
-- 日历视图，按投递日期、跟进日期和时间线事件查看安排
+Do not commit real `.env` files.
 
-## 后续方向
+## Install
 
-- 增加面试复盘模板
-- 增加 CSV 导出
-- 迁移到 Supabase 实现多设备同步
+```powershell
+pnpm.cmd install
+```
+
+## Desktop Development
+
+Run the web version:
+
+```powershell
+pnpm.cmd desktop:dev
+```
+
+Run the Tauri desktop client:
+
+```powershell
+pnpm.cmd desktop:tauri
+```
+
+Build the Windows installer:
+
+```powershell
+pnpm.cmd desktop:installer
+```
+
+## Mobile Development
+
+Start Expo:
+
+```powershell
+pnpm.cmd mobile:dev
+```
+
+Build an Android APK with EAS:
+
+```powershell
+pnpm.cmd mobile:eas:login
+pnpm.cmd mobile:android:apk
+```
+
+Build an Android App Bundle for stores:
+
+```powershell
+pnpm.cmd mobile:android:aab
+```
+
+## Supabase
+
+Run the migration in:
+
+```text
+supabase/migrations/202605160001_initial_schema.sql
+```
+
+The tables use Row Level Security so each user can only access their own data.

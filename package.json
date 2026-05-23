@@ -1,0 +1,21 @@
+{
+  "name": "job-hunting-tracker",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@9.12.0",
+  "scripts": {
+    "desktop:dev": "pnpm --filter @job-tracker/desktop dev",
+    "desktop:tauri": "pnpm --filter @job-tracker/desktop tauri dev",
+    "desktop:build": "pnpm --filter @job-tracker/desktop tauri build",
+    "desktop:exe": "pnpm --filter @job-tracker/desktop tauri build --no-bundle",
+    "desktop:installer": "pnpm --filter @job-tracker/desktop tauri build",
+    "mobile:dev": "pnpm --filter @job-tracker/mobile start",
+    "mobile:eas:login": "pnpm --filter @job-tracker/mobile eas:login",
+    "mobile:android:apk": "pnpm --filter @job-tracker/mobile android:apk",
+    "mobile:android:aab": "pnpm --filter @job-tracker/mobile android:aab",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
