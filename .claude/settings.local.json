@@ -21,7 +21,11 @@
       "Bash(python3 -c ' *)",
       "Bash(rm -rf apps/mobile/android)",
       "Bash(pnpm install *)",
-      "Bash(pnpm --filter @job-tracker/mobile add expo-build-properties)"
+      "Bash(pnpm --filter @job-tracker/mobile add expo-build-properties)",
+      "Bash(curl -s --max-time 15 -D /tmp/headers2.txt \"https://storage.googleapis.com/eas-workflows-production/logs/2714122b-75ab-49a9-9ff0-afa641502369/2f38e98b-1e0a-4ada-9810-c0da2e4e4448/2026-05-24T02%3A32%3A37Z-01abd829-f09a-4000-87b1-0267abedd67a.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260524%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260524T023800Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=279fff1286740716780e483a1a4b86f830baff1d97b0eb0de8cfc7b952c3002d381d912298bee1669f403c683bb9dea645027193415ee9b70844d6a499df5506eb318f6599ebf08b9786007ea7a5ed66f93539ad461d20c3c5993fdba6e0c95db235f81588e08d3afedf8574232154a523c7523f42688a93a80f78de0cc009710e84ce16e27cc3a563a25dbda840d943cefa426c4088d6e8a7ce4d4c33ab39f9df934f87aa13101fc19be694b792490e19feb67340426626d6ac1f6ac2e809994b16bbe1b775217bdb017256a9523c9f445ad902485a557d7a711d49d1cea912f2dc2f2b24723a19b535e588c8a1c9d95b31563070f3bea76c9ebe20f688a7f2\" -o /tmp/eas_log2.txt)",
+      "Bash(/mingw64/bin/brotli -d -c /tmp/eas_log2.txt)",
+      "Bash(java -version)",
+      "Bash(where adb *)"
     ]
   }
 }
