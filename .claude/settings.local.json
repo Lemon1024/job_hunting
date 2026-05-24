@@ -93,7 +93,14 @@
       "Bash(ln -s \"/c/Users/Lemon/.claude/skills/academic-research-skills/deep-research\" deep-research)",
       "Bash(ln -s \"/c/Users/Lemon/.claude/skills/academic-research-skills/academic-paper\" academic-paper)",
       "Bash(ln -s \"/c/Users/Lemon/.claude/skills/academic-research-skills/academic-paper-reviewer\" academic-paper-reviewer)",
-      "Bash(ln -s \"/c/Users/Lemon/.claude/skills/academic-research-skills/academic-pipeline\" academic-pipeline)"
+      "Bash(ln -s \"/c/Users/Lemon/.claude/skills/academic-research-skills/academic-pipeline\" academic-pipeline)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(pnpm mobile:android:apk)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('Log URL:', d.get\\('logFiles',['']\\)[0][:200]\\)\")",
+      "Bash(curl -s --max-time 15 -o /tmp/eas_log3.txt \"https://storage.googleapis.com/eas-workflows-production/logs/2714122b-75ab-49a9-9ff0-afa641502369/19d4d184-8862-4edc-8e91-9e6e4dcc79d4/2026-05-24T05%3A41%3A17Z-5779f30a-8f36-4a27-a5e5-0fff402b6ad6.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260524%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260524T054453Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=4d6104aaeee4203714401f434e15e1c11e9fef964fab4ea7b7b542158cc7af8037e3c94115afa127f41348aee38b6b4f23e81e9c20fb2599d10327e45ff3535f6b3822ffd4a14214d8d3e5ab7b51be2141fe0f0ca7164046338b8f9cbd252bc34f4c917bdaf5e80dfcbdbdd1a01bfeb74b79ff05c0b2fb32b64ad9683cee1b13546d3b475059c87336890179c4a0bb8059db7dd720ae1dcc47ce3891e0fbb409cfd82a8cec0c5b1b93aab3ffb08eaad3d363721d840f96ce04f9af326447069420660d9c3a534209c49e52530af4262ece953c5de8737908efbe5f4288a6d70ea889791f9621a24360fd21c33acf51367795bd5caa9f98d972dcbe66587408d8\")",
+      "Bash(/mingw64/bin/brotli -d -c /tmp/eas_log3.txt)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Lemon\\Desktop\\Codex\\job_hunting\\.claude"
