@@ -6,7 +6,8 @@
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "assetBundlePatterns": [
-      "**/*"
+      "assets/**/*",
+      "assets/*"
     ],
     "ios": {
       "supportsTablet": true,
@@ -23,6 +24,15 @@
       "eas": {
         "projectId": "2714122b-75ab-49a9-9ff0-afa641502369"
       }
-    }
+    },
+    "plugins": [
+      ["expo-build-properties", {
+        "android": {
+          "kotlinVersion": "1.9.24",
+          "compileSdkVersion": 35,
+          "targetSdkVersion": 35
+        }
+      }]
+    ]
   }
 }

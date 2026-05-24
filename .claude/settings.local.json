@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx eas-cli *)",
+      "WebFetch(domain:expo.dev)",
+      "Bash(pnpm typecheck *)",
+      "Bash(npx expo *)",
+      "Bash(pnpm --version)",
+      "WebFetch(domain:storage.googleapis.com)",
+      "Bash(curl -s --max-time 15 \"https://storage.googleapis.com/eas-workflows-production/logs/2714122b-75ab-49a9-9ff0-afa641502369/75a934f4-b9f5-46ea-b7b9-608e23866795/2026-05-23T15%3A09%3A03Z-f18482a6-a681-4b73-ab09-54bbd77d4f71.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260523%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260523T161950Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=9c8a1729ce8fd8b853d3a46a66567b34c034a3b74b43154d8cc49193cefff9374ea1cc7848954eaf3d80957996e697d61b92853129b3e1e7affa79d7f4ec6761fd03453082cf2304d90a866fdd0dccfede64ba03657ecd63e255a1273ebb3d2627b8bd825bbc7dc6e3e5075c8ff328103990e2b39f937ca03da809e83d011ef63c7a8d2a07792a6db21b34b50d1cb3e13745dfd088df6cefb54163c299b2aaf2f62f6124e960cc4468e2691c3f753f74cd628f4add0001a12801cbee47385fcc51e82f7286c9407dc0719fb6282af5c698b3f2ae788cae0bea18f8c519f017a28da7de6fb4e619f1c0090fee1021e31b0f30237cd88687009bcc3c165d173a21\")",
+      "Bash(gunzip)",
+      "Bash(curl -s --max-time 15 \"https://storage.googleapis.com/eas-workflows-production/logs/2714122b-75ab-49a9-9ff0-afa641502369/75a934f4-b9f5-46ea-b7b9-608e23866795/2026-05-23T15%3A09%3A03Z-f18482a6-a681-4b73-ab09-54bbd77d4f71.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260523%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260523T163330Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=2731209a66ffb3c20bbd88b4d377d085fcdcd14869ca72aa3942e4eda76f79cced8ca19ae9d857a89bd7ccb40b0c2592d0be1132449fd348b012b9a0b8d79d254f23d396ac69b066d6d90b5aa9b57bd244114d71ea846b2207a9b83db52f3bb40d9adb0630f9e21288594fceec06af95c66a1e7944cd17d980ed04aa1d1ea8984163d2841771581c26831fb3e99e018a09ddaff458f9bca72c3d82c5f3ef8c84f5561ae28cb2f6d90672f357129d767632936942d34a01390cf18966058e3e59eeb9df65dcc22de71b073274c3aef078567c10cd9d50568f3caec33384ce7383d27359bc238aef5b6abcd678dab4a5b6f29165fe2d9060aab926abe363becc5c\")",
+      "Bash(curl -s --max-time 15 -o /tmp/eas_build_log.txt \"https://storage.googleapis.com/eas-workflows-production/logs/2714122b-75ab-49a9-9ff0-afa641502369/75a934f4-b9f5-46ea-b7b9-608e23866795/2026-05-23T15%3A09%3A03Z-f18482a6-a681-4b73-ab09-54bbd77d4f71.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260523%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260523T163330Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=2731209a66ffb3c20bbd88b4d377d085fcdcd14869ca72aa3942e4eda76f79cced8ca19ae9d857a89bd7ccb40b0c2592d0be1132449fd348b012b9a0b8d79d254f23d396ac69b066d6d90b5aa9b57bd244114d71ea846b2207a9b83db52f3bb40d9adb0630f9e21288594fceec06af95c66a1e7944cd17d980ed04aa1d1ea8984163d2841771581c26831fb3e99e018a09ddaff458f9bca72c3d82c5f3ef8c84f5561ae28cb2f6d90672f357129d767632936942d34a01390cf18966058e3e59eeb9df65dcc22de71b073274c3aef078567c10cd9d50568f3caec33384ce7383d27359bc238aef5b6abcd678dab4a5b6f29165fe2d9060aab926abe363becc5c\")",
+      "Read(//tmp/**)",
+      "Bash(xxd /tmp/eas_build_log.txt)",
+      "Bash(curl -s --max-time 15 -D /tmp/headers.txt \"https://storage.googleapis.com/eas-workflows-production/logs/2714122b-75ab-49a9-9ff0-afa641502369/75a934f4-b9f5-46ea-b7b9-608e23866795/2026-05-23T15%3A09%3A03Z-f18482a6-a681-4b73-ab09-54bbd77d4f71.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260523%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260523T163330Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=2731209a66ffb3c20bbd88b4d377d085fcdcd14869ca72aa3942e4eda76f79cced8ca19ae9d857a89bd7ccb40b0c2592d0be1132449fd348b012b9a0b8d79d254f23d396ac69b066d6d90b5aa9b57bd244114d71ea846b2207a9b83db52f3bb40d9adb0630f9e21288594fceec06af95c66a1e7944cd17d980ed04aa1d1ea8984163d2841771581c26831fb3e99e018a09ddaff458f9bca72c3d82c5f3ef8c84f5561ae28cb2f6d90672f357129d767632936942d34a01390cf18966058e3e59eeb9df65dcc22de71b073274c3aef078567c10cd9d50568f3caec33384ce7383d27359bc238aef5b6abcd678dab4a5b6f29165fe2d9060aab926abe363becc5c\" -o /tmp/eas_log.txt)",
+      "Bash(python3 -c \"import brotli; import sys; sys.stdout.buffer.write\\(brotli.decompress\\(sys.stdin.buffer.read\\(\\)\\)\\)\")",
+      "Bash(python3 -c \"import brotli\")",
+      "Bash(apt list *)",
+      "Bash(/mingw64/bin/brotli -d -c /tmp/eas_log.txt)",
+      "Bash(python3 -c ' *)",
+      "Bash(rm -rf apps/mobile/android)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm --filter @job-tracker/mobile add expo-build-properties)"
+    ]
+  }
+}
