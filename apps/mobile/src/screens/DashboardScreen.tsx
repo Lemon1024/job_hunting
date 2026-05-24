@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Alert, FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fonts, radius, spacing } from "../theme";
 import {
@@ -105,7 +106,7 @@ export default function DashboardScreen({ navigation }: Props) {
   };
 
   return (
-    <View style={styles.shell}>
+    <SafeAreaView style={styles.shell} edges={["top"]}>
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -166,7 +167,7 @@ export default function DashboardScreen({ navigation }: Props) {
         cities={cities}
         channels={channels}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

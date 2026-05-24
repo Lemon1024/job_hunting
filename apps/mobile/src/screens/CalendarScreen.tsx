@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Alert, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fonts, radius, spacing } from "../theme";
 import {
@@ -50,7 +51,7 @@ export default function CalendarScreen() {
   );
 
   return (
-    <View style={styles.shell}>
+    <SafeAreaView style={styles.shell} edges={["top"]}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>日历</Text>
@@ -133,7 +134,7 @@ export default function CalendarScreen() {
           )}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 

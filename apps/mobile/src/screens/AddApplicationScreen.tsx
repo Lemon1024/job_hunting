@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fonts, radius, spacing } from "../theme";
 import {
@@ -103,7 +104,7 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
   }
 
   return (
-    <View style={styles.shell}>
+    <SafeAreaView style={styles.shell} edges={["top", "bottom"]}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -195,7 +196,7 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
       <PickerModal visible={showCityPicker} items={CITIES} selected={city} onSelect={(v) => { setCity(v); setShowCityPicker(false); }} onClose={() => setShowCityPicker(false)} />
       <PickerModal visible={showChannelPicker} items={CHANNELS} selected={channel} onSelect={(v) => { setChannel(v); setShowChannelPicker(false); }} onClose={() => setShowChannelPicker(false)} />
       <PickerModal visible={showStatusPicker} items={APPLICATION_STATUSES.map((s) => s.id)} labels={APPLICATION_STATUSES.map((s) => s.label)} selected={status} onSelect={(v) => { setStatus(v); setShowStatusPicker(false); }} onClose={() => setShowStatusPicker(false)} />
-    </View>
+    </SafeAreaView>
   );
 }
 

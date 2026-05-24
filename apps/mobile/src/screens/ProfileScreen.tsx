@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fonts, radius, spacing } from "../theme";
 import { supabase } from "../supabaseClient";
@@ -7,7 +8,7 @@ export default function ProfileScreen() {
   const user = supabase.auth.currentUser;
 
   return (
-    <View style={styles.shell}>
+    <SafeAreaView style={styles.shell} edges={["top"]}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>我的</Text>
@@ -33,7 +34,7 @@ export default function ProfileScreen() {
         <Ionicons name="log-out-outline" size={18} color={colors.dangerText} />
         <Text style={styles.logoutText}>退出登录</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 

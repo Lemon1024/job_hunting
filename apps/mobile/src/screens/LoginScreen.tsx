@@ -9,6 +9,7 @@ import {
   View,
   Alert,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fonts, radius, spacing } from "../theme";
 import { supabase } from "../supabaseClient";
@@ -44,7 +45,8 @@ export default function LoginScreen() {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.shell} behavior={Platform.OS === "ios" ? "padding" : undefined}>
+    <SafeAreaView style={styles.shell} edges={["top", "bottom"]}>
+      <KeyboardAvoidingView style={{ flex: 1, justifyContent: "center" }} behavior={Platform.OS === "ios" ? "padding" : undefined}>
       <View style={styles.card}>
         {/* Logo + Title */}
         <View style={styles.logoWrap}>
@@ -109,17 +111,13 @@ export default function LoginScreen() {
           <Text style={styles.submitText}>{loading ? "处理中..." : tab === "login" ? "登录" : "注册"}</Text>
         </TouchableOpacity>
 
-        {/* Alternative */}
-        <TouchableOpacity style={styles.altBtn}>
-          <Text style={styles.altText}>邮箱验证码登录</Text>
-        </TouchableOpacity>
-
         {/* Legal */}
         <Text style={styles.legal}>
           登录即表示同意 <Text style={styles.legalLink}>用户协议</Text> 和 <Text style={styles.legalLink}>隐私政策</Text>
         </Text>
       </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -173,8 +171,6 @@ const styles = StyleSheet.create({
   },
   submitBtnDisabled: { opacity: 0.6 },
   submitText: { color: colors.headerText, fontSize: 16, fontWeight: fonts.bold },
-  altBtn: { alignItems: "center" },
-  altText: { fontSize: 14, color: colors.primary, fontWeight: fonts.semibold },
   legal: { fontSize: 11, color: colors.muted, textAlign: "center" },
   legalLink: { color: colors.primary },
 });
