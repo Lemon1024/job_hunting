@@ -8,6 +8,7 @@ import {
   calculateMetrics,
   isInterviewStatus,
   listApplications,
+  matchesLocationFilter,
 } from "@job-tracker/core";
 import { supabase } from "../supabaseClient";
 import StatsBar from "../components/StatsBar";
@@ -26,7 +27,7 @@ type Props = {
 interface FilterState {
   status: string | null;
   priority: string | null;
-  city: string | null;
+  locationIds: string[];
   channel: string | null;
 }
 
@@ -35,7 +36,7 @@ export default function DashboardScreen({ navigation }: Props) {
   const [search, setSearch] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
-  const [filters, setFilters] = useState<FilterState>({ status: null, priority: null, city: null, channel: null });
+  const [filters, setFilters] = useState<FilterState>({ status: null, priority: null, locationIds: [], channel: null });
   const [quickFilter, setQuickFilter] = useState<QuickFilterKey>("submitted");
 
   const load = useCallback(async () => {
@@ -61,10 +62,10 @@ export default function DashboardScreen({ navigation }: Props) {
 
   const metrics = useMemo(() => calculateMetrics(applications), [applications]);
 
-  const cities = useMemo(
-    () => [...new Set(applications.map((a) => a.city).filter(Boolean))] as string[],
-    [applications],
-  );
+  const locations = useMemo(() => {
+    const byId = new Map(applications.flatMap((application) => application.locations ?? []).map((tag) => [tag.id, tag]));
+    return [...byId.values()].sort((a, b) => a.label.localeCompare(b.label, "zh-CN"));
+  }, [applications]);
   const channels = useMemo(
     () => [...new Set(applications.map((a) => a.channel).filter(Boolean))] as string[],
     [applications],
@@ -78,6 +79,7 @@ export default function DashboardScreen({ navigation }: Props) {
         (a) =>
           a.company_name.toLowerCase().includes(q) ||
           a.position_name.toLowerCase().includes(q) ||
+          (a.locations ?? []).some((location) => location.label.toLowerCase().includes(q)) ||
           (a.city ?? "").toLowerCase().includes(q) ||
           (a.channel ?? "").toLowerCase().includes(q),
       );
@@ -94,9 +96,7 @@ export default function DashboardScreen({ navigation }: Props) {
     if (filters.priority) {
       result = result.filter((a) => a.priority === filters.priority);
     }
-    if (filters.city) {
-      result = result.filter((a) => a.city === filters.city);
-    }
+    result = result.filter((application) => matchesLocationFilter(application, filters.locationIds));
     if (filters.channel) {
       result = result.filter((a) => a.channel === filters.channel);
     }
@@ -154,7 +154,7 @@ export default function DashboardScreen({ navigation }: Props) {
         onClose={() => setFilterVisible(false)}
         filters={filters}
         onApply={setFilters}
-        cities={cities}
+        locations={locations}
         channels={channels}
       />
     </SafeAreaView>

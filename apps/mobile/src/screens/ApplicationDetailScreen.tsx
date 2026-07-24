@@ -6,12 +6,19 @@ import { colors, fonts, radius, spacing } from "../theme";
 import {
   type Application,
   type ApplicationEvent,
+  type FollowUpTask,
+  type FollowUpTaskInput,
+  createFollowUpTask,
   createEvent,
+  deleteApplication,
   deleteEvent,
+  deleteFollowUpTask,
   formatDate,
   getStatus,
   listApplications,
+  setFollowUpTaskCompleted,
   todayISO,
+  updateFollowUpTask,
 } from "@job-tracker/core";
 import { supabase } from "../supabaseClient";
 import StatusBadge from "../components/StatusBadge";
@@ -19,6 +26,7 @@ import PriorityBadge from "../components/PriorityBadge";
 import TimelineItem from "../components/TimelineItem";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { DashboardStackParamList } from "../navigation/types";
+import FollowUpTaskSection from "../components/FollowUpTaskSection";
 
 type Props = {
   navigation: NativeStackNavigationProp<DashboardStackParamList, "ApplicationDetail">;
@@ -29,6 +37,7 @@ export default function ApplicationDetailScreen({ navigation, route }: Props) {
   const [application, setApplication] = useState<Application>(route.params.application);
   const [eventTitle, setEventTitle] = useState("");
   const [showAddEvent, setShowAddEvent] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const refresh = useCallback(async () => {
     try {
@@ -70,6 +79,30 @@ export default function ApplicationDetailScreen({ navigation, route }: Props) {
     }
   }
 
+  function confirmDeleteApplication() {
+    Alert.alert(
+      "永久删除投递",
+      `将删除 ${application.company_name} · ${application.position_name}，以及关联的时间线和待办。个人地址标签会保留。此操作无法撤销。`,
+      [
+        { text: "取消", style: "cancel" },
+        {
+          text: "永久删除",
+          style: "destructive",
+          onPress: async () => {
+            setDeleting(true);
+            try {
+              await deleteApplication(supabase as never, application.id);
+              navigation.goBack();
+            } catch (error) {
+              Alert.alert("删除失败", error instanceof Error ? error.message : "请稍后重试");
+              setDeleting(false);
+            }
+          },
+        },
+      ],
+    );
+  }
+
   const statusInfo = getStatus(application.status);
   const events = application.events ?? [];
 
@@ -88,8 +121,14 @@ export default function ApplicationDetailScreen({ navigation, route }: Props) {
           >
             <Ionicons name="create-outline" size={20} color={colors.primary} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.headerBtn}>
-            <Ionicons name="share-outline" size={20} color={colors.primary} />
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel="删除投递"
+            style={[styles.headerBtn, deleting && styles.disabled]}
+            disabled={deleting}
+            onPress={confirmDeleteApplication}
+          >
+            <Ionicons name="trash-outline" size={20} color={colors.danger} />
           </TouchableOpacity>
         </View>
       </View>
@@ -108,6 +147,27 @@ export default function ApplicationDetailScreen({ navigation, route }: Props) {
           <StatusBadge status={application.status} />
         </View>
 
+        <View style={styles.card}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>地址标签</Text>
+            <TouchableOpacity
+              style={styles.addBtn}
+              onPress={() => navigation.navigate("AddApplication", { application, mode: "edit" })}
+            >
+              <Ionicons name="create-outline" size={18} color={colors.primary} />
+              <Text style={styles.addBtnText}>维护</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.locationRow}>
+            {(application.locations ?? []).length > 0 ? application.locations?.map((location) => (
+              <View key={location.id} style={styles.locationChip}>
+                <Ionicons name="location-outline" size={14} color={colors.primary} />
+                <Text style={styles.locationText}>{location.label}</Text>
+              </View>
+            )) : <Text style={styles.emptyTimeline}>暂未设置地址</Text>}
+          </View>
+        </View>
+
         {/* Basic Info */}
         <View style={styles.infoCard}>
           <InfoRow label="投递日期" value={application.applied_date ? formatDate(application.applied_date) : "待投递"} />
@@ -123,6 +183,27 @@ export default function ApplicationDetailScreen({ navigation, route }: Props) {
             <Text style={styles.notesText}>{application.notes}</Text>
           </View>
         ) : null}
+
+        <FollowUpTaskSection
+          applicationId={application.id}
+          tasks={application.follow_up_tasks ?? []}
+          onCreate={async (input: FollowUpTaskInput) => {
+            await createFollowUpTask(supabase as never, input);
+            await refresh();
+          }}
+          onUpdate={async (id: string, input: FollowUpTaskInput) => {
+            await updateFollowUpTask(supabase as never, id, input);
+            await refresh();
+          }}
+          onToggle={async (task: FollowUpTask, completed: boolean) => {
+            await setFollowUpTaskCompleted(supabase as never, task.id, completed);
+            await refresh();
+          }}
+          onDelete={async (task: FollowUpTask) => {
+            await deleteFollowUpTask(supabase as never, task.id);
+            await refresh();
+          }}
+        />
 
         {/* Timeline */}
         <View style={styles.card}>
@@ -198,6 +279,7 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 17, fontWeight: fonts.bold, color: colors.text },
   headerActions: { flexDirection: "row", gap: spacing.sm },
   headerBtn: { padding: spacing.sm },
+  disabled: { opacity: 0.5 },
   body: { padding: spacing.md, gap: spacing.md, paddingBottom: spacing.xxl * 2 },
 
   /* Company card */
@@ -246,6 +328,9 @@ const styles = StyleSheet.create({
   notesText: { fontSize: 14, color: colors.text, lineHeight: 20, marginTop: spacing.sm },
   addBtn: { flexDirection: "row", alignItems: "center", gap: 4 },
   addBtnText: { fontSize: 13, color: colors.primary, fontWeight: fonts.semibold },
+  locationRow: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
+  locationChip: { flexDirection: "row", alignItems: "center", gap: spacing.xs, backgroundColor: colors.primaryLight, borderRadius: radius.full, paddingHorizontal: spacing.md, paddingVertical: spacing.sm },
+  locationText: { color: colors.primaryText, fontSize: 13, fontWeight: fonts.semibold },
   addEventRow: { flexDirection: "row", gap: spacing.sm, marginBottom: spacing.md },
   eventInput: {
     flex: 1,

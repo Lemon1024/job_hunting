@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
@@ -18,9 +18,15 @@ import {
   APPLICATION_STATUSES,
   type Application,
   type ApplicationInput,
+  type LocationTag,
   createApplication,
   createEvent,
+  createLocationTag,
+  deleteLocationTag,
   getStatus,
+  listApplications,
+  listLocationTags,
+  renameLocationTag,
   todayISO,
   updateApplication,
 } from "@job-tracker/core";
@@ -28,6 +34,7 @@ import { supabase } from "../supabaseClient";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import type { DashboardStackParamList } from "../navigation/types";
+import LocationTagSelector from "../components/LocationTagSelector";
 
 type Props = {
   navigation: NativeStackNavigationProp<DashboardStackParamList, "AddApplication">;
@@ -37,7 +44,6 @@ type Props = {
 const PRIORITIES = ["high", "medium", "low"] as const;
 const priorityLabels: Record<string, string> = { high: "高", medium: "中", low: "低" };
 
-const CITIES = ["北京","上海","深圳","杭州","广州","成都","南京","武汉","苏州","西安","其他","远程"];
 const CHANNELS = ["官网投递","Boss 直聘","猎聘","脉脉","内推","实习僧","牛客网","其他"];
 
 export default function AddApplicationScreen({ navigation, route }: Props) {
@@ -46,7 +52,9 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
 
   const [company, setCompany] = useState(existing?.company_name ?? "");
   const [position, setPosition] = useState(existing?.position_name ?? "");
-  const [city, setCity] = useState(existing?.city ?? "");
+  const [locationTags, setLocationTags] = useState<LocationTag[]>([]);
+  const [selectedLocationIds, setSelectedLocationIds] = useState<string[]>(existing?.locations?.map((tag) => tag.id) ?? []);
+  const [locationUsageCounts, setLocationUsageCounts] = useState<Record<string, number>>({});
   const [channel, setChannel] = useState(existing?.channel ?? "");
   const [status, setStatus] = useState(existing?.status ?? "applied");
   const [appliedDate, setAppliedDate] = useState<Date>(
@@ -55,10 +63,53 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
   const [priority, setPriority] = useState<string>(existing?.priority ?? "medium");
   const [notes, setNotes] = useState(existing?.notes ?? "");
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showCityPicker, setShowCityPicker] = useState(false);
   const [showChannelPicker, setShowChannelPicker] = useState(false);
   const [showStatusPicker, setShowStatusPicker] = useState(false);
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    Promise.all([listLocationTags(supabase as never), listApplications(supabase as never)])
+      .then(([tags, applications]) => {
+        setLocationTags(tags);
+        const counts: Record<string, number> = {};
+        applications.forEach((application) => {
+          application.locations?.forEach((tag) => { counts[tag.id] = (counts[tag.id] ?? 0) + 1; });
+        });
+        setLocationUsageCounts(counts);
+      })
+      .catch((error) => Alert.alert("地址加载失败", error instanceof Error ? error.message : "请稍后重试"));
+  }, []);
+
+  const selectedLocations = useMemo(
+    () => locationTags.filter((tag) => selectedLocationIds.includes(tag.id)),
+    [locationTags, selectedLocationIds],
+  );
+
+  function toggleLocation(id: string) {
+    setSelectedLocationIds((current) => {
+      if (current.includes(id)) return current.filter((item) => item !== id);
+      if (current.length >= 10) {
+        Alert.alert("最多选择 10 个地址");
+        return current;
+      }
+      return [...current, id];
+    });
+  }
+
+  async function addLocationTag(label: string) {
+    const existingTag = locationTags.find((tag) => tag.label.localeCompare(label, undefined, { sensitivity: "accent" }) === 0);
+    if (existingTag) {
+      if (!selectedLocationIds.includes(existingTag.id)) toggleLocation(existingTag.id);
+      return;
+    }
+    try {
+      const created = await createLocationTag(supabase as never, label);
+      setLocationTags((current) => [...current, created].sort((a, b) => a.label.localeCompare(b.label, "zh-CN")));
+      setSelectedLocationIds((current) => [...current, created.id]);
+    } catch (error) {
+      Alert.alert("创建失败", error instanceof Error ? error.message : "请稍后重试");
+    }
+  }
 
   async function save() {
     if (!company.trim() || !position.trim()) {
@@ -70,12 +121,12 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
       const payload: ApplicationInput = {
         company_name: company.trim(),
         position_name: position.trim(),
-        city: city || null,
+        city: existing?.city ?? null,
         channel: channel || null,
         status: status as ApplicationInput["status"],
         priority: priority as ApplicationInput["priority"],
         applied_date: status === "todo" ? null : appliedDate.toISOString().split("T")[0],
-        next_action_date: null,
+        next_action_date: existing?.next_action_date ?? null,
         job_url: "",
         salary_range: "",
         resume_version: "",
@@ -85,9 +136,9 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
       };
 
       if (isEdit && existing) {
-        await updateApplication(supabase as never, existing.id, payload);
+        await updateApplication(supabase as never, existing.id, payload, selectedLocationIds);
       } else {
-        const created = await createApplication(supabase as never, payload);
+        const created = await createApplication(supabase as never, payload, selectedLocationIds);
         await createEvent(supabase as never, {
           application_id: created.id,
           type: "create",
@@ -127,11 +178,34 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
           <Text style={styles.label}>岗位</Text>
           <TextInput style={styles.input} value={position} onChangeText={setPosition} placeholder="输入岗位名称" placeholderTextColor={colors.muted} />
 
-          {/* City */}
-          <Text style={styles.label}>城市</Text>
-          <TouchableOpacity style={styles.input} onPress={() => setShowCityPicker(true)}>
-            <Text style={city ? styles.inputText : styles.inputPlaceholder}>{city || "选择城市"}</Text>
-          </TouchableOpacity>
+          <Text style={styles.label}>地址标签</Text>
+          <LocationTagSelector
+            tags={locationTags}
+            selectedIds={selectedLocationIds}
+            onToggle={toggleLocation}
+            onCreate={addLocationTag}
+            usageCounts={locationUsageCounts}
+            onRename={async (tag, label) => {
+              try {
+                const renamed = await renameLocationTag(supabase as never, tag.id, label);
+                setLocationTags((current) => current.map((item) => item.id === tag.id ? renamed : item));
+              } catch (error) {
+                Alert.alert("重命名失败", error instanceof Error ? error.message : "请稍后重试");
+              }
+            }}
+            onDelete={async (tag) => {
+              try {
+                await deleteLocationTag(supabase as never, tag.id);
+                setLocationTags((current) => current.filter((item) => item.id !== tag.id));
+                setSelectedLocationIds((current) => current.filter((id) => id !== tag.id));
+              } catch (error) {
+                Alert.alert("删除失败", error instanceof Error ? error.message : "请稍后重试");
+              }
+            }}
+          />
+          {selectedLocations.length > 0 ? (
+            <Text style={styles.selectionSummary}>已选：{selectedLocations.map((tag) => tag.label).join("、")}</Text>
+          ) : null}
 
           {/* Channel */}
           <Text style={styles.label}>渠道</Text>
@@ -193,8 +267,6 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      {/* City picker modal */}
-      <PickerModal visible={showCityPicker} items={CITIES} selected={city} onSelect={(v) => { setCity(v); setShowCityPicker(false); }} onClose={() => setShowCityPicker(false)} />
       <PickerModal visible={showChannelPicker} items={CHANNELS} selected={channel} onSelect={(v) => { setChannel(v); setShowChannelPicker(false); }} onClose={() => setShowChannelPicker(false)} />
       <PickerModal visible={showStatusPicker} items={APPLICATION_STATUSES.map((s) => s.id)} labels={APPLICATION_STATUSES.map((s) => s.label)} selected={status} onSelect={(v) => { setStatus(v as ApplicationInput["status"]); setShowStatusPicker(false); }} onClose={() => setShowStatusPicker(false)} />
     </SafeAreaView>
@@ -279,6 +351,7 @@ const styles = StyleSheet.create({
   inputPlaceholder: { fontSize: 15, color: colors.muted },
   notesInput: { minHeight: 80, paddingTop: spacing.md },
   charCount: { fontSize: 11, color: colors.muted, textAlign: "right", marginTop: -spacing.xs },
+  selectionSummary: { fontSize: 12, color: colors.primaryText },
   segRow: { flexDirection: "row", gap: spacing.sm },
   segBtn: {
     flex: 1,
