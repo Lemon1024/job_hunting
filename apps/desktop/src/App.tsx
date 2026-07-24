@@ -7,13 +7,20 @@ import {
   type ApplicationInput,
   type ApplicationStatus,
   type EventType,
+  type FollowUpTask,
+  type FollowUpTaskInput,
+  type LocationTag,
   type Priority,
   buildCalendarItems,
   calculateMetrics,
   createApplication,
   createEvent,
+  createFollowUpTask,
+  createLocationTag,
   deleteApplication,
   deleteEvent,
+  deleteFollowUpTask,
+  deleteLocationTag,
   exportApplicationsExcel,
   exportApplicationsJSON,
   formatDate,
@@ -24,13 +31,19 @@ import {
   isDue,
   isNotApplied,
   listApplications,
+  listLocationTags,
+  matchesLocationFilter,
+  renameLocationTag,
+  setFollowUpTaskCompleted,
   todayISO,
-  updateApplication
+  updateApplication,
+  updateFollowUpTask
 } from "@job-tracker/core";
 import type { Session } from "@supabase/supabase-js";
 import type { ChangeEvent, FormEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "./supabaseClient";
+import { countLocationUsage, getNextPendingTaskDate } from "./workbench";
 
 type NavFilter = "all" | "active" | "follow" | "offer" | "closed";
 type SortMode = "updated-desc" | "applied-desc" | "priority-desc" | "follow-asc";
@@ -218,6 +231,14 @@ export function App() {
   const [draftTitle, setDraftTitle] = useState(DEFAULT_APP_TITLE);
   const [editingTitle, setEditingTitle] = useState(false);
   const [calendarMonth, setCalendarMonth] = useState(() => new Date());
+  const [locationTags, setLocationTags] = useState<LocationTag[]>([]);
+  const [selectedLocationIds, setSelectedLocationIds] = useState<string[]>([]);
+  const [locationFilterIds, setLocationFilterIds] = useState<string[]>([]);
+  const [newLocationLabel, setNewLocationLabel] = useState("");
+  const [taskTitle, setTaskTitle] = useState("");
+  const [taskNotes, setTaskNotes] = useState("");
+  const [taskDueDate, setTaskDueDate] = useState(todayISO());
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem(SETTINGS_KEY);
@@ -259,6 +280,7 @@ export function App() {
     })).filter((status) => status.count > 0),
     [applications]
   );
+  const locationUsage = useMemo(() => countLocationUsage(applications), [applications]);
 
   const filtered = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -269,8 +291,9 @@ export function App() {
         if (navFilter === "follow" && !isDue(application)) return false;
         if (navFilter === "offer" && application.status !== "offer") return false;
         if (navFilter === "closed" && !getStatus(application.status).closed) return false;
+        if (!matchesLocationFilter(application, locationFilterIds)) return false;
         if (!term) return true;
-        return [application.company_name, application.position_name, application.city, application.channel]
+        return [application.company_name, application.position_name, application.city, application.channel, ...(application.locations ?? []).map((location) => location.label)]
           .join(" ")
           .toLowerCase()
           .includes(term);
@@ -278,10 +301,10 @@ export function App() {
       .sort((a, b) => {
         if (sortMode === "applied-desc") return (b.applied_date ?? "").localeCompare(a.applied_date ?? "");
         if (sortMode === "priority-desc") return priorityRank[b.priority] - priorityRank[a.priority];
-        if (sortMode === "follow-asc") return (a.next_action_date ?? "9999-12-31").localeCompare(b.next_action_date ?? "9999-12-31");
+        if (sortMode === "follow-asc") return (getNextPendingTaskDate(a) ?? "9999-12-31").localeCompare(getNextPendingTaskDate(b) ?? "9999-12-31");
         return b.updated_at.localeCompare(a.updated_at);
       });
-  }, [applications, navFilter, query, sortMode, statusFilter]);
+  }, [applications, locationFilterIds, navFilter, query, sortMode, statusFilter]);
 
   const calendarByDate = useMemo(() => {
     return calendarItems.reduce<Record<string, typeof calendarItems>>((grouped, item) => {
@@ -292,8 +315,9 @@ export function App() {
 
   async function refreshApplications() {
     try {
-      const data = await listApplications(supabase);
+      const [data, tags] = await Promise.all([listApplications(supabase), listLocationTags(supabase)]);
       setApplications(data);
+      setLocationTags(tags);
       setSelectedId((current) => current ?? data[0]?.id ?? null);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : T.loadFailed);
@@ -313,12 +337,14 @@ export function App() {
   function openCreateDialog() {
     setEditingId(null);
     setInput(emptyInput);
+    setSelectedLocationIds([]);
     setIsDialogOpen(true);
   }
 
   function openEditDialog(application: Application) {
     setEditingId(application.id);
     setInput(inputFromApplication(application));
+    setSelectedLocationIds((application.locations ?? []).map((location) => location.id));
     setIsDialogOpen(true);
   }
 
@@ -326,11 +352,11 @@ export function App() {
     event.preventDefault();
     const payload = normalizeInput(input);
     if (editingId) {
-      await updateApplication(supabase, editingId, payload);
+      await updateApplication(supabase, editingId, payload, selectedLocationIds);
       await refreshApplications();
       setSelectedId(editingId);
     } else {
-      const created = await createApplication(supabase, payload);
+      const created = await createApplication(supabase, payload, selectedLocationIds);
       await createEvent(supabase, {
         application_id: created.id,
         type: "create",
@@ -364,6 +390,124 @@ export function App() {
   async function handleNextActionChange(application: Application, value: string) {
     await updateApplication(supabase, application.id, { next_action_date: value || null });
     await refreshApplications();
+  }
+
+  function toggleLocationSelection(id: string) {
+    setSelectedLocationIds((current) => {
+      if (current.includes(id)) return current.filter((item) => item !== id);
+      if (current.length >= 10) {
+        setError("每条投递最多选择 10 个地址标签。");
+        return current;
+      }
+      return [...current, id];
+    });
+  }
+
+  function toggleLocationFilter(id: string) {
+    setLocationFilterIds((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]);
+  }
+
+  async function handleCreateLocationTag() {
+    const label = newLocationLabel.trim();
+    if (!label) return;
+    const duplicate = locationTags.find((tag) => tag.label.localeCompare(label, undefined, { sensitivity: "accent" }) === 0);
+    if (duplicate) {
+      if (!selectedLocationIds.includes(duplicate.id)) toggleLocationSelection(duplicate.id);
+      setNewLocationLabel("");
+      return;
+    }
+    try {
+      const created = await createLocationTag(supabase, label);
+      setLocationTags((current) => [...current, created].sort((a, b) => a.label.localeCompare(b.label, "zh-CN")));
+      setSelectedLocationIds((current) => [...current, created.id]);
+      setNewLocationLabel("");
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "地址标签创建失败");
+    }
+  }
+
+  async function handleRenameLocationTag(tag: LocationTag) {
+    const label = window.prompt("新的地址标签名称", tag.label)?.trim();
+    if (!label || label === tag.label) return;
+    try {
+      const renamed = await renameLocationTag(supabase, tag.id, label);
+      setLocationTags((current) => current.map((item) => item.id === tag.id ? renamed : item));
+      await refreshApplications();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "地址标签重命名失败");
+    }
+  }
+
+  async function handleDeleteLocationTag(tag: LocationTag) {
+    const count = locationUsage[tag.id] ?? 0;
+    if (!window.confirm(count > 0 ? `该标签用于 ${count} 条投递。删除会解除关联，但不会删除投递。继续吗？` : `永久删除地址标签“${tag.label}”？`)) return;
+    try {
+      await deleteLocationTag(supabase, tag.id);
+      setSelectedLocationIds((current) => current.filter((id) => id !== tag.id));
+      setLocationFilterIds((current) => current.filter((id) => id !== tag.id));
+      await refreshApplications();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "地址标签删除失败");
+    }
+  }
+
+  function beginEditTask(task: FollowUpTask) {
+    setEditingTaskId(task.id);
+    setTaskTitle(task.title);
+    setTaskNotes(task.notes ?? "");
+    setTaskDueDate(task.due_date);
+  }
+
+  function resetTaskEditor(date = todayISO()) {
+    setEditingTaskId(null);
+    setTaskTitle("");
+    setTaskNotes("");
+    setTaskDueDate(date);
+  }
+
+  async function handleSaveTask() {
+    if (!selected || !taskTitle.trim() || !taskDueDate) return;
+    const payload: FollowUpTaskInput = {
+      application_id: selected.id,
+      title: taskTitle.trim(),
+      notes: taskNotes.trim() || null,
+      due_date: taskDueDate,
+    };
+    try {
+      if (editingTaskId) await updateFollowUpTask(supabase, editingTaskId, payload);
+      else await createFollowUpTask(supabase, payload);
+      resetTaskEditor();
+      await refreshApplications();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "待办保存失败");
+    }
+  }
+
+  async function handleToggleTask(task: FollowUpTask) {
+    try {
+      await setFollowUpTaskCompleted(supabase, task.id, task.completed_at === null);
+      await refreshApplications();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "待办更新失败");
+    }
+  }
+
+  async function handleDeleteTask(task: FollowUpTask) {
+    if (!window.confirm(`永久删除待办“${task.title}”？`)) return;
+    try {
+      await deleteFollowUpTask(supabase, task.id);
+      if (editingTaskId === task.id) resetTaskEditor();
+      await refreshApplications();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "待办删除失败");
+    }
+  }
+
+  function openCalendarTask(applicationId: string, taskId?: string) {
+    setSelectedId(applicationId);
+    if (!taskId) return;
+    const task = applications.flatMap((application) => application.follow_up_tasks ?? []).find((item) => item.id === taskId);
+    if (task) beginEditTask(task);
   }
 
   async function handleAddEvent() {
@@ -523,10 +667,10 @@ export function App() {
         {error && <p className="error banner">{error}</p>}
 
         <section className="metric-grid" aria-label="metrics">
-          <article className="metric-card"><span>{T.total}</span><strong>{metrics.total}</strong></article>
+          <article className="metric-card"><span>待投递</span><strong>{metrics.todo}</strong></article>
+          <article className="metric-card"><span>{T.total}</span><strong>{metrics.submitted}</strong></article>
           <article className="metric-card"><span>{T.interviewing}</span><strong>{metrics.interview}</strong></article>
           <article className="metric-card"><span>Offer</span><strong>{metrics.offer}</strong></article>
-          <article className="metric-card urgent"><span>{T.follow}</span><strong>{metrics.follow}</strong></article>
         </section>
 
         <section className="content-grid">
@@ -557,19 +701,37 @@ export function App() {
               ))}
             </div>
 
+            {locationTags.length > 0 && (
+              <div className="location-filter" aria-label="地址筛选（命中任意标签）">
+                <span>地址筛选</span>
+                {locationTags.map((tag) => (
+                  <button
+                    key={tag.id}
+                    className={locationFilterIds.includes(tag.id) ? "location-chip active" : "location-chip"}
+                    type="button"
+                    aria-pressed={locationFilterIds.includes(tag.id)}
+                    onClick={() => toggleLocationFilter(tag.id)}
+                  >
+                    {tag.label}
+                  </button>
+                ))}
+                {locationFilterIds.length > 0 && <button className="link-button compact" type="button" onClick={() => setLocationFilterIds([])}>清除</button>}
+              </div>
+            )}
+
             <div className="application-list">
               {filtered.map((application) => (
                 <button key={application.id} className={selected?.id === application.id ? "application-card active" : "application-card"} type="button" onClick={() => setSelectedId(application.id)}>
                   <div className="card-main">
                     <div className="card-title">
                       <h3>{application.company_name} {"\u00b7"} {application.position_name}</h3>
-                      <p>{application.city || T.cityEmpty} {"\u00b7"} {application.channel || T.channelEmpty}</p>
+                      <p>{(application.locations ?? []).map((location) => location.label).join("、") || application.city || T.cityEmpty} {"\u00b7"} {application.channel || T.channelEmpty}</p>
                     </div>
                     <span className={`badge ${application.status}`}>{getStatus(application.status).label}</span>
                   </div>
                   <div className="card-meta">
                     <span>{isNotApplied(application) ? T.notApplied : `${formatDate(application.applied_date)} ${T.applied}`}</span>
-                    <span>{application.next_action_date ? `${formatDate(application.next_action_date)} ${T.follow}` : T.noFollow}</span>
+                    <span>{getNextPendingTaskDate(application) ? `${formatDate(getNextPendingTaskDate(application))} ${T.follow}` : T.noFollow}</span>
                     <span className={`badge priority-${application.priority}`}>{T.priorityPrefix} {getPriorityLabel(application.priority)}</span>
                   </div>
                 </button>
@@ -582,18 +744,22 @@ export function App() {
               <article className="detail-view">
                 <div className="detail-header">
                   <div>
-                    <p className="eyebrow">{selected.city || T.cityEmpty} {"\u00b7"} {getStatus(selected.status).label}</p>
+                    <p className="eyebrow">{(selected.locations ?? []).map((location) => location.label).join("、") || selected.city || T.cityEmpty} {"\u00b7"} {getStatus(selected.status).label}</p>
                     <h3>{selected.company_name} {"\u00b7"} {selected.position_name}</h3>
                   </div>
                   <div className="detail-actions">
                     <button className="icon-button" type="button" onClick={() => openEditDialog(selected)} title={T.edit}>{"\u270e"}</button>
-                    <button className="icon-button danger" type="button" onClick={() => deleteApplication(supabase, selected.id).then(refreshApplications)} title={T.delete}>{"\u00d7"}</button>
+                    <button className="icon-button danger" type="button" onClick={() => {
+                      if (window.confirm(`永久删除 ${selected.company_name} · ${selected.position_name} 及其时间线和待办？个人地址标签会保留。`)) {
+                        deleteApplication(supabase, selected.id).then(refreshApplications).catch((caught) => setError(caught instanceof Error ? caught.message : "删除失败"));
+                      }
+                    }} title={T.delete}>{"\u00d7"}</button>
                   </div>
                 </div>
 
                 <div className="detail-status-row">
                   <label>{T.currentStatus}<select value={selected.status} onChange={(event) => handleStatusChange(selected, event.target.value)}>{APPLICATION_STATUSES.map((status) => <option key={status.id} value={status.id}>{status.label}</option>)}</select></label>
-                  <label>{T.nextFollow}<input type="date" value={selected.next_action_date ?? ""} onChange={(event) => handleNextActionChange(selected, event.target.value)} /></label>
+                  <div className="location-summary"><span>地址标签</span><strong>{(selected.locations ?? []).map((location) => location.label).join("、") || "未设置"}</strong></div>
                 </div>
 
                 <dl className="info-grid">
@@ -604,6 +770,28 @@ export function App() {
                 </dl>
 
                 {selected.notes && <div className="notes-wrap">{selected.notes}</div>}
+
+                <section className="task-section">
+                  <div className="section-title"><h4>待跟进事项</h4><span>{(selected.follow_up_tasks ?? []).filter((task) => task.completed_at === null).length} 项未完成</span></div>
+                  <div className="task-composer">
+                    <input required placeholder="待办标题" value={taskTitle} onChange={(event) => setTaskTitle(event.target.value)} />
+                    <input required type="date" value={taskDueDate} onChange={(event) => setTaskDueDate(event.target.value)} />
+                    <input placeholder="备注（可选）" value={taskNotes} onChange={(event) => setTaskNotes(event.target.value)} />
+                    <button className="secondary-button" type="button" onClick={handleSaveTask}>{editingTaskId ? "保存修改" : "新建待办"}</button>
+                    {editingTaskId && <button className="ghost-button" type="button" onClick={() => resetTaskEditor()}>取消编辑</button>}
+                  </div>
+                  <div className="task-list">
+                    {(selected.follow_up_tasks ?? []).map((task) => (
+                      <article className={task.completed_at ? "task-item completed" : "task-item"} key={task.id}>
+                        <button className="task-check" type="button" onClick={() => handleToggleTask(task)} title={task.completed_at ? "恢复" : "完成"}>{task.completed_at ? "✓" : "○"}</button>
+                        <div><strong>{task.title}</strong><p>{formatDate(task.due_date)}{task.notes ? ` · ${task.notes}` : ""}</p></div>
+                        <button className="mini-action" type="button" onClick={() => beginEditTask(task)}>编辑</button>
+                        <button className="mini-action danger" type="button" onClick={() => handleDeleteTask(task)}>删除</button>
+                      </article>
+                    ))}
+                    {!selected.follow_up_tasks?.length && <p className="muted-text">暂无待办，可从此处或日历创建。</p>}
+                  </div>
+                </section>
 
                 <section className="event-composer" aria-label="event composer">
                   <select value={eventType} onChange={(event) => setEventType(event.target.value as EventType)}>
@@ -666,9 +854,15 @@ export function App() {
               const muted = date.getMonth() !== calendarMonth.getMonth();
               return (
                 <div key={iso} className={`calendar-day ${muted ? "muted" : ""} ${iso === todayISO() ? "today" : ""}`}>
-                  <div className="calendar-date"><span>{date.getDate()}</span>{dayItems.length > 0 && <span className="calendar-count">{dayItems.length}</span>}</div>
+                  <div className="calendar-date">
+                    <span>{date.getDate()}</span>
+                    <span className="calendar-date-actions">
+                      {selected && <button className="calendar-add" type="button" title={`为 ${selected.company_name} 新建待办`} onClick={() => resetTaskEditor(iso)}>+待办</button>}
+                      {dayItems.length > 0 && <span className="calendar-count">{dayItems.length}</span>}
+                    </span>
+                  </div>
                   {dayItems.slice(0, 3).map((item, index) => (
-                    <button key={`${item.applicationId}-${index}`} className={`calendar-event ${item.type}`} type="button" onClick={() => setSelectedId(item.applicationId)}>
+                    <button key={`${item.applicationId}-${item.taskId ?? index}`} className={`calendar-event ${item.type}`} type="button" onClick={() => openCalendarTask(item.applicationId, item.taskId)}>
                       {item.label} {"\u00b7"} {item.title}
                     </button>
                   ))}
@@ -690,17 +884,37 @@ export function App() {
             <div className="form-grid">
               <label>{T.company}<input required value={input.company_name} onChange={(event) => setInput({ ...input, company_name: event.target.value })} /></label>
               <label>{T.position}<input required value={input.position_name} onChange={(event) => setInput({ ...input, position_name: event.target.value })} /></label>
-              <label>{T.city}<input value={input.city ?? ""} onChange={(event) => setInput({ ...input, city: event.target.value })} /></label>
               <label>{T.channel}<input value={input.channel ?? ""} placeholder={T.channelPlaceholder} onChange={(event) => setInput({ ...input, channel: event.target.value })} /></label>
               <label>{T.currentStatus}<select value={input.status} onChange={(event) => setInput({ ...input, status: event.target.value as ApplicationStatus, applied_date: event.target.value === "todo" ? null : input.applied_date || todayISO() })}>{APPLICATION_STATUSES.map((status) => <option key={status.id} value={status.id}>{status.label}</option>)}</select></label>
               <label>{T.priority}<select value={input.priority} onChange={(event) => setInput({ ...input, priority: event.target.value as Priority })}>{PRIORITIES.map((priority) => <option key={priority.id} value={priority.id}>{priority.label}</option>)}</select></label>
               <label>{T.appliedDate}<input type="date" disabled={input.status === "todo"} value={input.applied_date ?? ""} onChange={(event) => setInput({ ...input, applied_date: event.target.value })} /></label>
-              <label>{T.nextFollow}<input type="date" value={input.next_action_date ?? ""} onChange={(event) => setInput({ ...input, next_action_date: event.target.value })} /></label>
               <label>{T.jobUrl}<input type="url" value={input.job_url ?? ""} onChange={(event) => setInput({ ...input, job_url: event.target.value })} /></label>
               <label>{T.salary}<input value={input.salary_range ?? ""} onChange={(event) => setInput({ ...input, salary_range: event.target.value })} /></label>
               <label>{T.resume}<input value={input.resume_version ?? ""} onChange={(event) => setInput({ ...input, resume_version: event.target.value })} /></label>
               <label>{T.contact}<input value={input.contact_name ?? ""} onChange={(event) => setInput({ ...input, contact_name: event.target.value })} /></label>
             </div>
+            <section className="location-editor">
+              <div className="section-title"><h4>地址标签</h4><span>最多选择 10 个</span></div>
+              <div className="location-editor-chips">
+                {locationTags.map((tag) => (
+                  <div className="managed-location" key={tag.id}>
+                    <button
+                      className={selectedLocationIds.includes(tag.id) ? "location-chip active" : "location-chip"}
+                      type="button"
+                      aria-pressed={selectedLocationIds.includes(tag.id)}
+                      onClick={() => toggleLocationSelection(tag.id)}
+                    >{tag.label}</button>
+                    <button className="tag-action" type="button" onClick={() => handleRenameLocationTag(tag)} title="重命名">✎</button>
+                    <button className="tag-action danger" type="button" onClick={() => handleDeleteLocationTag(tag)} title={`删除（影响 ${locationUsage[tag.id] ?? 0} 条）`}>×</button>
+                  </div>
+                ))}
+              </div>
+              <div className="new-location-row">
+                <input maxLength={32} placeholder="创建个人地址标签" value={newLocationLabel} onChange={(event) => setNewLocationLabel(event.target.value)} />
+                <button className="secondary-button" type="button" onClick={handleCreateLocationTag}>创建并选择</button>
+              </div>
+              {input.city && <p className="muted-text">旧城市字段（只读兼容）：{input.city}</p>}
+            </section>
             <label className="wide-label">{T.notes}<textarea rows={4} value={input.notes ?? ""} onChange={(event) => setInput({ ...input, notes: event.target.value })} /></label>
             <div className="dialog-footer">
               <button className="ghost-button" type="button" onClick={() => setIsDialogOpen(false)}>{T.cancel}</button>
