@@ -6,6 +6,7 @@ export const APPLICATION_STATUSES = [
   { id: "interview1", label: "\u4e00\u9762", closed: false },
   { id: "interview2", label: "\u4e8c\u9762", closed: false },
   { id: "interview3", label: "\u4e09\u9762", closed: false },
+  { id: "manager", label: "\u4e3b\u7ba1\u9762", closed: false },
   { id: "hr", label: "HR \u9762", closed: false },
   { id: "offer", label: "Offer", closed: true },
   { id: "rejected", label: "\u5df2\u62d2\u7edd", closed: true },
@@ -44,5 +45,5 @@ export function getEventTypeLabel(id: string) {
 }
 
 export function isInterviewStatus(status: string) {
-  return ["interview1", "interview2", "interview3", "hr"].includes(status);
+  return ["interview1", "interview2", "interview3", "manager", "hr"].includes(status);
 }
