@@ -6,11 +6,12 @@ import { colors, fonts, radius, spacing } from "../theme";
 import {
   type Application,
   calculateMetrics,
+  isInterviewStatus,
   listApplications,
-  getStatus,
 } from "@job-tracker/core";
 import { supabase } from "../supabaseClient";
 import StatsBar from "../components/StatsBar";
+import type { QuickFilterKey } from "../components/StatsBar";
 import SearchBar from "../components/SearchBar";
 import ApplicationCard from "../components/ApplicationCard";
 import FilterSheet from "../components/FilterSheet";
@@ -35,7 +36,7 @@ export default function DashboardScreen({ navigation }: Props) {
   const [refreshing, setRefreshing] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
   const [filters, setFilters] = useState<FilterState>({ status: null, priority: null, city: null, channel: null });
-  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [quickFilter, setQuickFilter] = useState<QuickFilterKey>("submitted");
 
   const load = useCallback(async () => {
     try {
@@ -81,9 +82,12 @@ export default function DashboardScreen({ navigation }: Props) {
           (a.channel ?? "").toLowerCase().includes(q),
       );
     }
-    if (statusFilter) {
-      result = result.filter((a) => a.status === statusFilter);
-    }
+    result = result.filter((application) => {
+      if (quickFilter === "todo") return application.status === "todo";
+      if (quickFilter === "submitted") return application.status !== "todo";
+      if (quickFilter === "interview") return isInterviewStatus(application.status);
+      return application.status === "offer";
+    });
     if (filters.status) {
       result = result.filter((a) => a.status === filters.status);
     }
@@ -97,14 +101,7 @@ export default function DashboardScreen({ navigation }: Props) {
       result = result.filter((a) => a.channel === filters.channel);
     }
     return result;
-  }, [applications, search, statusFilter, filters]);
-
-  const handleStatPress = (key: string) => {
-    if (key === "total") { setStatusFilter(null); return; }
-    if (key === "interview") { setStatusFilter("interview1"); return; }
-    if (key === "offer") { setStatusFilter("offer"); return; }
-    if (key === "follow") { setStatusFilter("todo"); return; }
-  };
+  }, [applications, search, quickFilter, filters]);
 
   return (
     <SafeAreaView style={styles.shell} edges={["top"]}>
@@ -124,18 +121,10 @@ export default function DashboardScreen({ navigation }: Props) {
         keyExtractor={(item) => item.id}
         ListHeaderComponent={
           <View style={styles.listHeader}>
-            <StatsBar metrics={metrics} onPress={handleStatPress} />
+            <StatsBar metrics={metrics} activeKey={quickFilter} onPress={setQuickFilter} />
             <View style={styles.searchRow}>
               <SearchBar value={search} onChangeText={setSearch} onFilterPress={() => setFilterVisible(true)} />
             </View>
-            {statusFilter && (
-              <View style={styles.activeFilterRow}>
-                <Text style={styles.activeFilterText}>筛选: {getStatus(statusFilter).label}</Text>
-                <TouchableOpacity onPress={() => setStatusFilter(null)}>
-                  <Ionicons name="close-circle" size={18} color={colors.primary} />
-                </TouchableOpacity>
-              </View>
-            )}
           </View>
         }
         renderItem={({ item }) => (
@@ -186,8 +175,6 @@ const styles = StyleSheet.create({
   headerTitle: { color: colors.headerText, fontSize: 22, fontWeight: fonts.bold, marginTop: 2 },
   listHeader: { padding: spacing.md, gap: spacing.md },
   searchRow: { marginTop: spacing.xs },
-  activeFilterRow: { flexDirection: "row", alignItems: "center", gap: spacing.sm },
-  activeFilterText: { fontSize: 13, color: colors.primaryText, fontWeight: fonts.semibold },
   listContent: { paddingBottom: 80 },
   cardWrap: { paddingHorizontal: spacing.md, paddingBottom: spacing.sm },
   fab: {
