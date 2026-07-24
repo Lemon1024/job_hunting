@@ -4,7 +4,7 @@
     "slug": "job-hunting-tracker",
     "version": "0.1.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "assetBundlePatterns": [
       "assets/**/*",
       "assets/*"
@@ -36,7 +36,14 @@
           }
         }
       ],
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "允许求职投递助手选择一张图片作为个人头像。",
+          "cameraPermission": false
+        }
+      ]
     ]
   }
 }

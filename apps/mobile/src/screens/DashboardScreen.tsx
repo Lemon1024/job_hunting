@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Alert, FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Modal, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fonts, radius, spacing } from "../theme";
 import {
   type Application,
   calculateMetrics,
+  getProfile,
+  getReminderTasks,
   isInterviewStatus,
   listApplications,
   matchesLocationFilter,
+  todayISO,
 } from "@job-tracker/core";
 import { supabase } from "../supabaseClient";
 import StatsBar from "../components/StatsBar";
@@ -36,6 +39,9 @@ export default function DashboardScreen({ navigation }: Props) {
   const [search, setSearch] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
+  const [reminderVisible, setReminderVisible] = useState(false);
+  const [remindersEnabled, setRemindersEnabled] = useState(true);
+  const [reminderLeadDays, setReminderLeadDays] = useState(0);
   const [filters, setFilters] = useState<FilterState>({ status: null, priority: null, locationIds: [], channel: null });
   const [quickFilter, setQuickFilter] = useState<QuickFilterKey>("submitted");
 
@@ -43,6 +49,10 @@ export default function DashboardScreen({ navigation }: Props) {
     try {
       const data = await listApplications(supabase as never);
       setApplications(data);
+      getProfile(supabase as never).then((profile) => {
+        setRemindersEnabled(profile.in_app_reminders_enabled);
+        setReminderLeadDays(profile.reminder_lead_days);
+      }).catch(() => undefined);
     } catch (e) {
       Alert.alert("加载失败", e instanceof Error ? e.message : "请检查网络");
     }
@@ -61,6 +71,9 @@ export default function DashboardScreen({ navigation }: Props) {
   }
 
   const metrics = useMemo(() => calculateMetrics(applications), [applications]);
+  const reminderTasks = useMemo(() => remindersEnabled
+    ? getReminderTasks(applications.flatMap((application) => application.follow_up_tasks ?? []), todayISO(), reminderLeadDays)
+    : [], [applications, reminderLeadDays, remindersEnabled]);
 
   const locations = useMemo(() => {
     const byId = new Map(applications.flatMap((application) => application.locations ?? []).map((tag) => [tag.id, tag]));
@@ -111,8 +124,14 @@ export default function DashboardScreen({ navigation }: Props) {
           <Text style={styles.headerEyebrow}>JOB APPLICATION TRACKER</Text>
           <Text style={styles.headerTitle}>投递工作台</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          accessibilityRole="button"
+          accessibilityLabel={`应用内提醒 ${reminderTasks.length}`}
+          style={styles.notificationButton}
+          onPress={() => setReminderVisible(true)}
+        >
           <Ionicons name="notifications-outline" size={22} color={colors.headerText} />
+          {reminderTasks.length > 0 ? <View style={styles.notificationBadge}><Text style={styles.notificationBadgeText}>{Math.min(reminderTasks.length, 99)}</Text></View> : null}
         </TouchableOpacity>
       </View>
 
@@ -157,6 +176,46 @@ export default function DashboardScreen({ navigation }: Props) {
         locations={locations}
         channels={channels}
       />
+
+      <Modal visible={reminderVisible} transparent animationType="slide" onRequestClose={() => setReminderVisible(false)}>
+        <View style={styles.reminderBackdrop}>
+          <View style={styles.reminderSheet}>
+            <View style={styles.reminderHeader}>
+              <View>
+                <Text style={styles.reminderTitle}>应用内提醒</Text>
+                <Text style={styles.reminderSubtitle}>提前 {reminderLeadDays} 天 · {reminderTasks.length} 项</Text>
+              </View>
+              <TouchableOpacity onPress={() => setReminderVisible(false)}><Ionicons name="close" size={22} color={colors.text} /></TouchableOpacity>
+            </View>
+            <ScrollView contentContainerStyle={styles.reminderList}>
+              {!remindersEnabled ? <Text style={styles.reminderEmpty}>应用内提醒已在“我的”中关闭。</Text> : null}
+              {remindersEnabled && reminderTasks.length === 0 ? <Text style={styles.reminderEmpty}>暂无即将到期或已逾期待办。</Text> : null}
+              {reminderTasks.map((task) => {
+                const application = applications.find((item) => item.id === task.application_id);
+                const overdue = task.due_date < todayISO();
+                if (!application) return null;
+                return (
+                  <TouchableOpacity
+                    key={task.id}
+                    style={styles.reminderItem}
+                    onPress={() => {
+                      setReminderVisible(false);
+                      navigation.navigate("ApplicationDetail", { applicationId: application.id, application });
+                    }}
+                  >
+                    <View style={[styles.reminderIndicator, { backgroundColor: overdue ? colors.danger : colors.warning }]} />
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.reminderItemTitle}>{task.title}</Text>
+                      <Text style={styles.reminderItemMeta}>{application.company_name} · {task.due_date}</Text>
+                    </View>
+                    <Text style={[styles.reminderState, overdue && styles.reminderStateOverdue]}>{overdue ? "已逾期" : "即将到期"}</Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -173,6 +232,9 @@ const styles = StyleSheet.create({
   },
   headerEyebrow: { color: colors.headerMuted, fontSize: 11, fontWeight: fonts.bold, letterSpacing: 1 },
   headerTitle: { color: colors.headerText, fontSize: 22, fontWeight: fonts.bold, marginTop: 2 },
+  notificationButton: { padding: spacing.sm },
+  notificationBadge: { position: "absolute", top: 1, right: 0, minWidth: 17, height: 17, borderRadius: 9, paddingHorizontal: 3, alignItems: "center", justifyContent: "center", backgroundColor: colors.danger },
+  notificationBadgeText: { color: "#ffffff", fontSize: 9, fontWeight: fonts.bold },
   listHeader: { padding: spacing.md, gap: spacing.md },
   searchRow: { marginTop: spacing.xs },
   listContent: { paddingBottom: 80 },
@@ -193,4 +255,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
   },
+  reminderBackdrop: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.45)" },
+  reminderSheet: { maxHeight: "78%", minHeight: "35%", backgroundColor: colors.surface, borderTopLeftRadius: radius.xl, borderTopRightRadius: radius.xl },
+  reminderHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: spacing.lg, borderBottomWidth: 1, borderBottomColor: colors.border },
+  reminderTitle: { color: colors.text, fontSize: 18, fontWeight: fonts.bold },
+  reminderSubtitle: { color: colors.muted, fontSize: 11, marginTop: 2 },
+  reminderList: { padding: spacing.lg, gap: spacing.sm, paddingBottom: spacing.xxl * 2 },
+  reminderEmpty: { color: colors.muted, textAlign: "center", paddingVertical: spacing.xxl },
+  reminderItem: { flexDirection: "row", alignItems: "center", gap: spacing.md, padding: spacing.md, borderWidth: 1, borderColor: colors.border, borderRadius: radius.md, backgroundColor: colors.bg },
+  reminderIndicator: { width: 7, height: 36, borderRadius: 4 },
+  reminderItemTitle: { color: colors.text, fontSize: 14, fontWeight: fonts.bold },
+  reminderItemMeta: { color: colors.muted, fontSize: 11, marginTop: 2 },
+  reminderState: { color: colors.warning, fontSize: 11, fontWeight: fonts.bold },
+  reminderStateOverdue: { color: colors.dangerText },
 });

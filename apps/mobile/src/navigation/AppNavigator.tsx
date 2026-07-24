@@ -38,7 +38,7 @@ function MainTabs() {
           return <Ionicons name={icons[route.name] ?? "ellipse"} size={size} color={color} />;
         },
         tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.muted,
+        tabBarInactiveTintColor: colors.muted as string,
         tabBarStyle: {
           backgroundColor: colors.surface,
           borderTopColor: colors.border,
