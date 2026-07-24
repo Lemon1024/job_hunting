@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Pressable as TouchableOpacity, StyleSheet, Text, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import type { LocationTag } from "@job-tracker/core";
 import { colors, fonts, radius, spacing } from "../theme";

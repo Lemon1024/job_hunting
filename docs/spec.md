@@ -1,6 +1,6 @@
 # Spec：秋招投递助手（Job Hunting Tracker）
 
-> 文档状态：已批准  
+> 文档状态：已实现，待数据库部署与人工验收
 > 基线版本：v0.2.0  
 > 最后核验日期：2026-07-25  
 > 适用范围：整个 `job_hunting` pnpm monorepo
@@ -348,25 +348,24 @@ function normalizeInput(input: ApplicationInput): ApplicationInput {
 
 ### 9.1 当前事实
 
-v0.1 没有项目级 lint、单元测试、组件测试、端到端测试或 CI 配置。Expo 的传递依赖中出现 Jest 不代表项目已经配置 Jest。
+v0.2 已获批并建立以下自动化验证入口：
 
-在自动化测试框架获批并安装前：
+1. `pnpm.cmd typecheck`：全仓 TypeScript 静态验证。
+2. `pnpm.cmd test`：运行 `packages/core` Vitest、桌面端 Vitest 与移动端 Jest/React Native Testing Library 测试。
+3. `pnpm.cmd --filter @job-tracker/desktop build:check`：桌面 Web 类型检查与 Vite 生产构建。
+4. `..\..\node_modules\.bin\expo.CMD export --platform android --output-dir ..\..\dist\mobile-android`：从 `apps/mobile` 执行 Android JavaScript bundle 冒烟。
+5. 平台与双账号数据隔离仍使用第 10 节和第 15.9 节的人工场景验收。
 
-1. `pnpm.cmd typecheck` 是全仓静态验证入口。
-2. `pnpm.cmd --filter @job-tracker/desktop build:check` 是桌面 Web 表面的类型与构建验证入口。
-3. 平台功能使用第 10 节的人工场景验收。
-4. 任何新增测试框架、覆盖率阈值或 CI workflow 都属于“Ask first”。
+项目仍没有 lint/formatter、覆盖率阈值、端到端测试或 CI workflow；新增这些能力继续属于“Ask first”。
 
-### 9.2 目标测试分层
+### 9.2 测试分层
 
-后续建立测试体系时应覆盖：
-
-- 单元测试：`packages/core` 的日期、逾期、指标、日历映射、状态查找和导出转义。
-- 服务集成测试：Supabase CRUD、认证缺失、RLS 用户隔离和事件归属约束。
-- 组件测试：表单必填、筛选、加载/错误/空状态和导航参数。
-- 端到端测试：注册登录、创建申请、变更状态、跨端读取、导入导出和退出。
-
-框架选型必须兼顾 Vite、React Native/Expo 和 Supabase；在选型前不得把某个框架写成既定依赖。
+- `packages/core`：覆盖 `todo`/`submitted`/面试指标、`manager`、地址任意匹配、待办到期/逾期/完成和日历映射。
+- 移动端：覆盖顶部卡片顺序、激活态与回调、多地址选择和创建、多待办创建/完成、主题解析、密码校验及反馈邮件编码。
+- 桌面端：覆盖地址使用量和下一条未完成待办日期等工作台纯逻辑。
+- `apps/desktop/src/rls.integration.test.ts` 提供真实 Supabase 双账号集成入口；配置 `.env.example` 中六个 `SUPABASE_TEST_*` 变量后随桌面测试运行，覆盖关系写入、任务修改、私有头像、级联删除和标签保留。当前环境未配置这些凭据，因此该用例明确跳过。
+- 尚待真实 Supabase 环境执行：旧字段回填，以及上述双账号 RLS 集成用例。
+- 尚待端到端覆盖：注册登录、跨端刷新、导入导出和完整设置流程。
 
 ## 10. Manual Acceptance Scenarios
 
@@ -415,32 +414,40 @@ v0.1 没有项目级 lint、单元测试、组件测试、端到端测试或 CI 
 3. 模拟网络或 Supabase 请求失败，确认错误可见，已有本地界面数据不被错误响应覆盖。
 4. 缺失环境变量时，确认问题被识别为配置错误，而不是静默连接到其他项目。
 
+### 10.7 v0.2 双端交叉验收
+
+1. 以同一账号分别登录移动端和桌面端；在一端创建、重命名、选择和删除地址标签，刷新另一端并确认结果一致。
+2. 为一条申请选择多个地址，验证搜索和多地址筛选采用“命中任意标签”，并确认单条申请无法超过 10 个标签。
+3. 创建多个待办，分别编辑、完成、恢复和删除；从申请详情、日历日期和待办列表进入编辑，并在另一端刷新确认同步。
+4. 删除申请前确认二次提示；删除后事件、地址关联和待办消失，但个人地址标签保留。
+5. 移动端依次验证跟随系统、浅色和深色主题，覆盖登录、投递、详情、编辑、日历、弹窗、导航和“我的”。
+6. 验证真实邮箱、昵称、私有头像、密码二次确认、提醒开关和提前天数；反馈邮件应预填版本、构建和平台。
+7. 用两个账号验证无法读取、更新或关联彼此的申请、标签、待办与头像。
+8. 验证合法/非法 JSON 导入、JSON/Excel 导出及失败状态不会破坏已有数据。
+
 ## 11. Known Baseline Gaps
 
-### 11.1 当前验证失败
+### 11.1 当前验证结果
 
 2026-07-25 在 Windows PowerShell 中核验：
 
 ```powershell
 pnpm.cmd typecheck
+pnpm.cmd test
 pnpm.cmd --filter @job-tracker/desktop build:check
 ```
 
-两条命令当前均失败，已观察到的主要类别为：
+以上三条命令均通过；Android Expo export 和 `apps/mobile/android/gradlew.bat assembleDebug --no-daemon --console=plain` 原生构建也通过。原生构建仅报告 `NODE_ENV` 未设置提示和上游 Java 弃用警告，未出现编译错误。原有 workspace 包解析、React DOM 类型、移动导航类型和 Supabase `currentUser` 问题已清零。
 
-- 桌面端和移动端无法解析 workspace 包 `@job-tracker/core`。
-- 桌面端缺少 `react-dom/client` 类型声明，并出现由上游类型丢失引发的隐式 `any`。
-- 移动端导航 screen 参数类型不兼容。
-- 移动端使用了当前 Supabase Auth 类型中不存在的 `currentUser` 属性。
-
-这些是已知基线差距，不在本规格任务中修复。任何后续功能变更前，应单独立项恢复类型检查和构建验证。
+自动化测试合计 18 项：核心 6 项、移动端 10 项、桌面端 2 项。
 
 ### 11.2 质量基础设施缺失
 
 - 没有 lint/formatter 命令。
-- 没有项目级自动化测试或覆盖率目标。
+- 没有覆盖率目标、端到端测试或真实设备组件测试。
 - 没有 CI workflow。
-- 没有可验证的数据库迁移执行与回滚命令。
+- 当前环境没有 Supabase CLI、Docker 或测试项目授权，因此迁移尚未部署，回填和双账号 RLS 尚未运行验证。
+- `pnpm.cmd audit --prod` 报告 41 条上游公告（2 critical、26 high、10 moderate、3 low），主要来自 Expo/React Native 工具链传递依赖；依赖升级需要单独审批，发布前必须处置或完成风险接受。
 
 ## 12. Boundaries
 

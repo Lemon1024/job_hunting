@@ -180,11 +180,11 @@ export default function ProfileScreen() {
 
   async function sendFeedback() {
     const url = buildFeedbackMailto({ version, build, platform: Platform.OS });
-    if (!(await Linking.canOpenURL(url))) {
+    try {
+      await Linking.openURL(url);
+    } catch {
       Alert.alert("无法打开邮件应用", "请手动发送邮件到 418154155@qq.com。", [{ text: "知道了" }]);
-      return;
     }
-    await Linking.openURL(url);
   }
 
   return (

@@ -74,6 +74,8 @@ language plpgsql
 set search_path = public
 as $$
 begin
+  -- Serialize concurrent inserts for one application so this count cannot race.
+  perform pg_advisory_xact_lock(hashtextextended(new.application_id::text, 0));
   if (
     select count(*)
     from public.application_location_tags existing
@@ -221,14 +223,14 @@ $$;
 grant execute on function public.set_application_locations(uuid, uuid[]) to authenticated;
 
 insert into public.location_tags (user_id, label)
-select distinct application.user_id, btrim(application.city)
+select distinct application.user_id, left(btrim(application.city), 32)
 from public.applications application
 where application.city is not null
   and btrim(application.city) <> ''
   and not exists (
     select 1 from public.location_tags tag
     where tag.user_id = application.user_id
-      and lower(tag.label) = lower(btrim(application.city))
+      and lower(tag.label) = lower(left(btrim(application.city), 32))
   );
 
 insert into public.application_location_tags (application_id, location_tag_id, user_id)
@@ -236,7 +238,7 @@ select application.id, tag.id, application.user_id
 from public.applications application
 join public.location_tags tag
   on tag.user_id = application.user_id
- and lower(tag.label) = lower(btrim(application.city))
+ and lower(tag.label) = lower(left(btrim(application.city), 32))
 where application.city is not null
   and btrim(application.city) <> ''
 on conflict do nothing;
@@ -245,7 +247,7 @@ insert into public.follow_up_tasks (user_id, application_id, title, due_date)
 select
   application.user_id,
   application.id,
-  '跟进：' || application.company_name || ' · ' || application.position_name,
+  left('跟进：' || application.company_name || ' · ' || application.position_name, 200),
   application.next_action_date
 from public.applications application
 where application.next_action_date is not null

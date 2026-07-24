@@ -102,6 +102,10 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
       if (!selectedLocationIds.includes(existingTag.id)) toggleLocation(existingTag.id);
       return;
     }
+    if (selectedLocationIds.length >= 10) {
+      Alert.alert("最多选择 10 个地址", "请先取消一个已选地址，再创建并选择新标签。");
+      return;
+    }
     try {
       const created = await createLocationTag(supabase as never, label);
       setLocationTags((current) => [...current, created].sort((a, b) => a.label.localeCompare(b.label, "zh-CN")));

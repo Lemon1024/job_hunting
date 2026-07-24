@@ -387,11 +387,6 @@ export function App() {
     await refreshApplications();
   }
 
-  async function handleNextActionChange(application: Application, value: string) {
-    await updateApplication(supabase, application.id, { next_action_date: value || null });
-    await refreshApplications();
-  }
-
   function toggleLocationSelection(id: string) {
     setSelectedLocationIds((current) => {
       if (current.includes(id)) return current.filter((item) => item !== id);
@@ -414,6 +409,10 @@ export function App() {
     if (duplicate) {
       if (!selectedLocationIds.includes(duplicate.id)) toggleLocationSelection(duplicate.id);
       setNewLocationLabel("");
+      return;
+    }
+    if (selectedLocationIds.length >= 10) {
+      setError("每条投递最多选择 10 个地址标签；请先取消一个已选标签。");
       return;
     }
     try {
