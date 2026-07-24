@@ -8,10 +8,11 @@ import AddApplicationScreen from "../screens/AddApplicationScreen";
 import ApplicationDetailScreen from "../screens/ApplicationDetailScreen";
 import CalendarScreen from "../screens/CalendarScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import type { DashboardStackParamList, MainTabParamList, RootStackParamList } from "./types";
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
-const DashStack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<MainTabParamList>();
+const DashStack = createNativeStackNavigator<DashboardStackParamList>();
 
 function DashboardStack() {
   return (

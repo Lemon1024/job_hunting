@@ -18,10 +18,11 @@ import StatusBadge from "../components/StatusBadge";
 import PriorityBadge from "../components/PriorityBadge";
 import TimelineItem from "../components/TimelineItem";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { DashboardStackParamList } from "../navigation/types";
 
 type Props = {
-  navigation: NativeStackNavigationProp<any>;
-  route: { params: { application: Application } };
+  navigation: NativeStackNavigationProp<DashboardStackParamList, "ApplicationDetail">;
+  route: { params: DashboardStackParamList["ApplicationDetail"] };
 };
 
 export default function ApplicationDetailScreen({ navigation, route }: Props) {

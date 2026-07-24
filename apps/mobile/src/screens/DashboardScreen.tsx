@@ -16,9 +16,10 @@ import ApplicationCard from "../components/ApplicationCard";
 import FilterSheet from "../components/FilterSheet";
 import EmptyState from "../components/EmptyState";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { DashboardStackParamList } from "../navigation/types";
 
 type Props = {
-  navigation: NativeStackNavigationProp<any>;
+  navigation: NativeStackNavigationProp<DashboardStackParamList, "DashboardMain">;
 };
 
 interface FilterState {

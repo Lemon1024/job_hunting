@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -5,7 +6,11 @@ import { colors, fonts, radius, spacing } from "../theme";
 import { supabase } from "../supabaseClient";
 
 export default function ProfileScreen() {
-  const user = supabase.auth.currentUser;
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? null));
+  }, []);
 
   return (
     <SafeAreaView style={styles.shell} edges={["top"]}>
@@ -19,7 +24,7 @@ export default function ProfileScreen() {
         <View style={styles.avatar}>
           <Ionicons name="person" size={32} color={colors.primary} />
         </View>
-        <Text style={styles.email}>{user?.email ?? "未登录"}</Text>
+        <Text style={styles.email}>{email ?? "未登录"}</Text>
       </View>
 
       {/* Settings */}

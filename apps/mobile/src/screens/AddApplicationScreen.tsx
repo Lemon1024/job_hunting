@@ -27,10 +27,11 @@ import {
 import { supabase } from "../supabaseClient";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import type { DashboardStackParamList } from "../navigation/types";
 
 type Props = {
-  navigation: NativeStackNavigationProp<any>;
-  route: { params?: { application?: Application; mode?: "edit" } };
+  navigation: NativeStackNavigationProp<DashboardStackParamList, "AddApplication">;
+  route: { params?: DashboardStackParamList["AddApplication"] };
 };
 
 const PRIORITIES = ["high", "medium", "low"] as const;
@@ -195,7 +196,7 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
       {/* City picker modal */}
       <PickerModal visible={showCityPicker} items={CITIES} selected={city} onSelect={(v) => { setCity(v); setShowCityPicker(false); }} onClose={() => setShowCityPicker(false)} />
       <PickerModal visible={showChannelPicker} items={CHANNELS} selected={channel} onSelect={(v) => { setChannel(v); setShowChannelPicker(false); }} onClose={() => setShowChannelPicker(false)} />
-      <PickerModal visible={showStatusPicker} items={APPLICATION_STATUSES.map((s) => s.id)} labels={APPLICATION_STATUSES.map((s) => s.label)} selected={status} onSelect={(v) => { setStatus(v); setShowStatusPicker(false); }} onClose={() => setShowStatusPicker(false)} />
+      <PickerModal visible={showStatusPicker} items={APPLICATION_STATUSES.map((s) => s.id)} labels={APPLICATION_STATUSES.map((s) => s.label)} selected={status} onSelect={(v) => { setStatus(v as ApplicationInput["status"]); setShowStatusPicker(false); }} onClose={() => setShowStatusPicker(false)} />
     </SafeAreaView>
   );
 }
