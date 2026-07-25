@@ -20,32 +20,40 @@ function dynamicColor(light: string, dark: string, androidToken: string): ColorV
   return light;
 }
 
+export const androidColorTokens = {
+  background: "?attr/colorBackground",
+  border: "?attr/textColorTertiary",
+  text: "?attr/textColorPrimary",
+  muted: "?attr/textColorSecondary",
+  highlight: "?attr/colorControlHighlight",
+} as const;
+
 export const colors = {
-  bg: dynamicColor("#f4f6f9", "#0b1118", "?android:attr/colorBackground"),
-  surface: dynamicColor("#ffffff", "#151e28", "?android:attr/colorBackground"),
-  border: dynamicColor("#d9e0e8", "#344252", "?android:attr/textColorTertiary"),
-  text: dynamicColor("#17202a", "#edf2f7", "?android:attr/textColorPrimary"),
-  muted: dynamicColor("#657385", "#9fb0c1", "?android:attr/textColorSecondary"),
+  bg: dynamicColor("#f4f6f9", "#0b1118", androidColorTokens.background),
+  surface: dynamicColor("#ffffff", "#151e28", androidColorTokens.background),
+  border: dynamicColor("#d9e0e8", "#344252", androidColorTokens.border),
+  text: dynamicColor("#17202a", "#edf2f7", androidColorTokens.text),
+  muted: dynamicColor("#657385", "#9fb0c1", androidColorTokens.muted),
   primary: "#0f8f83",
-  primaryLight: dynamicColor("#e7f4f2", "#153d3a", "?android:attr/colorControlHighlight"),
-  primaryText: dynamicColor("#0f4f49", "#73ddd2", "?android:attr/textColorPrimary"),
+  primaryLight: dynamicColor("#e7f4f2", "#153d3a", androidColorTokens.highlight),
+  primaryText: dynamicColor("#0f4f49", "#73ddd2", androidColorTokens.text),
   danger: "#dc2626",
-  dangerLight: dynamicColor("#fff1f3", "#3d1b22", "?android:attr/colorControlHighlight"),
-  dangerText: dynamicColor("#c01632", "#ff8fa3", "?android:attr/textColorPrimary"),
+  dangerLight: dynamicColor("#fff1f3", "#3d1b22", androidColorTokens.highlight),
+  dangerText: dynamicColor("#c01632", "#ff8fa3", androidColorTokens.text),
   warning: "#b45309",
-  warningLight: dynamicColor("#fff7ed", "#3b2a16", "?android:attr/colorControlHighlight"),
-  headerBg: dynamicColor("#17202a", "#080d13", "?android:attr/colorBackground"),
-  headerMuted: dynamicColor("#9fb0c1", "#8ea0b3", "?android:attr/textColorSecondary"),
-  headerText: dynamicColor("#ffffff", "#f8fafc", "?android:attr/textColorPrimary"),
-  tabInactive: dynamicColor("#eef2f7", "#202c38", "?android:attr/colorControlHighlight"),
-  tabInactiveText: dynamicColor("#475467", "#a9b8c8", "?android:attr/textColorSecondary"),
-  tabActive: dynamicColor("#d9f3ef", "#164a45", "?android:attr/colorControlHighlight"),
-  tabActiveText: dynamicColor("#0f766e", "#7be3d8", "?android:attr/textColorPrimary"),
+  warningLight: dynamicColor("#fff7ed", "#3b2a16", androidColorTokens.highlight),
+  headerBg: dynamicColor("#17202a", "#080d13", androidColorTokens.background),
+  headerMuted: dynamicColor("#9fb0c1", "#8ea0b3", androidColorTokens.muted),
+  headerText: dynamicColor("#ffffff", "#f8fafc", androidColorTokens.text),
+  tabInactive: dynamicColor("#eef2f7", "#202c38", androidColorTokens.highlight),
+  tabInactiveText: dynamicColor("#475467", "#a9b8c8", androidColorTokens.muted),
+  tabActive: dynamicColor("#d9f3ef", "#164a45", androidColorTokens.highlight),
+  tabActiveText: dynamicColor("#0f766e", "#7be3d8", androidColorTokens.text),
 };
 
 const themedStatus = (lightBg: string, lightText: string, darkBg: string, darkText: string) => ({
-  bg: dynamicColor(lightBg, darkBg, "?android:attr/colorControlHighlight"),
-  text: dynamicColor(lightText, darkText, "?android:attr/textColorPrimary"),
+  bg: dynamicColor(lightBg, darkBg, androidColorTokens.highlight),
+  text: dynamicColor(lightText, darkText, androidColorTokens.text),
 });
 
 export const statusColors: Record<string, { bg: ColorValue; text: ColorValue }> = {
