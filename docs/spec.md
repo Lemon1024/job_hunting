@@ -34,7 +34,7 @@
 - Tauri 桌面应用及其 Vite Web 开发表面。
 - Expo/React Native 移动应用，当前发布目标以 Android 为主。
 - `@job-tracker/core` 共享类型与业务逻辑。
-- `@job-tracker/ui` 共享设计令牌。
+- 桌面端和移动端各自维护平台设计令牌，共享业务约束仍集中在 `@job-tracker/core`。
 - Supabase Auth、PostgreSQL schema、RLS 和云端同步。
 - 桌面端数据导入、导出与本地标题设置。
 
@@ -43,7 +43,6 @@
 - 团队协作、消息通知、职位抓取、AI 匹配和招聘平台集成。
 - 离线写入队列及冲突合并。
 - iOS 发布承诺；配置允许 iOS 构建，但当前没有验收基线。
-- `legacy-static/` 的继续开发。该目录仅作为历史实现参考，不接受新功能。
 - v0.2 未明确授权的代码、依赖、数据库或 CI 修改。
 
 ## 2. Product Requirements
@@ -282,7 +281,7 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 
 ### 6.4 数据库变更
 
-当前 schema 来源为 `supabase/migrations/202605160001_initial_schema.sql`。仓库没有配置可验证的 Supabase CLI 脚本，因此本规格不虚构数据库执行命令。任何迁移应用方式、目标项目和回滚方案必须先获批准。
+当前 schema 依次来源于 `202605160001_initial_schema.sql`、`202607250001_add_manager_status.sql` 和 `202607250002_mobile_workbench.sql`，对应的 v0.2 回滚脚本位于 `supabase/rollbacks/202607250002_mobile_workbench.sql`。仓库没有配置可验证的 Supabase CLI 脚本，因此本规格不虚构数据库执行命令。任何迁移应用方式、目标项目和回滚方案必须先获批准。
 
 ## 7. Project Structure
 
@@ -298,9 +297,8 @@ apps/
     android/               跟踪的 Android 原生工程
 packages/
   core/src/                跨端类型、常量、CRUD、统计、日期和导出逻辑
-  ui/src/                  跨端设计令牌
 supabase/migrations/       PostgreSQL schema、trigger、索引与 RLS
-legacy-static/             历史静态 Web 参考；不继续开发
+supabase/rollbacks/        已提供的迁移回滚脚本
 docs/                      项目规范和后续架构决策文档
 ```
 
@@ -468,7 +466,6 @@ pnpm.cmd --filter @job-tracker/desktop build:check
 - 改变认证方式、会话存储、Supabase 项目或密钥策略。
 - 新增测试框架、lint/formatter、CI、发布、遥测或监控配置。
 - 改变公开类型、共享服务接口、导入导出格式或状态业务含义。
-- 扩大 `legacy-static` 的用途，或把历史代码重新引入生产路径。
 
 ### Never do
 
