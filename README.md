@@ -70,23 +70,79 @@ EAS 云构建还需要在对应 EAS 项目环境中配置相同的两个 `EXPO_P
 
 ## 常用命令
 
-| 命令 | 用途 |
-| --- | --- |
-| `pnpm.cmd install` | 安装全部 workspace 依赖 |
-| `pnpm.cmd typecheck` | 检查 core、桌面端和移动端 TypeScript |
-| `pnpm.cmd test` | 运行全部现有测试 |
-| `pnpm.cmd desktop:dev` | 启动桌面端 Web 开发服务器 |
-| `pnpm.cmd --filter @job-tracker/desktop build:check` | 执行桌面端类型检查和 Web 构建 |
-| `pnpm.cmd desktop:tauri` | 启动 Tauri 桌面开发应用 |
-| `pnpm.cmd desktop:exe` | 构建不打包安装器的桌面可执行文件 |
-| `pnpm.cmd desktop:installer` | 构建 Windows 安装器 |
-| `pnpm.cmd mobile:dev` | 启动 Expo 开发服务器 |
-| `pnpm.cmd --filter @job-tracker/mobile android` | 本地运行 Android 开发构建 |
-| `pnpm.cmd mobile:eas:login` | 登录 EAS |
-| `pnpm.cmd mobile:android:apk` | 通过 EAS 构建内部测试 APK |
-| `pnpm.cmd mobile:android:aab` | 通过 EAS 构建生产 AAB |
+| 类型 | 命令 | 用途和产物 |
+| --- | --- | --- |
+| 安装 | `pnpm.cmd install` | 安装全部 workspace 依赖；首次运行或 lockfile 变化后执行 |
+| 验证 | `pnpm.cmd typecheck` | 检查 core、桌面端和移动端 TypeScript，不生成软件 |
+| 验证 | `pnpm.cmd test` | 运行全部现有自动化测试，不生成软件 |
+| 桌面开发 | `pnpm.cmd desktop:dev` | 只启动 Vite Web 开发页面，适合调试界面 |
+| 桌面开发 | `pnpm.cmd desktop:tauri` | 启动带热更新的 Tauri Windows 应用，适合调试桌面行为 |
+| 桌面验证 | `pnpm.cmd --filter @job-tracker/desktop build:check` | 类型检查并构建 Web 资源到 `apps/desktop/dist/`，不是 Windows 安装包 |
+| 桌面发布 | `pnpm.cmd desktop:exe` | 生成未打包安装器的 `job-tracker-desktop.exe` |
+| 桌面发布 | `pnpm.cmd desktop:installer` | 生成可分发的 Windows NSIS 安装器；`desktop:build` 与此命令等价 |
+| 移动开发 | `pnpm.cmd mobile:dev` | 只启动 Expo/Metro 开发服务器，不生成 APK |
+| 移动开发 | `pnpm.cmd --filter @job-tracker/mobile android` | 构建开发版并安装到已连接的 Android 设备或模拟器 |
+| EAS | `pnpm.cmd mobile:eas:login` | 登录 Expo/EAS；通常每台电脑首次构建时执行一次 |
+| 移动测试包 | `pnpm.cmd mobile:android:apk` | 通过 EAS 云构建可直接安装的内部测试 APK |
+| 移动发布包 | `pnpm.cmd mobile:android:aab` | 通过 EAS 云构建用于 Google Play 上架的 AAB，不能直接点击安装 |
 
 项目当前没有 lint、formatter 或 CI 命令；新增相关工具或依赖前应先更新规格并获得批准。
+
+## 生成新的桌面端和移动端软件
+
+发布前先确认两个应用的 `.env` 已配置，并建议执行：
+
+```powershell
+pnpm.cmd install
+pnpm.cmd typecheck
+pnpm.cmd test
+```
+
+### 生成 Windows 桌面安装器
+
+推荐执行：
+
+```powershell
+pnpm.cmd desktop:installer
+```
+
+构建成功后，安装器位于：
+
+```text
+apps/desktop/src-tauri/target/release/bundle/nsis/*.exe
+```
+
+如果只需要未经安装器封装的桌面可执行文件，可以执行：
+
+```powershell
+pnpm.cmd desktop:exe
+```
+
+产物位于 `apps/desktop/src-tauri/target/release/job-tracker-desktop.exe`。普通用户分发建议使用 NSIS 安装器。
+
+### 生成 Android 安装包
+
+首次使用 EAS 时先登录，并确认 EAS 项目中已经配置 `EXPO_PUBLIC_SUPABASE_URL` 和 `EXPO_PUBLIC_SUPABASE_ANON_KEY`：
+
+```powershell
+pnpm.cmd mobile:eas:login
+```
+
+生成可直接安装到 Android 手机上的测试 APK：
+
+```powershell
+pnpm.cmd mobile:android:apk
+```
+
+生成提交到 Google Play 的生产 AAB：
+
+```powershell
+pnpm.cmd mobile:android:aab
+```
+
+这两个命令都在 EAS 云端构建，完成后终端会显示构建页面和下载地址。APK 用于直接安装和测试；AAB 用于应用商店发布。
+
+开始新的发布版本前，还应同步检查 `apps/desktop/src-tauri/tauri.conf.json` 中的桌面版本，以及 `apps/mobile/app.json` 中的移动端 `version` 和 Android `versionCode`。EAS production profile 会自动递增 Android `versionCode`。
 
 ## 数据库迁移
 
