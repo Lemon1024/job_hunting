@@ -267,11 +267,12 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 
 | 目的 | 命令 |
 |---|---|
-| 启动 Expo 开发服务器 | `pnpm.cmd mobile:dev` |
+| 启动 Development Build 的 Expo/Metro 服务 | `pnpm.cmd mobile:dev` |
 | 登录 EAS | `pnpm.cmd mobile:eas:login` |
 | 构建内部测试 APK | `pnpm.cmd mobile:android:apk` |
 | 构建商店 AAB | `pnpm.cmd mobile:android:aab` |
-| 启动本地 Android 原生项目 | `pnpm.cmd --filter @job-tracker/mobile android` |
+| 构建并安装到 Android 模拟器 | `pnpm.cmd mobile:android` |
+| 构建并安装到已连接 Android 真机 | `pnpm.cmd mobile:android:device` |
 
 本地生成 release APK 时，从 `apps/mobile/android` 执行：
 

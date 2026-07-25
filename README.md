@@ -120,13 +120,50 @@ EAS 云构建还需要在对应 EAS 项目环境中配置相同的两个 `EXPO_P
 | 桌面验证 | `pnpm.cmd --filter @job-tracker/desktop build:check` | 类型检查并构建 Web 资源到 `apps/desktop/dist/`，不是 Windows 安装包 |
 | 桌面发布 | `pnpm.cmd desktop:exe` | 生成未打包安装器的 `job-tracker-desktop.exe` |
 | 桌面发布 | `pnpm.cmd desktop:installer` | 生成可分发的 Windows NSIS 安装器；`desktop:build` 与此命令等价 |
-| 移动开发 | `pnpm.cmd mobile:dev` | 只启动 Expo/Metro 开发服务器，不生成 APK |
-| 移动开发 | `pnpm.cmd --filter @job-tracker/mobile android` | 构建开发版并安装到已连接的 Android 设备或模拟器 |
+| 移动开发 | `pnpm.cmd mobile:dev` | 启动面向 Development Build 的 Expo/Metro 服务，供已安装的开发版热更新 |
+| 移动开发 | `pnpm.cmd mobile:android` | 首次构建开发版并安装到正在运行的 Android 模拟器 |
+| 移动开发 | `pnpm.cmd mobile:android:device` | 选择已通过 USB 调试连接的 Android 真机并安装开发版 |
 | EAS | `pnpm.cmd mobile:eas:login` | 登录 Expo/EAS；通常每台电脑首次构建时执行一次 |
 | 移动测试包 | `pnpm.cmd mobile:android:apk` | 通过 EAS 云构建可直接安装的内部测试 APK |
 | 移动发布包 | `pnpm.cmd mobile:android:aab` | 通过 EAS 云构建用于 Google Play 上架的 AAB，不能直接点击安装 |
 
 项目当前没有 lint、formatter 或 CI 命令；新增相关工具或依赖前应先更新规格并获得批准。
+
+## 移动端高效调试
+
+日常开发不需要每次生成并下载 APK。推荐使用 Android 模拟器或 USB 连接的真机，只在第一次以及原生配置变化后重新构建开发版；普通 TypeScript、界面和样式修改由 Metro Fast Refresh 在几秒内同步。
+
+### Android 模拟器
+
+1. 在 Android Studio 的 SDK Manager 中安装 Android Emulator 和 API 35 系统镜像。
+2. 在 Device Manager 中创建并启动一个 Android Virtual Device（建议 Pixel、API 35）。
+3. 首次安装开发版：
+
+```powershell
+pnpm.cmd mobile:android
+```
+
+以后日常开发只需启动 Metro：
+
+```powershell
+pnpm.cmd mobile:dev
+```
+
+终端出现 Expo 菜单后按 `a` 即可打开已经安装的开发版。保存 `.ts`、`.tsx` 或样式文件后，Fast Refresh 会自动更新模拟器中的画面。
+
+### Android 真机
+
+在手机中启用“开发者选项”和“USB 调试”，通过数据线连接电脑并确认授权，然后首次执行：
+
+```powershell
+pnpm.cmd mobile:android:device
+```
+
+完成一次安装后，同样使用 `pnpm.cmd mobile:dev` 进行日常热更新。电脑和手机应处于可互访的同一网络；USB 连接方式出现 Metro 连接问题时，可执行 `adb reverse tcp:8081 tcp:8081`。
+
+只有以下变更通常需要重新执行 `pnpm.cmd mobile:android` 或 `mobile:android:device`：新增或升级原生依赖、修改 `app.json`/config plugin、修改 `apps/mobile/android/` 原生代码或升级 Expo SDK。普通业务代码和 UI 修改不需要重新安装。
+
+本项目使用 Development Build 工作流而不是 Expo Go。实现依据：[Expo 本地开发构建](https://docs.expo.dev/guides/local-app-development/)和 [Development Build 使用说明](https://docs.expo.dev/develop/development-builds/use-development-builds/)。
 
 ## 生成新的桌面端和移动端软件
 

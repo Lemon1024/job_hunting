@@ -10,6 +10,8 @@
     "desktop:exe": "pnpm --filter @job-tracker/desktop tauri build --no-bundle",
     "desktop:installer": "pnpm --filter @job-tracker/desktop tauri build",
     "mobile:dev": "pnpm --filter @job-tracker/mobile start",
+    "mobile:android": "pnpm --filter @job-tracker/mobile android",
+    "mobile:android:device": "pnpm --filter @job-tracker/mobile exec expo run:android --device",
     "mobile:eas:login": "pnpm --filter @job-tracker/mobile eas:login",
     "mobile:android:apk": "pnpm --filter @job-tracker/mobile android:apk",
     "mobile:android:aab": "pnpm --filter @job-tracker/mobile android:aab",
