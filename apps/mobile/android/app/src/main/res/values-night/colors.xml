@@ -1,1 +1,45 @@
-<resources/>
+<resources>
+  <color name="job_tracker_background">#0b1118</color>
+  <color name="job_tracker_surface">#151e28</color>
+  <color name="job_tracker_border">#344252</color>
+  <color name="job_tracker_text">#edf2f7</color>
+  <color name="job_tracker_muted">#9fb0c1</color>
+  <color name="job_tracker_primary_light">#153d3a</color>
+  <color name="job_tracker_primary_text">#73ddd2</color>
+  <color name="job_tracker_danger_light">#3d1b22</color>
+  <color name="job_tracker_danger_text">#ff8fa3</color>
+  <color name="job_tracker_warning_light">#3b2a16</color>
+  <color name="job_tracker_header_bg">#080d13</color>
+  <color name="job_tracker_header_muted">#8ea0b3</color>
+  <color name="job_tracker_header_text">#f8fafc</color>
+  <color name="job_tracker_tab_inactive">#202c38</color>
+  <color name="job_tracker_tab_inactive_text">#a9b8c8</color>
+  <color name="job_tracker_tab_active">#164a45</color>
+  <color name="job_tracker_tab_active_text">#7be3d8</color>
+  <color name="job_tracker_status_todo_bg">#25313e</color>
+  <color name="job_tracker_status_todo_text">#c2cfdd</color>
+  <color name="job_tracker_status_applied_bg">#172e52</color>
+  <color name="job_tracker_status_applied_text">#8bb9ff</color>
+  <color name="job_tracker_status_screening_bg">#35214e</color>
+  <color name="job_tracker_status_screening_text">#c69cff</color>
+  <color name="job_tracker_status_exam_bg">#4b2036</color>
+  <color name="job_tracker_status_exam_text">#ff98c5</color>
+  <color name="job_tracker_status_interview_bg">#452818</color>
+  <color name="job_tracker_status_interview_text">#ffad79</color>
+  <color name="job_tracker_status_manager_bg">#4a2516</color>
+  <color name="job_tracker_status_manager_text">#ffb181</color>
+  <color name="job_tracker_status_hr_bg">#423416</color>
+  <color name="job_tracker_status_hr_text">#ffd873</color>
+  <color name="job_tracker_status_offer_bg">#123c32</color>
+  <color name="job_tracker_status_offer_text">#76e2bd</color>
+  <color name="job_tracker_status_rejected_bg">#491d22</color>
+  <color name="job_tracker_status_rejected_text">#ff999f</color>
+  <color name="job_tracker_status_silent_bg">#27323e</color>
+  <color name="job_tracker_status_silent_text">#b0bdcb</color>
+  <color name="job_tracker_priority_high_bg">#491d22</color>
+  <color name="job_tracker_priority_high_text">#ff999f</color>
+  <color name="job_tracker_priority_medium_bg">#423416</color>
+  <color name="job_tracker_priority_medium_text">#ffd873</color>
+  <color name="job_tracker_priority_low_bg">#25313e</color>
+  <color name="job_tracker_priority_low_text">#c2cfdd</color>
+</resources>

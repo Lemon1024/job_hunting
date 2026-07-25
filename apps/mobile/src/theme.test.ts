@@ -15,8 +15,10 @@ describe("resolveThemePreference", () => {
 });
 
 describe("Android theme colors", () => {
-  it("uses PlatformColor resource paths supported by React Native", () => {
-    expect(Object.values(androidColorTokens)).not.toContainEqual(expect.stringContaining("?android:attr/"));
-    expect(Object.values(androidColorTokens).every((token) => token.startsWith("?attr/"))).toBe(true);
+  it("uses visible app-owned resources for every semantic color", () => {
+    const tokens = Object.values(androidColorTokens);
+
+    expect(tokens.every((token) => token.startsWith("@color/job_tracker_"))).toBe(true);
+    expect(new Set(tokens).size).toBe(tokens.length);
   });
 });

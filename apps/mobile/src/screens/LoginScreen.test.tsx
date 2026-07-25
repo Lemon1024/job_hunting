@@ -16,6 +16,7 @@ describe("LoginScreen", () => {
     const screen = render(<LoginScreen />);
 
     expect(screen.getByTestId("login-scroll-view")).toBeTruthy();
+    expect(screen.getByTestId("login-keyboard-avoiding-view")).toBeTruthy();
     expect(screen.getByLabelText("邮箱")).toBeTruthy();
     expect(screen.getByLabelText("密码")).toBeTruthy();
     expect(screen.getByRole("button", { name: "显示密码" })).toBeTruthy();
