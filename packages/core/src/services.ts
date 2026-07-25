@@ -13,6 +13,40 @@ type ApplicationRow = Application & {
   location_links?: Array<{ location: LocationTag | null }>;
 };
 
+type PostgrestErrorLike = {
+  code?: unknown;
+};
+
+function hasPostgrestCode(error: unknown, codes: readonly string[]) {
+  if (!error || typeof error !== "object") return false;
+  const code = (error as PostgrestErrorLike).code;
+  return typeof code === "string" && codes.includes(code);
+}
+
+function isMissingWorkbenchRelation(error: unknown) {
+  return hasPostgrestCode(error, ["PGRST200", "PGRST205", "42P01"]);
+}
+
+function isMissingWorkbenchTable(error: unknown) {
+  return hasPostgrestCode(error, ["PGRST205", "42P01"]);
+}
+
+function normalizeProfile(profile: Profile): Profile {
+  const themePreference = profile.theme_preference;
+  const reminderLeadDays = profile.reminder_lead_days;
+  return {
+    ...profile,
+    avatar_path: typeof profile.avatar_path === "string" ? profile.avatar_path : null,
+    theme_preference: themePreference === "light" || themePreference === "dark" ? themePreference : "system",
+    in_app_reminders_enabled: typeof profile.in_app_reminders_enabled === "boolean"
+      ? profile.in_app_reminders_enabled
+      : true,
+    reminder_lead_days: reminderLeadDays === 0 || reminderLeadDays === 3 || reminderLeadDays === 7
+      ? reminderLeadDays
+      : 1,
+  };
+}
+
 async function getCurrentUserId(client: SupabaseClientLike) {
   const { data, error } = await client.auth.getUser();
   if (error) throw error;
@@ -38,10 +72,18 @@ function normalizeTaskInput(input: FollowUpTaskInput): FollowUpTaskInput {
 }
 
 export async function listApplications(client: SupabaseClientLike): Promise<Application[]> {
-  const { data, error } = await client
+  let { data, error } = await client
     .from("applications")
     .select("*, events:application_events(*), follow_up_tasks(*), location_links:application_location_tags(location:location_tags(*))")
     .order("updated_at", { ascending: false });
+
+  // Keep the v0.1 application list usable while a deployed database is waiting for the v0.2 migration.
+  if (error && isMissingWorkbenchRelation(error)) {
+    ({ data, error } = await client
+      .from("applications")
+      .select("*, events:application_events(*)")
+      .order("updated_at", { ascending: false }));
+  }
 
   if (error) throw error;
   return ((data ?? []) as unknown as ApplicationRow[]).map(({ location_links, ...application }) => ({
@@ -125,6 +167,7 @@ export async function deleteEvent(client: SupabaseClientLike, id: string) {
 
 export async function listLocationTags(client: SupabaseClientLike) {
   const { data, error } = await client.from("location_tags").select("*").order("label");
+  if (error && isMissingWorkbenchTable(error)) return [];
   if (error) throw error;
   return (data ?? []) as LocationTag[];
 }
@@ -220,7 +263,7 @@ export async function getProfile(client: SupabaseClientLike) {
   const userId = await getCurrentUserId(client);
   const { data, error } = await client.from("profiles").select("*").eq("id", userId).single();
   if (error) throw error;
-  return data as Profile;
+  return normalizeProfile(data as Profile);
 }
 
 export async function updateProfile(
@@ -240,5 +283,5 @@ export async function updateProfile(
   }
   const { data, error } = await client.from("profiles").update(payload).eq("id", userId).select().single();
   if (error) throw error;
-  return data as Profile;
+  return normalizeProfile(data as Profile);
 }

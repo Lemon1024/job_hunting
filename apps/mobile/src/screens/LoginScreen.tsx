@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -19,7 +20,6 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [remember, setRemember] = useState(false);
   const [loading, setLoading] = useState(false);
 
   async function submit() {
@@ -46,8 +46,14 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.shell} edges={["top", "bottom"]}>
-      <KeyboardAvoidingView style={{ flex: 1, justifyContent: "center" }} behavior={Platform.OS === "ios" ? "padding" : undefined}>
-      <View style={styles.card}>
+      <KeyboardAvoidingView style={styles.keyboardArea} behavior={Platform.OS === "ios" ? "padding" : undefined}>
+        <ScrollView
+          testID="login-scroll-view"
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+        <View style={styles.card}>
         {/* Logo + Title */}
         <View style={styles.logoWrap}>
           <Ionicons name="briefcase" size={48} color={colors.primary} />
@@ -57,10 +63,20 @@ export default function LoginScreen() {
 
         {/* Tab switch */}
         <View style={styles.tabRow}>
-          <TouchableOpacity style={tab === "login" ? styles.tabActive : styles.tab} onPress={() => setTab("login")}>
+          <TouchableOpacity
+            accessibilityRole="tab"
+            accessibilityState={{ selected: tab === "login" }}
+            style={tab === "login" ? styles.tabActive : styles.tab}
+            onPress={() => setTab("login")}
+          >
             <Text style={tab === "login" ? styles.tabTextActive : styles.tabText}>登录</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={tab === "register" ? styles.tabActive : styles.tab} onPress={() => setTab("register")}>
+          <TouchableOpacity
+            accessibilityRole="tab"
+            accessibilityState={{ selected: tab === "register" }}
+            style={tab === "register" ? styles.tabActive : styles.tab}
+            onPress={() => setTab("register")}
+          >
             <Text style={tab === "register" ? styles.tabTextActive : styles.tabText}>注册</Text>
           </TouchableOpacity>
         </View>
@@ -70,10 +86,13 @@ export default function LoginScreen() {
           <Ionicons name="mail-outline" size={18} color={colors.muted} style={{ marginRight: spacing.sm }} />
           <TextInput
             style={styles.input}
+            accessibilityLabel="邮箱"
             placeholder="邮箱"
             placeholderTextColor={colors.muted}
             autoCapitalize="none"
             keyboardType="email-address"
+            autoComplete="email"
+            textContentType="emailAddress"
             value={email}
             onChangeText={setEmail}
           />
@@ -84,30 +103,33 @@ export default function LoginScreen() {
           <Ionicons name="lock-closed-outline" size={18} color={colors.muted} style={{ marginRight: spacing.sm }} />
           <TextInput
             style={styles.input}
+            accessibilityLabel="密码"
             placeholder="密码"
             placeholderTextColor={colors.muted}
             secureTextEntry={!showPassword}
+            autoComplete={tab === "login" ? "current-password" : "new-password"}
+            textContentType={tab === "login" ? "password" : "newPassword"}
             value={password}
             onChangeText={setPassword}
+            onSubmitEditing={() => void submit()}
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel={showPassword ? "隐藏密码" : "显示密码"}
+            hitSlop={8}
+            onPress={() => setShowPassword(!showPassword)}
+          >
             <Ionicons name={showPassword ? "eye-off-outline" : "eye-outline"} size={18} color={colors.muted} />
           </TouchableOpacity>
         </View>
 
-        {/* Remember + Forgot */}
-        <View style={styles.optionRow}>
-          <TouchableOpacity style={styles.checkRow} onPress={() => setRemember(!remember)}>
-            <Ionicons name={remember ? "checkbox" : "square-outline"} size={18} color={colors.primary} />
-            <Text style={styles.optionText}>记住我</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.forgotText}>忘记密码</Text>
-          </TouchableOpacity>
-        </View>
-
         {/* Submit */}
-        <TouchableOpacity style={[styles.submitBtn, loading && styles.submitBtnDisabled]} onPress={submit} disabled={loading}>
+        <TouchableOpacity
+          accessibilityRole="button"
+          style={[styles.submitBtn, loading && styles.submitBtnDisabled]}
+          onPress={submit}
+          disabled={loading}
+        >
           <Text style={styles.submitText}>{loading ? "处理中..." : tab === "login" ? "登录" : "注册"}</Text>
         </TouchableOpacity>
 
@@ -115,15 +137,26 @@ export default function LoginScreen() {
         <Text style={styles.legal}>
           登录即表示同意 <Text style={styles.legalLink}>用户协议</Text> 和 <Text style={styles.legalLink}>隐私政策</Text>
         </Text>
-      </View>
+        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  shell: { flex: 1, backgroundColor: colors.bg, justifyContent: "center", padding: spacing.xl },
+  shell: { flex: 1, backgroundColor: colors.bg },
+  keyboardArea: { flex: 1 },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.xxl,
+  },
   card: {
+    width: "100%",
+    maxWidth: 440,
+    alignSelf: "center",
     backgroundColor: colors.surface,
     borderRadius: radius.xl,
     borderWidth: 1,
@@ -158,10 +191,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   input: { flex: 1, fontSize: 15, color: colors.text },
-  optionRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  checkRow: { flexDirection: "row", alignItems: "center", gap: 6 },
-  optionText: { fontSize: 13, color: colors.muted },
-  forgotText: { fontSize: 13, color: colors.primary, fontWeight: fonts.semibold },
   submitBtn: {
     minHeight: 48,
     borderRadius: radius.md,
