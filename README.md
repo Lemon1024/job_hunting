@@ -32,6 +32,8 @@ supabase/
 docs/
   spec.md                  当前产品与工程规格
   ideas/                   已批准需求的设计记录
+scripts/
+  setup-windows.ps1        Windows 开发环境检查与自动安装
 ```
 
 设计令牌由各客户端按平台维护：移动端使用 `apps/mobile/src/theme.ts`，桌面端使用 `apps/desktop/src/styles.css`。移动端现有 11 个复用组件均有实际页面消费者；业务规则应优先放入 `@job-tracker/core`。
@@ -43,6 +45,44 @@ docs/
 - 桌面原生构建：Rust stable 和 Tauri 2 所需的 Windows 工具链。
 - Android 本地构建：JDK 17、Android SDK 35 和 Build Tools 35.0.0。
 - EAS 云构建：Expo/EAS 账号。
+
+## Windows 一键安装开发环境
+
+仓库提供 `scripts/setup-windows.ps1`，用于检查并安装当前项目的 Windows 开发环境。安装模式需要 Windows 10/11、网络连接、`winget` 和管理员 PowerShell。
+
+先克隆仓库，在仓库根目录以管理员身份打开 PowerShell，然后执行：
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup-windows.ps1
+```
+
+脚本可重复运行，已经满足要求的组件不会重复安装。默认会：
+
+- 通过 WinGet 安装缺失的 Git、Node.js LTS、Visual Studio 2022 C++ Build Tools、Rustup、JDK 17 和 Android Studio。
+- 安装项目固定的 `pnpm@9.12.0`。
+- 从 Google 官方地址下载 Android Command-line Tools，并在 SHA-256 校验通过后安装 SDK Platform 35、Build Tools 35.0.0、platform-tools 和 NDK 26.1.10909125。
+- 设置当前用户的 `JAVA_HOME`、`ANDROID_HOME`、`ANDROID_SDK_ROOT` 和 `NDK_HOME`。
+- 执行 `pnpm.cmd install --frozen-lockfile`，在缺失时从 `.env.example` 创建两个应用的 `.env`，最后运行类型检查和测试。
+
+只检查、不修改电脑，也不需要管理员权限：
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup-windows.ps1 -CheckOnly
+```
+
+可选参数：
+
+| 参数 | 用途 |
+| --- | --- |
+| `-CheckOnly` | 只报告缺失项，不安装、不写环境变量、不创建文件 |
+| `-SkipDesktop` | 跳过 Visual Studio Build Tools 和 Rust 环境 |
+| `-SkipAndroid` | 跳过 JDK、Android Studio 和 Android SDK 环境 |
+| `-SkipProjectInstall` | 只准备系统工具，不安装项目依赖或创建 `.env` |
+| `-SkipVerification` | 安装完成后不运行 `typecheck` 和测试 |
+
+Android SDK licenses 必须由使用者在脚本提示时阅读并输入 `y` 接受，脚本不会静默代替接受协议。脚本也不会填写或读取真实 Supabase 密钥；运行完成后仍需手动填写 `apps/desktop/.env` 和 `apps/mobile/.env`。如果环境变量刚被写入，请重新打开终端和 IDE；Android 模拟器需要在 Android Studio Device Manager 中另行创建。
+
+实现依据：[WinGet install](https://learn.microsoft.com/windows/package-manager/winget/install)、[Tauri prerequisites](https://v2.tauri.app/start/prerequisites/)、[pnpm installation](https://pnpm.io/installation) 和 [Android sdkmanager](https://developer.android.com/tools/sdkmanager)。
 
 ## 快速开始
 

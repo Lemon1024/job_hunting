@@ -243,6 +243,8 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 
 | 目的 | 命令 | 当前状态 |
 |---|---|---|
+| 只读检查 Windows 开发环境 | `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup-windows.ps1 -CheckOnly` | 已配置，不修改系统 |
+| 安装 Windows 开发环境 | `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup-windows.ps1` | 已配置，需要管理员权限、网络和交互接受 Android licenses |
 | 安装依赖 | `pnpm.cmd install` | 已配置 |
 | 全仓类型检查 | `pnpm.cmd typecheck` | 已配置，当前失败；见 11.1 |
 | 桌面前端类型检查与构建 | `pnpm.cmd --filter @job-tracker/desktop build:check` | 已配置，当前失败；见 11.1 |
@@ -300,6 +302,7 @@ packages/
 supabase/migrations/       PostgreSQL schema、trigger、索引与 RLS
 supabase/rollbacks/        已提供的迁移回滚脚本
 docs/                      项目规范和后续架构决策文档
+scripts/                   可重复运行的本机开发环境引导脚本
 ```
 
 新增自动化测试时，测试位置必须随框架选型一并批准；在此之前不得创建误导性的空测试目录。
