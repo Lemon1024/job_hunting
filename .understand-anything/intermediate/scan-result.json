@@ -1,0 +1,971 @@
+{
+  "name": "job-hunting-tracker",
+  "description": "面向个人求职者的跨平台求职申请管理工具，通过 Supabase 在桌面端与移动端同步申请、招聘进度、地点标签和待跟进事项。注意：该项目包含超过 100 个源文件；若需加快后续分析，可将范围限定到子目录。",
+  "languages": [
+    "batch",
+    "config",
+    "css",
+    "gradle",
+    "html",
+    "jar",
+    "javascript",
+    "json",
+    "keystore",
+    "kotlin",
+    "markdown",
+    "powershell",
+    "pro",
+    "properties",
+    "rust",
+    "sql",
+    "toml",
+    "typescript",
+    "unknown",
+    "webp",
+    "xml",
+    "yaml"
+  ],
+  "frameworks": [
+    "Expo",
+    "React",
+    "React Native",
+    "Supabase",
+    "Tauri",
+    "Vite",
+    "Vitest"
+  ],
+  "files": [
+    {
+      "path": ".env.example",
+      "language": "config",
+      "sizeLines": 14,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".npmrc",
+      "language": "unknown",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "sizeLines": 3,
+      "fileCategory": "config"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "sizeLines": 276,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "apps/desktop/index.html",
+      "language": "html",
+      "sizeLines": 12,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "apps/desktop/package.json",
+      "language": "json",
+      "sizeLines": 29,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/desktop/src-tauri/Cargo.toml",
+      "language": "toml",
+      "sizeLines": 21,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/desktop/src-tauri/build.rs",
+      "language": "rust",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/desktop/src-tauri/gen/schemas/acl-manifests.json",
+      "language": "json",
+      "sizeLines": 0,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/desktop/src-tauri/gen/schemas/capabilities.json",
+      "language": "json",
+      "sizeLines": 0,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/desktop/src-tauri/gen/schemas/desktop-schema.json",
+      "language": "json",
+      "sizeLines": 2611,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/desktop/src-tauri/gen/schemas/windows-schema.json",
+      "language": "json",
+      "sizeLines": 2611,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/desktop/src-tauri/src/main.rs",
+      "language": "rust",
+      "sizeLines": 5,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/desktop/src-tauri/tauri.conf.json",
+      "language": "json",
+      "sizeLines": 28,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/desktop/src/App.tsx",
+      "language": "typescript",
+      "sizeLines": 927,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/desktop/src/main.tsx",
+      "language": "typescript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/desktop/src/rls.integration.test.ts",
+      "language": "typescript",
+      "sizeLines": 118,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/desktop/src/styles.css",
+      "language": "css",
+      "sizeLines": 1176,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "apps/desktop/src/supabaseClient.ts",
+      "language": "typescript",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/desktop/src/workbench.test.ts",
+      "language": "typescript",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/desktop/src/workbench.ts",
+      "language": "typescript",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/desktop/tsconfig.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/desktop/vite.config.ts",
+      "language": "typescript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/.expo/README.md",
+      "language": "markdown",
+      "sizeLines": 8,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "apps/mobile/.expo/devices.json",
+      "language": "json",
+      "sizeLines": 3,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/App.tsx",
+      "language": "typescript",
+      "sizeLines": 74,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/build.gradle",
+      "language": "gradle",
+      "sizeLines": 176,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/app/debug.keystore",
+      "language": "keystore",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/proguard-rules.pro",
+      "language": "pro",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/debug/AndroidManifest.xml",
+      "language": "xml",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/AndroidManifest.xml",
+      "language": "xml",
+      "sizeLines": 30,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "language": "kotlin",
+      "sizeLines": 61,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "language": "kotlin",
+      "sizeLines": 57,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml",
+      "language": "xml",
+      "sizeLines": 5,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+      "language": "xml",
+      "sizeLines": 37,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp",
+      "language": "webp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp",
+      "language": "webp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp",
+      "language": "webp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp",
+      "language": "webp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp",
+      "language": "webp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp",
+      "language": "webp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp",
+      "language": "webp",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp",
+      "language": "webp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp",
+      "language": "webp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp",
+      "language": "webp",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/values-night/colors.xml",
+      "language": "xml",
+      "sizeLines": 45,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/values/colors.xml",
+      "language": "xml",
+      "sizeLines": 48,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/values/strings.xml",
+      "language": "xml",
+      "sizeLines": 2,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/app/src/main/res/values/styles.xml",
+      "language": "xml",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/build.gradle",
+      "language": "gradle",
+      "sizeLines": 41,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/gradle.properties",
+      "language": "properties",
+      "sizeLines": 60,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/gradle/wrapper/gradle-wrapper.jar",
+      "language": "jar",
+      "sizeLines": 151,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/gradle/wrapper/gradle-wrapper.properties",
+      "language": "properties",
+      "sizeLines": 7,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/android/gradlew",
+      "language": "unknown",
+      "sizeLines": 252,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/android/gradlew.bat",
+      "language": "batch",
+      "sizeLines": 94,
+      "fileCategory": "script"
+    },
+    {
+      "path": "apps/mobile/android/settings.gradle",
+      "language": "gradle",
+      "sizeLines": 38,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/app.json",
+      "language": "json",
+      "sizeLines": 50,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/babel.config.js",
+      "language": "javascript",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/eas.json",
+      "language": "json",
+      "sizeLines": 30,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/index.js",
+      "language": "javascript",
+      "sizeLines": 4,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/jest.setup.js",
+      "language": "javascript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/metro.config.js",
+      "language": "javascript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/package.json",
+      "language": "json",
+      "sizeLines": 46,
+      "fileCategory": "config"
+    },
+    {
+      "path": "apps/mobile/src/components/ApplicationCard.tsx",
+      "language": "typescript",
+      "sizeLines": 86,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/CalendarGrid.tsx",
+      "language": "typescript",
+      "sizeLines": 116,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/EmptyState.tsx",
+      "language": "typescript",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/FilterSheet.tsx",
+      "language": "typescript",
+      "sizeLines": 181,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/FollowUpTaskSection.test.tsx",
+      "language": "typescript",
+      "sizeLines": 61,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "language": "typescript",
+      "sizeLines": 237,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/LocationTagSelector.test.tsx",
+      "language": "typescript",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/LocationTagSelector.tsx",
+      "language": "typescript",
+      "sizeLines": 196,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/PriorityBadge.tsx",
+      "language": "typescript",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/SearchBar.tsx",
+      "language": "typescript",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/StatsBar.test.tsx",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/StatsBar.tsx",
+      "language": "typescript",
+      "sizeLines": 82,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/StatusBadge.tsx",
+      "language": "typescript",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/components/TimelineItem.tsx",
+      "language": "typescript",
+      "sizeLines": 58,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/navigation/AppNavigator.tsx",
+      "language": "typescript",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/navigation/types.ts",
+      "language": "typescript",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 371,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 356,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/screens/CalendarScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 320,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/screens/DashboardScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 271,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/screens/LoginScreen.test.tsx",
+      "language": "typescript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/screens/LoginScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 209,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/screens/ProfileScreen.tsx",
+      "language": "typescript",
+      "sizeLines": 388,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/settings.test.ts",
+      "language": "typescript",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/settings.ts",
+      "language": "typescript",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/supabaseClient.ts",
+      "language": "typescript",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/theme.test.ts",
+      "language": "typescript",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/theme.ts",
+      "language": "typescript",
+      "sizeLines": 166,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/src/themePreference.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "apps/mobile/tsconfig.json",
+      "language": "json",
+      "sizeLines": 9,
+      "fileCategory": "config"
+    },
+    {
+      "path": "docs/ideas/mobile-workbench-v0.2.md",
+      "language": "markdown",
+      "sizeLines": 62,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/spec.md",
+      "language": "markdown",
+      "sizeLines": 610,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "sizeLines": 25,
+      "fileCategory": "config"
+    },
+    {
+      "path": "packages/core/package.json",
+      "language": "json",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    },
+    {
+      "path": "packages/core/src/constants.ts",
+      "language": "typescript",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/src/date.ts",
+      "language": "typescript",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/src/exporters.ts",
+      "language": "typescript",
+      "sizeLines": 101,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "language": "typescript",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/src/services.compatibility.test.ts",
+      "language": "typescript",
+      "sizeLines": 114,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/src/services.ts",
+      "language": "typescript",
+      "sizeLines": 287,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/src/stats.ts",
+      "language": "typescript",
+      "sizeLines": 118,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/src/supabase.ts",
+      "language": "typescript",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/src/types.ts",
+      "language": "typescript",
+      "sizeLines": 111,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/src/workbench.test.ts",
+      "language": "typescript",
+      "sizeLines": 128,
+      "fileCategory": "code"
+    },
+    {
+      "path": "packages/core/tsconfig.json",
+      "language": "json",
+      "sizeLines": 8,
+      "fileCategory": "config"
+    },
+    {
+      "path": "pnpm-workspace.yaml",
+      "language": "yaml",
+      "sizeLines": 3,
+      "fileCategory": "config"
+    },
+    {
+      "path": "scripts/setup-windows.ps1",
+      "language": "powershell",
+      "sizeLines": 439,
+      "fileCategory": "script"
+    },
+    {
+      "path": "supabase/migrations/202605160001_initial_schema.sql",
+      "language": "sql",
+      "sizeLines": 142,
+      "fileCategory": "data"
+    },
+    {
+      "path": "supabase/migrations/202607250001_add_manager_status.sql",
+      "language": "sql",
+      "sizeLines": 1,
+      "fileCategory": "data"
+    },
+    {
+      "path": "supabase/migrations/202607250002_mobile_workbench.sql",
+      "language": "sql",
+      "sizeLines": 302,
+      "fileCategory": "data"
+    },
+    {
+      "path": "supabase/rollbacks/202607250002_mobile_workbench.sql",
+      "language": "sql",
+      "sizeLines": 30,
+      "fileCategory": "data"
+    },
+    {
+      "path": "tsconfig.base.json",
+      "language": "json",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    }
+  ],
+  "totalFiles": 116,
+  "filteredByIgnore": 0,
+  "estimatedComplexity": "moderate",
+  "importMap": {
+    ".env.example": [],
+    ".npmrc": [],
+    ".understand-anything/.understandignore": [],
+    ".understand-anything/config.json": [],
+    "README.md": [],
+    "apps/desktop/index.html": [],
+    "apps/desktop/package.json": [],
+    "apps/desktop/src-tauri/Cargo.toml": [],
+    "apps/desktop/src-tauri/build.rs": [],
+    "apps/desktop/src-tauri/gen/schemas/acl-manifests.json": [],
+    "apps/desktop/src-tauri/gen/schemas/capabilities.json": [],
+    "apps/desktop/src-tauri/gen/schemas/desktop-schema.json": [],
+    "apps/desktop/src-tauri/gen/schemas/windows-schema.json": [],
+    "apps/desktop/src-tauri/src/main.rs": [],
+    "apps/desktop/src-tauri/tauri.conf.json": [],
+    "apps/desktop/src/App.tsx": [
+      "apps/desktop/src/supabaseClient.ts",
+      "apps/desktop/src/workbench.ts"
+    ],
+    "apps/desktop/src/main.tsx": [
+      "apps/desktop/src/App.tsx",
+      "apps/desktop/src/styles.css"
+    ],
+    "apps/desktop/src/rls.integration.test.ts": [],
+    "apps/desktop/src/styles.css": [],
+    "apps/desktop/src/supabaseClient.ts": [],
+    "apps/desktop/src/workbench.test.ts": [
+      "apps/desktop/src/workbench.ts"
+    ],
+    "apps/desktop/src/workbench.ts": [],
+    "apps/desktop/tsconfig.json": [],
+    "apps/desktop/vite.config.ts": [],
+    "apps/mobile/.expo/README.md": [],
+    "apps/mobile/.expo/devices.json": [],
+    "apps/mobile/App.tsx": [
+      "apps/mobile/src/navigation/AppNavigator.tsx",
+      "apps/mobile/src/supabaseClient.ts",
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/android/app/build.gradle": [],
+    "apps/mobile/android/app/debug.keystore": [],
+    "apps/mobile/android/app/proguard-rules.pro": [],
+    "apps/mobile/android/app/src/debug/AndroidManifest.xml": [],
+    "apps/mobile/android/app/src/main/AndroidManifest.xml": [],
+    "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt": [],
+    "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt": [],
+    "apps/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml": [],
+    "apps/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml": [],
+    "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp": [],
+    "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp": [],
+    "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp": [],
+    "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp": [],
+    "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp": [],
+    "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp": [],
+    "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp": [],
+    "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp": [],
+    "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp": [],
+    "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp": [],
+    "apps/mobile/android/app/src/main/res/values-night/colors.xml": [],
+    "apps/mobile/android/app/src/main/res/values/colors.xml": [],
+    "apps/mobile/android/app/src/main/res/values/strings.xml": [],
+    "apps/mobile/android/app/src/main/res/values/styles.xml": [],
+    "apps/mobile/android/build.gradle": [],
+    "apps/mobile/android/gradle.properties": [],
+    "apps/mobile/android/gradle/wrapper/gradle-wrapper.jar": [],
+    "apps/mobile/android/gradle/wrapper/gradle-wrapper.properties": [],
+    "apps/mobile/android/gradlew": [],
+    "apps/mobile/android/gradlew.bat": [],
+    "apps/mobile/android/settings.gradle": [],
+    "apps/mobile/app.json": [],
+    "apps/mobile/babel.config.js": [],
+    "apps/mobile/eas.json": [],
+    "apps/mobile/index.js": [
+      "apps/mobile/App.tsx"
+    ],
+    "apps/mobile/jest.setup.js": [],
+    "apps/mobile/metro.config.js": [],
+    "apps/mobile/package.json": [],
+    "apps/mobile/src/components/ApplicationCard.tsx": [
+      "apps/mobile/src/components/PriorityBadge.tsx",
+      "apps/mobile/src/components/StatusBadge.tsx",
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/CalendarGrid.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/EmptyState.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/FilterSheet.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/FollowUpTaskSection.test.tsx": [
+      "apps/mobile/src/components/FollowUpTaskSection.tsx"
+    ],
+    "apps/mobile/src/components/FollowUpTaskSection.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/LocationTagSelector.test.tsx": [
+      "apps/mobile/src/components/LocationTagSelector.tsx"
+    ],
+    "apps/mobile/src/components/LocationTagSelector.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/PriorityBadge.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/SearchBar.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/StatsBar.test.tsx": [
+      "apps/mobile/src/components/StatsBar.tsx"
+    ],
+    "apps/mobile/src/components/StatsBar.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/StatusBadge.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/components/TimelineItem.tsx": [
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/navigation/AppNavigator.tsx": [
+      "apps/mobile/src/navigation/types.ts",
+      "apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "apps/mobile/src/screens/CalendarScreen.tsx",
+      "apps/mobile/src/screens/DashboardScreen.tsx",
+      "apps/mobile/src/screens/LoginScreen.tsx",
+      "apps/mobile/src/screens/ProfileScreen.tsx",
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/navigation/types.ts": [],
+    "apps/mobile/src/screens/AddApplicationScreen.tsx": [
+      "apps/mobile/src/components/LocationTagSelector.tsx",
+      "apps/mobile/src/navigation/types.ts",
+      "apps/mobile/src/supabaseClient.ts",
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/screens/ApplicationDetailScreen.tsx": [
+      "apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "apps/mobile/src/components/PriorityBadge.tsx",
+      "apps/mobile/src/components/StatusBadge.tsx",
+      "apps/mobile/src/components/TimelineItem.tsx",
+      "apps/mobile/src/navigation/types.ts",
+      "apps/mobile/src/supabaseClient.ts",
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/screens/CalendarScreen.tsx": [
+      "apps/mobile/src/components/ApplicationCard.tsx",
+      "apps/mobile/src/components/CalendarGrid.tsx",
+      "apps/mobile/src/components/EmptyState.tsx",
+      "apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "apps/mobile/src/supabaseClient.ts",
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/screens/DashboardScreen.tsx": [
+      "apps/mobile/src/components/ApplicationCard.tsx",
+      "apps/mobile/src/components/EmptyState.tsx",
+      "apps/mobile/src/components/FilterSheet.tsx",
+      "apps/mobile/src/components/SearchBar.tsx",
+      "apps/mobile/src/components/StatsBar.tsx",
+      "apps/mobile/src/navigation/types.ts",
+      "apps/mobile/src/supabaseClient.ts",
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/screens/LoginScreen.test.tsx": [
+      "apps/mobile/src/screens/LoginScreen.tsx"
+    ],
+    "apps/mobile/src/screens/LoginScreen.tsx": [
+      "apps/mobile/src/supabaseClient.ts",
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/screens/ProfileScreen.tsx": [
+      "apps/mobile/src/settings.ts",
+      "apps/mobile/src/supabaseClient.ts",
+      "apps/mobile/src/theme.ts"
+    ],
+    "apps/mobile/src/settings.test.ts": [
+      "apps/mobile/src/settings.ts"
+    ],
+    "apps/mobile/src/settings.ts": [],
+    "apps/mobile/src/supabaseClient.ts": [],
+    "apps/mobile/src/theme.test.ts": [
+      "apps/mobile/src/theme.ts",
+      "apps/mobile/src/themePreference.ts"
+    ],
+    "apps/mobile/src/theme.ts": [
+      "apps/mobile/src/themePreference.ts"
+    ],
+    "apps/mobile/src/themePreference.ts": [],
+    "apps/mobile/tsconfig.json": [],
+    "docs/ideas/mobile-workbench-v0.2.md": [],
+    "docs/spec.md": [],
+    "package.json": [],
+    "packages/core/package.json": [],
+    "packages/core/src/constants.ts": [],
+    "packages/core/src/date.ts": [],
+    "packages/core/src/exporters.ts": [
+      "packages/core/src/constants.ts",
+      "packages/core/src/date.ts",
+      "packages/core/src/types.ts"
+    ],
+    "packages/core/src/index.ts": [],
+    "packages/core/src/services.compatibility.test.ts": [
+      "packages/core/src/services.ts"
+    ],
+    "packages/core/src/services.ts": [
+      "packages/core/src/supabase.ts",
+      "packages/core/src/types.ts"
+    ],
+    "packages/core/src/stats.ts": [
+      "packages/core/src/constants.ts",
+      "packages/core/src/date.ts",
+      "packages/core/src/types.ts"
+    ],
+    "packages/core/src/supabase.ts": [],
+    "packages/core/src/types.ts": [
+      "packages/core/src/constants.ts"
+    ],
+    "packages/core/src/workbench.test.ts": [
+      "packages/core/src/index.ts"
+    ],
+    "packages/core/tsconfig.json": [],
+    "pnpm-workspace.yaml": [],
+    "scripts/setup-windows.ps1": [],
+    "supabase/migrations/202605160001_initial_schema.sql": [],
+    "supabase/migrations/202607250001_add_manager_status.sql": [],
+    "supabase/migrations/202607250002_mobile_workbench.sql": [],
+    "supabase/rollbacks/202607250002_mobile_workbench.sql": [],
+    "tsconfig.base.json": []
+  }
+}

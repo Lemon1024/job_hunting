@@ -1,0 +1,5992 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "job-hunting-tracker",
+    "languages": [
+      "batch",
+      "config",
+      "css",
+      "gradle",
+      "html",
+      "jar",
+      "javascript",
+      "json",
+      "keystore",
+      "kotlin",
+      "markdown",
+      "powershell",
+      "pro",
+      "properties",
+      "rust",
+      "sql",
+      "toml",
+      "typescript",
+      "unknown",
+      "webp",
+      "xml",
+      "yaml"
+    ],
+    "frameworks": [
+      "Expo",
+      "React",
+      "React Native",
+      "Supabase",
+      "Tauri",
+      "Vite",
+      "Vitest"
+    ],
+    "description": "面向个人求职者的跨平台求职申请管理工具，通过 Supabase 在桌面端与移动端同步申请、招聘进度、地点标签和待跟进事项。注意：该项目包含超过 100 个源文件；若需加快后续分析，可将范围限定到子目录。",
+    "analyzedAt": "2026-07-28T16:03:32.033Z",
+    "gitCommitHash": "0444f04d07d13ec286e168f0b5827ee79a55ddb5"
+  },
+  "nodes": [
+    {
+      "id": "file:apps/mobile/App.tsx",
+      "type": "file",
+      "name": "App.tsx",
+      "filePath": "apps/mobile/App.tsx",
+      "summary": "移动端根组件，初始化 Supabase 会话并在 ThemeProvider 内按认证状态切换登录页与主导航，同时从用户资料同步主题偏好。",
+      "tags": [
+        "entry-point",
+        "react-native",
+        "authentication",
+        "theme"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "使用 React Hooks 订阅 Supabase auth 状态，并将主题同步拆为无界面副作用组件。"
+    },
+    {
+      "id": "file:apps/mobile/index.js",
+      "type": "file",
+      "name": "index.js",
+      "filePath": "apps/mobile/index.js",
+      "summary": "Expo/React Native 启动入口，将根组件注册为原生应用的主组件。",
+      "tags": [
+        "entry-point",
+        "expo",
+        "react-native"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "type": "file",
+      "name": "AppNavigator.tsx",
+      "filePath": "apps/mobile/src/navigation/AppNavigator.tsx",
+      "summary": "定义移动端认证分流、仪表盘栈与底部标签导航，组织投递、日历和个人中心等主要页面。",
+      "tags": [
+        "navigation",
+        "component",
+        "react-native",
+        "routing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:apps/mobile/src/navigation/types.ts",
+      "type": "file",
+      "name": "types.ts",
+      "filePath": "apps/mobile/src/navigation/types.ts",
+      "summary": "集中声明 React Navigation 根栈、仪表盘栈和标签页参数类型，约束页面跳转与编辑态载荷。",
+      "tags": [
+        "type-definition",
+        "navigation",
+        "typescript"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "type": "file",
+      "name": "AddApplicationScreen.tsx",
+      "filePath": "apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "summary": "提供新增与编辑求职申请的复合表单，管理状态、优先级、渠道、日期和地点标签，并在保存时同步事件记录。",
+      "tags": [
+        "component",
+        "form",
+        "application-workflow",
+        "validation",
+        "data-access"
+      ],
+      "complexity": "complex",
+      "languageNotes": "单个 React 函数组件承载大量本地状态、异步数据加载和持久化分支，呈现明显的高耦合表单控制器模式。"
+    },
+    {
+      "id": "file:apps/mobile/src/screens/LoginScreen.test.tsx",
+      "type": "file",
+      "name": "LoginScreen.test.tsx",
+      "filePath": "apps/mobile/src/screens/LoginScreen.test.tsx",
+      "summary": "验证登录界面的关键渲染与认证交互行为，为移动端认证入口提供回归保护。",
+      "tags": [
+        "test",
+        "authentication",
+        "react-native"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/screens/LoginScreen.tsx",
+      "type": "file",
+      "name": "LoginScreen.tsx",
+      "filePath": "apps/mobile/src/screens/LoginScreen.tsx",
+      "summary": "实现登录与注册共用界面，校验凭据并调用 Supabase Auth，同时处理密码显示、加载态和错误提示。",
+      "tags": [
+        "component",
+        "authentication",
+        "form",
+        "validation",
+        "tested"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:apps/mobile/src/screens/ProfileScreen.tsx",
+      "type": "file",
+      "name": "ProfileScreen.tsx",
+      "filePath": "apps/mobile/src/screens/ProfileScreen.tsx",
+      "summary": "实现个人资料与设置中心，覆盖头像上传、昵称、密码、主题、提醒偏好、反馈和退出登录。",
+      "tags": [
+        "component",
+        "profile",
+        "settings",
+        "storage",
+        "authentication"
+      ],
+      "complexity": "complex",
+      "languageNotes": "组件同时协调 Supabase Auth、Storage、资料表和本地主题上下文，副作用与交互职责较密集。"
+    },
+    {
+      "id": "file:apps/mobile/src/settings.test.ts",
+      "type": "file",
+      "name": "settings.test.ts",
+      "filePath": "apps/mobile/src/settings.test.ts",
+      "summary": "测试反馈邮件链接生成与密码变更校验等纯函数规则。",
+      "tags": [
+        "test",
+        "utility",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/settings.ts",
+      "type": "file",
+      "name": "settings.ts",
+      "filePath": "apps/mobile/src/settings.ts",
+      "summary": "提供设置页使用的反馈邮件 URI 构造和密码一致性、长度校验工具。",
+      "tags": [
+        "utility",
+        "validation",
+        "settings",
+        "tested"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/supabaseClient.ts",
+      "type": "file",
+      "name": "supabaseClient.ts",
+      "filePath": "apps/mobile/src/supabaseClient.ts",
+      "summary": "从 Expo 公共环境变量创建并导出移动端共享 Supabase 客户端，缺少配置时立即失败。",
+      "tags": [
+        "singleton",
+        "supabase",
+        "configuration",
+        "data-access"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/mobile/App.tsx:ProfileThemeSync",
+      "type": "function",
+      "name": "ProfileThemeSync",
+      "filePath": "apps/mobile/App.tsx",
+      "summary": "读取已登录用户资料中的主题偏好并写入全局主题上下文。",
+      "tags": [
+        "component",
+        "theme",
+        "profile-sync"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        11,
+        20
+      ]
+    },
+    {
+      "id": "function:apps/mobile/App.tsx:ThemedApp",
+      "type": "function",
+      "name": "ThemedApp",
+      "filePath": "apps/mobile/App.tsx",
+      "summary": "根据会话状态渲染登录页或主导航，并配置状态栏与导航主题。",
+      "tags": [
+        "component",
+        "navigation",
+        "theme"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        22,
+        49
+      ]
+    },
+    {
+      "id": "function:apps/mobile/App.tsx:App",
+      "type": "function",
+      "name": "App",
+      "filePath": "apps/mobile/App.tsx",
+      "summary": "启动认证会话查询和状态订阅，在准备完成后挂载主题提供器与应用主体。",
+      "tags": [
+        "entry-point",
+        "component",
+        "authentication"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        51,
+        74
+      ]
+    },
+    {
+      "id": "function:apps/mobile/src/navigation/AppNavigator.tsx:MainTabs",
+      "type": "function",
+      "name": "MainTabs",
+      "filePath": "apps/mobile/src/navigation/AppNavigator.tsx",
+      "summary": "配置投递、日历和个人中心三个底部标签页及其图标和主题样式。",
+      "tags": [
+        "component",
+        "navigation",
+        "tab-router"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        27,
+        56
+      ]
+    },
+    {
+      "id": "function:apps/mobile/src/navigation/AppNavigator.tsx:AppNavigator",
+      "type": "function",
+      "name": "AppNavigator",
+      "filePath": "apps/mobile/src/navigation/AppNavigator.tsx",
+      "summary": "根据登录状态选择认证页或主标签导航的根级路由。",
+      "tags": [
+        "component",
+        "navigation",
+        "authentication"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        58,
+        68
+      ]
+    },
+    {
+      "id": "function:apps/mobile/src/screens/AddApplicationScreen.tsx:AddApplicationScreen",
+      "type": "function",
+      "name": "AddApplicationScreen",
+      "filePath": "apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "summary": "驱动申请表单完整生命周期，包括初值、地点标签、校验、创建或更新以及初始事件写入。",
+      "tags": [
+        "component",
+        "form-controller",
+        "application-workflow",
+        "data-access"
+      ],
+      "complexity": "complex",
+      "lineRange": [
+        49,
+        278
+      ]
+    },
+    {
+      "id": "function:apps/mobile/src/screens/AddApplicationScreen.tsx:PickerModal",
+      "type": "function",
+      "name": "PickerModal",
+      "filePath": "apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "summary": "渲染可复用的单选模态列表，并将选择结果回传给申请表单。",
+      "tags": [
+        "component",
+        "modal",
+        "selection"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        280,
+        309
+      ]
+    },
+    {
+      "id": "function:apps/mobile/src/screens/LoginScreen.tsx:LoginScreen",
+      "type": "function",
+      "name": "LoginScreen",
+      "filePath": "apps/mobile/src/screens/LoginScreen.tsx",
+      "summary": "管理登录和注册标签、表单状态与 Supabase Auth 提交流程。",
+      "tags": [
+        "component",
+        "authentication",
+        "form-controller"
+      ],
+      "complexity": "complex",
+      "lineRange": [
+        18,
+        149
+      ]
+    },
+    {
+      "id": "function:apps/mobile/src/screens/ProfileScreen.tsx:ProfileScreen",
+      "type": "function",
+      "name": "ProfileScreen",
+      "filePath": "apps/mobile/src/screens/ProfileScreen.tsx",
+      "summary": "协调个人资料加载、头像存储、凭据修改、偏好持久化及设置中心交互。",
+      "tags": [
+        "component",
+        "profile",
+        "settings",
+        "storage"
+      ],
+      "complexity": "complex",
+      "lineRange": [
+        38,
+        314
+      ]
+    },
+    {
+      "id": "function:apps/mobile/src/screens/ProfileScreen.tsx:MenuItem",
+      "type": "function",
+      "name": "MenuItem",
+      "filePath": "apps/mobile/src/screens/ProfileScreen.tsx",
+      "summary": "渲染设置菜单中的图标、文本、详情和点击反馈。",
+      "tags": [
+        "component",
+        "menu-item",
+        "presentation"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        324,
+        333
+      ]
+    },
+    {
+      "id": "function:apps/mobile/src/settings.ts:buildFeedbackMailto",
+      "type": "function",
+      "name": "buildFeedbackMailto",
+      "filePath": "apps/mobile/src/settings.ts",
+      "summary": "编码应用版本、构建号和平台信息，生成预填充的反馈邮件链接。",
+      "tags": [
+        "utility",
+        "serialization",
+        "feedback"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        7,
+        13
+      ]
+    },
+    {
+      "id": "function:apps/mobile/src/settings.ts:validatePasswordChange",
+      "type": "function",
+      "name": "validatePasswordChange",
+      "filePath": "apps/mobile/src/settings.ts",
+      "summary": "校验新密码最小长度及两次输入的一致性并返回可显示错误。",
+      "tags": [
+        "utility",
+        "validation",
+        "security"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        15,
+        19
+      ]
+    },
+    {
+      "id": "file:apps/mobile/src/components/ApplicationCard.tsx",
+      "type": "file",
+      "name": "ApplicationCard.tsx",
+      "filePath": "apps/mobile/src/components/ApplicationCard.tsx",
+      "summary": "展示单条投递记录的移动端卡片，组合公司、岗位、日期、状态与优先级信息，并向上转发点击事件。",
+      "tags": [
+        "component",
+        "application-summary",
+        "navigation",
+        "react-native"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:apps/mobile/src/components/ApplicationCard.tsx:ApplicationCard",
+      "type": "function",
+      "name": "ApplicationCard",
+      "filePath": "apps/mobile/src/components/ApplicationCard.tsx",
+      "lineRange": [
+        14,
+        48
+      ],
+      "summary": "渲染投递概览卡片，并将领域状态、优先级和日期转换为紧凑的可视化信息。",
+      "tags": [
+        "component",
+        "presentation",
+        "application-card",
+        "event-handler"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/components/CalendarGrid.tsx",
+      "type": "file",
+      "name": "CalendarGrid.tsx",
+      "filePath": "apps/mobile/src/components/CalendarGrid.tsx",
+      "summary": "实现月视图日历网格，负责月份切换、日期选择以及投递事件圆点的聚合展示。",
+      "tags": [
+        "component",
+        "calendar",
+        "date-grid",
+        "react-native"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:apps/mobile/src/components/CalendarGrid.tsx:CalendarGrid",
+      "type": "function",
+      "name": "CalendarGrid",
+      "filePath": "apps/mobile/src/components/CalendarGrid.tsx",
+      "lineRange": [
+        19,
+        92
+      ],
+      "summary": "计算指定年月的周网格并渲染日期单元格，同时按日期汇总事件类型并显示颜色标记。",
+      "tags": [
+        "component",
+        "calendar",
+        "date-calculation",
+        "event-visualization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:apps/mobile/src/components/FollowUpTaskSection.test.tsx",
+      "type": "file",
+      "name": "FollowUpTaskSection.test.tsx",
+      "filePath": "apps/mobile/src/components/FollowUpTaskSection.test.tsx",
+      "summary": "验证跟进任务区的创建、编辑、完成与删除交互，确保用户操作正确委托给回调。",
+      "tags": [
+        "test",
+        "component-test",
+        "follow-up-task",
+        "interaction"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "type": "file",
+      "name": "FollowUpTaskSection.tsx",
+      "filePath": "apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "summary": "提供投递详情中的跟进任务工作区，统一处理新建、编辑、校验、完成切换、删除确认和任务列表排序。",
+      "tags": [
+        "component",
+        "follow-up-task",
+        "form",
+        "state-management",
+        "validation",
+        "tested"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:apps/mobile/src/components/FollowUpTaskSection.tsx:FollowUpTaskSection",
+      "type": "function",
+      "name": "FollowUpTaskSection",
+      "filePath": "apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "lineRange": [
+        19,
+        196
+      ],
+      "summary": "维护跟进任务编辑状态，校验标题与日期，并通过异步回调执行 CRUD 和完成状态切换。",
+      "tags": [
+        "component",
+        "form-state",
+        "validation",
+        "crud",
+        "event-handler"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:apps/mobile/src/components/PriorityBadge.tsx",
+      "type": "file",
+      "name": "PriorityBadge.tsx",
+      "filePath": "apps/mobile/src/components/PriorityBadge.tsx",
+      "summary": "将投递优先级映射为统一标签和主题颜色的轻量徽章组件。",
+      "tags": [
+        "component",
+        "badge",
+        "priority",
+        "presentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/mobile/src/components/PriorityBadge.tsx:PriorityBadge",
+      "type": "function",
+      "name": "PriorityBadge",
+      "filePath": "apps/mobile/src/components/PriorityBadge.tsx",
+      "lineRange": [
+        9,
+        16
+      ],
+      "summary": "根据优先级标识渲染对应文本和配色。",
+      "tags": [
+        "component",
+        "badge",
+        "priority",
+        "presentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/components/StatusBadge.tsx",
+      "type": "file",
+      "name": "StatusBadge.tsx",
+      "filePath": "apps/mobile/src/components/StatusBadge.tsx",
+      "summary": "将投递流程状态映射为统一标签和语义配色的轻量徽章组件。",
+      "tags": [
+        "component",
+        "badge",
+        "status",
+        "presentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/mobile/src/components/StatusBadge.tsx:StatusBadge",
+      "type": "function",
+      "name": "StatusBadge",
+      "filePath": "apps/mobile/src/components/StatusBadge.tsx",
+      "lineRange": [
+        9,
+        17
+      ],
+      "summary": "查询状态元数据并渲染对应的标签和背景色。",
+      "tags": [
+        "component",
+        "badge",
+        "status",
+        "presentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/components/TimelineItem.tsx",
+      "type": "file",
+      "name": "TimelineItem.tsx",
+      "filePath": "apps/mobile/src/components/TimelineItem.tsx",
+      "summary": "渲染投递进展时间线中的单个事件，支持激活态、末节点样式、点击和删除操作。",
+      "tags": [
+        "component",
+        "timeline",
+        "event",
+        "event-handler"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:apps/mobile/src/components/TimelineItem.tsx:TimelineItem",
+      "type": "function",
+      "name": "TimelineItem",
+      "filePath": "apps/mobile/src/components/TimelineItem.tsx",
+      "lineRange": [
+        15,
+        34
+      ],
+      "summary": "展示事件类型、标题、日期和备注，并根据时间线位置及激活状态调整视觉样式。",
+      "tags": [
+        "component",
+        "timeline-item",
+        "event",
+        "presentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "type": "file",
+      "name": "ApplicationDetailScreen.tsx",
+      "filePath": "apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "summary": "移动端投递详情页，聚合投递资料、状态与优先级、地点标签、进展事件和跟进任务，并协调相应的数据写入。",
+      "tags": [
+        "screen",
+        "application-detail",
+        "orchestration",
+        "crud",
+        "react-native"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:apps/mobile/src/screens/ApplicationDetailScreen.tsx:ApplicationDetailScreen",
+      "type": "function",
+      "name": "ApplicationDetailScreen",
+      "filePath": "apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "lineRange": [
+        36,
+        250
+      ],
+      "summary": "加载指定投递记录，协调事件与跟进任务的增删改，并处理编辑、返回和删除整条投递记录的导航流程。",
+      "tags": [
+        "screen",
+        "data-fetching",
+        "crud",
+        "navigation",
+        "orchestration"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "type": "file",
+      "name": "CalendarScreen.tsx",
+      "filePath": "apps/mobile/src/screens/CalendarScreen.tsx",
+      "summary": "移动端日历与待办工作台，将投递日期、进展事件和跟进任务组织为月历及任务列表，并支持直接维护任务。",
+      "tags": [
+        "screen",
+        "calendar",
+        "follow-up-task",
+        "data-fetching",
+        "react-native"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:apps/mobile/src/screens/CalendarScreen.tsx:CalendarScreen",
+      "type": "function",
+      "name": "CalendarScreen",
+      "filePath": "apps/mobile/src/screens/CalendarScreen.tsx",
+      "lineRange": [
+        31,
+        249
+      ],
+      "summary": "加载投递集合并派生日历事件和未完成任务，在月历与待办子页间协调筛选、导航和任务 CRUD。",
+      "tags": [
+        "screen",
+        "calendar",
+        "derived-state",
+        "crud",
+        "orchestration"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:apps/mobile/src/components/EmptyState.tsx",
+      "type": "file",
+      "name": "EmptyState.tsx",
+      "filePath": "apps/mobile/src/components/EmptyState.tsx",
+      "summary": "提供带可选 Ionicons 图标和提示文本的移动端空状态组件，用于列表无数据或无匹配结果的反馈。",
+      "tags": [
+        "component",
+        "empty-state",
+        "react-native",
+        "presentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/mobile/src/components/EmptyState.tsx:EmptyState",
+      "type": "function",
+      "name": "EmptyState",
+      "filePath": "apps/mobile/src/components/EmptyState.tsx",
+      "lineRange": [
+        10,
+        17
+      ],
+      "summary": "渲染居中的空状态图标与说明文字，并允许调用方覆盖默认图标。",
+      "tags": [
+        "component",
+        "empty-state",
+        "ui",
+        "react-native"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/components/FilterSheet.tsx",
+      "type": "file",
+      "name": "FilterSheet.tsx",
+      "filePath": "apps/mobile/src/components/FilterSheet.tsx",
+      "summary": "实现移动端筛选底部弹层，统一处理状态、优先级、地址标签和投递渠道的选择与重置。",
+      "tags": [
+        "component",
+        "filtering",
+        "modal",
+        "react-native"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:apps/mobile/src/components/FilterSheet.tsx:FilterSheet",
+      "type": "function",
+      "name": "FilterSheet",
+      "filePath": "apps/mobile/src/components/FilterSheet.tsx",
+      "lineRange": [
+        22,
+        124
+      ],
+      "summary": "根据传入筛选状态渲染多组可切换 chip，并通过 onApply 立即回传更新后的筛选条件。",
+      "tags": [
+        "component",
+        "filtering",
+        "event-handler",
+        "modal"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:apps/mobile/src/components/SearchBar.tsx",
+      "type": "file",
+      "name": "SearchBar.tsx",
+      "filePath": "apps/mobile/src/components/SearchBar.tsx",
+      "summary": "提供受控搜索输入框、清空按钮和可选筛选入口，是移动端工作台的查询控件。",
+      "tags": [
+        "component",
+        "search",
+        "input",
+        "react-native"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:apps/mobile/src/components/SearchBar.tsx:SearchBar",
+      "type": "function",
+      "name": "SearchBar",
+      "filePath": "apps/mobile/src/components/SearchBar.tsx",
+      "lineRange": [
+        12,
+        38
+      ],
+      "summary": "渲染受控 TextInput，并按输入状态显示清空操作、按需显示筛选按钮。",
+      "tags": [
+        "component",
+        "search",
+        "controlled-input",
+        "event-handler"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/components/StatsBar.test.tsx",
+      "type": "file",
+      "name": "StatsBar.test.tsx",
+      "filePath": "apps/mobile/src/components/StatsBar.test.tsx",
+      "summary": "验证工作台统计卡片的固定展示顺序、筛选键回调和无障碍 selected 状态。",
+      "tags": [
+        "test",
+        "component-test",
+        "accessibility",
+        "jest"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/components/StatsBar.tsx",
+      "type": "file",
+      "name": "StatsBar.tsx",
+      "filePath": "apps/mobile/src/components/StatsBar.tsx",
+      "summary": "将仪表盘指标映射为四个可交互统计卡片，并以选中态驱动快速筛选。",
+      "tags": [
+        "component",
+        "dashboard",
+        "filtering",
+        "accessibility",
+        "tested"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:apps/mobile/src/components/StatsBar.tsx:StatsBar",
+      "type": "function",
+      "name": "StatsBar",
+      "filePath": "apps/mobile/src/components/StatsBar.tsx",
+      "lineRange": [
+        26,
+        51
+      ],
+      "summary": "遍历预定义快速筛选项，展示指标值并把点击事件转换为 QuickFilterKey 回调。",
+      "tags": [
+        "component",
+        "dashboard",
+        "event-handler",
+        "accessibility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "type": "file",
+      "name": "DashboardScreen.tsx",
+      "filePath": "apps/mobile/src/screens/DashboardScreen.tsx",
+      "summary": "移动端投递工作台主屏，负责加载 Supabase 投递数据、计算指标和提醒，并组合搜索、筛选、列表与导航交互。",
+      "tags": [
+        "component",
+        "screen",
+        "dashboard",
+        "data-fetching",
+        "filtering"
+      ],
+      "complexity": "complex",
+      "languageNotes": "以多个 React hooks 集中管理远程数据、筛选派生状态和弹层状态，单组件职责较多。"
+    },
+    {
+      "id": "function:apps/mobile/src/screens/DashboardScreen.tsx:DashboardScreen",
+      "type": "function",
+      "name": "DashboardScreen",
+      "filePath": "apps/mobile/src/screens/DashboardScreen.tsx",
+      "lineRange": [
+        37,
+        221
+      ],
+      "summary": "协调投递列表加载、刷新、搜索、多维筛选、快速统计筛选和到期提醒，并导航到新增或详情页面。",
+      "tags": [
+        "component",
+        "screen",
+        "state-management",
+        "data-fetching",
+        "navigation"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:apps/mobile/src/theme.test.ts",
+      "type": "file",
+      "name": "theme.test.ts",
+      "filePath": "apps/mobile/src/theme.test.ts",
+      "summary": "覆盖主题偏好解析的显式与系统模式，并校验 Android 语义颜色资源名称的完整性和唯一性。",
+      "tags": [
+        "test",
+        "theme",
+        "validation",
+        "jest"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/theme.ts",
+      "type": "file",
+      "name": "theme.ts",
+      "filePath": "apps/mobile/src/theme.ts",
+      "summary": "定义跨 iOS、Android 和 Web 的语义颜色、状态色、间距与共享样式，并通过 Context 持久化用户主题偏好。",
+      "tags": [
+        "theme",
+        "design-system",
+        "context",
+        "react-native",
+        "configuration",
+        "tested"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "使用 DynamicColorIOS、PlatformColor 与 React Context 组合实现平台原生动态色和运行时主题偏好。"
+    },
+    {
+      "id": "function:apps/mobile/src/theme.ts:ThemeProvider",
+      "type": "function",
+      "name": "ThemeProvider",
+      "filePath": "apps/mobile/src/theme.ts",
+      "lineRange": [
+        116,
+        143
+      ],
+      "summary": "从 AsyncStorage 恢复主题偏好，同步系统 Appearance，并向组件树提供偏好、解析结果和更新方法。",
+      "tags": [
+        "component",
+        "context-provider",
+        "theme",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/mobile/src/theme.ts:useAppTheme",
+      "type": "function",
+      "name": "useAppTheme",
+      "filePath": "apps/mobile/src/theme.ts",
+      "lineRange": [
+        145,
+        147
+      ],
+      "summary": "封装 ThemeContext 读取，为消费组件暴露当前主题偏好和修改接口。",
+      "tags": [
+        "hook",
+        "theme",
+        "context",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/themePreference.ts",
+      "type": "file",
+      "name": "themePreference.ts",
+      "filePath": "apps/mobile/src/themePreference.ts",
+      "summary": "提供纯函数形式的主题偏好解析，将 system、light、dark 偏好归一为实际明暗主题。",
+      "tags": [
+        "utility",
+        "theme",
+        "type-definition",
+        "pure-function",
+        "tested"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/mobile/src/themePreference.ts:resolveThemePreference",
+      "type": "function",
+      "name": "resolveThemePreference",
+      "filePath": "apps/mobile/src/themePreference.ts",
+      "lineRange": [
+        5,
+        8
+      ],
+      "summary": "优先采用显式明暗偏好，否则跟随系统主题并在未知时安全回退到 light。",
+      "tags": [
+        "utility",
+        "theme",
+        "pure-function",
+        "normalization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:packages/core/src/constants.ts",
+      "type": "file",
+      "name": "constants.ts",
+      "filePath": "packages/core/src/constants.ts",
+      "summary": "集中定义投递状态、优先级、事件类型和默认标题，并提供标签查询及面试状态判定。",
+      "tags": [
+        "constants",
+        "domain-model",
+        "utility",
+        "status"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/constants.ts:getStatus",
+      "type": "function",
+      "name": "getStatus",
+      "filePath": "packages/core/src/constants.ts",
+      "lineRange": [
+        35,
+        37
+      ],
+      "summary": "按状态标识查找投递状态元数据，并在未命中时返回默认状态。",
+      "tags": [
+        "utility",
+        "status",
+        "lookup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/constants.ts:getPriorityLabel",
+      "type": "function",
+      "name": "getPriorityLabel",
+      "filePath": "packages/core/src/constants.ts",
+      "lineRange": [
+        39,
+        41
+      ],
+      "summary": "将优先级标识映射为面向用户的中文标签。",
+      "tags": [
+        "utility",
+        "priority",
+        "lookup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/constants.ts:getEventTypeLabel",
+      "type": "function",
+      "name": "getEventTypeLabel",
+      "filePath": "packages/core/src/constants.ts",
+      "lineRange": [
+        43,
+        45
+      ],
+      "summary": "将进展事件类型映射为显示标签。",
+      "tags": [
+        "utility",
+        "event",
+        "lookup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/constants.ts:isInterviewStatus",
+      "type": "function",
+      "name": "isInterviewStatus",
+      "filePath": "packages/core/src/constants.ts",
+      "lineRange": [
+        47,
+        49
+      ],
+      "summary": "判断投递状态是否属于任一面试阶段。",
+      "tags": [
+        "utility",
+        "status",
+        "predicate"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:packages/core/src/date.ts",
+      "type": "file",
+      "name": "date.ts",
+      "filePath": "packages/core/src/date.ts",
+      "summary": "提供本地日期的 ISO 生成与中文短日期、完整日期格式化函数，供多个客户端共享。",
+      "tags": [
+        "utility",
+        "date",
+        "formatting",
+        "localization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/date.ts:todayISO",
+      "type": "function",
+      "name": "todayISO",
+      "filePath": "packages/core/src/date.ts",
+      "lineRange": [
+        1,
+        7
+      ],
+      "summary": "基于本地年月日生成 YYYY-MM-DD 字符串，避免 UTC 日期偏移。",
+      "tags": [
+        "utility",
+        "date",
+        "serialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/date.ts:formatDate",
+      "type": "function",
+      "name": "formatDate",
+      "filePath": "packages/core/src/date.ts",
+      "lineRange": [
+        9,
+        14
+      ],
+      "summary": "将可选 ISO 日期格式化为中文月日文本。",
+      "tags": [
+        "utility",
+        "date",
+        "formatting",
+        "localization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/date.ts:formatFullDate",
+      "type": "function",
+      "name": "formatFullDate",
+      "filePath": "packages/core/src/date.ts",
+      "lineRange": [
+        16,
+        23
+      ],
+      "summary": "将可选日期格式化为中文年月日完整表示。",
+      "tags": [
+        "utility",
+        "date",
+        "formatting",
+        "localization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:packages/core/src/exporters.ts",
+      "type": "file",
+      "name": "exporters.ts",
+      "filePath": "packages/core/src/exporters.ts",
+      "summary": "将投递数据导出为格式化 JSON 或 Excel 兼容的 SpreadsheetML，包含投递、事件和统计工作表。",
+      "tags": [
+        "serialization",
+        "export",
+        "spreadsheet",
+        "xml",
+        "utility"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "直接生成 SpreadsheetML XML，从而避免引入专用 Excel 库。"
+    },
+    {
+      "id": "function:packages/core/src/exporters.ts:exportApplicationsJSON",
+      "type": "function",
+      "name": "exportApplicationsJSON",
+      "filePath": "packages/core/src/exporters.ts",
+      "lineRange": [
+        22,
+        24
+      ],
+      "summary": "将完整投递集合序列化为带缩进的 JSON 文本。",
+      "tags": [
+        "serialization",
+        "export",
+        "json"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/exporters.ts:exportApplicationsExcel",
+      "type": "function",
+      "name": "exportApplicationsExcel",
+      "filePath": "packages/core/src/exporters.ts",
+      "lineRange": [
+        26,
+        101
+      ],
+      "summary": "把投递、时间线事件和汇总统计转换为多工作表 SpreadsheetML 文档。",
+      "tags": [
+        "serialization",
+        "export",
+        "spreadsheet",
+        "reporting",
+        "xml"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:packages/core/src/services.compatibility.test.ts",
+      "type": "file",
+      "name": "services.compatibility.test.ts",
+      "filePath": "packages/core/src/services.compatibility.test.ts",
+      "summary": "验证 workbench 新表或关联尚未部署时服务层的兼容降级行为，以及新增服务接口的基本约束。",
+      "tags": [
+        "test",
+        "compatibility",
+        "service-test",
+        "supabase",
+        "fallback"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:packages/core/src/services.ts",
+      "type": "file",
+      "name": "services.ts",
+      "filePath": "packages/core/src/services.ts",
+      "summary": "封装基于 Supabase 的投递、事件、地点标签、跟进任务和用户资料访问，并处理 v0.2 schema 未部署时的兼容降级。",
+      "tags": [
+        "service",
+        "data-access",
+        "supabase",
+        "crud",
+        "compatibility",
+        "tested"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:normalizeProfile",
+      "type": "function",
+      "name": "normalizeProfile",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        34,
+        48
+      ],
+      "summary": "为缺失的资料字段补齐默认值，使旧版数据库返回符合当前 Profile 类型。",
+      "tags": [
+        "normalization",
+        "compatibility",
+        "profile",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:normalizeLocationLabel",
+      "type": "function",
+      "name": "normalizeLocationLabel",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        57,
+        62
+      ],
+      "summary": "修剪并校验地点标签，拒绝空值或超过长度限制的输入。",
+      "tags": [
+        "validation",
+        "normalization",
+        "location-tag"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:listApplications",
+      "type": "function",
+      "name": "listApplications",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        74,
+        100
+      ],
+      "summary": "查询当前用户的投递及关联事件、任务和地点，并在关联缺失时回退到基础查询后规范化排序。",
+      "tags": [
+        "data-access",
+        "query",
+        "application",
+        "compatibility",
+        "supabase"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:createApplication",
+      "type": "function",
+      "name": "createApplication",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        102,
+        125
+      ],
+      "summary": "创建归属当前用户的投递记录，可原子式关联地点标签，并在关联失败时清理已插入记录。",
+      "tags": [
+        "data-access",
+        "create",
+        "application",
+        "transaction-compensation",
+        "supabase"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:updateApplication",
+      "type": "function",
+      "name": "updateApplication",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        127,
+        143
+      ],
+      "summary": "更新投递字段和更新时间，并按需替换其地点标签集合。",
+      "tags": [
+        "data-access",
+        "update",
+        "application",
+        "supabase"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:deleteApplication",
+      "type": "function",
+      "name": "deleteApplication",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        145,
+        148
+      ],
+      "summary": "按标识删除投递记录并传播 Supabase 错误。",
+      "tags": [
+        "data-access",
+        "delete",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:createEvent",
+      "type": "function",
+      "name": "createEvent",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        150,
+        161
+      ],
+      "summary": "为当前用户创建投递进展事件并返回持久化记录。",
+      "tags": [
+        "data-access",
+        "create",
+        "timeline-event",
+        "supabase"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:deleteEvent",
+      "type": "function",
+      "name": "deleteEvent",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        163,
+        166
+      ],
+      "summary": "按标识删除投递进展事件。",
+      "tags": [
+        "data-access",
+        "delete",
+        "timeline-event"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:listLocationTags",
+      "type": "function",
+      "name": "listLocationTags",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        168,
+        173
+      ],
+      "summary": "按标签文本排序获取地点标签，并在表未部署时返回空集合。",
+      "tags": [
+        "data-access",
+        "query",
+        "location-tag",
+        "compatibility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:createLocationTag",
+      "type": "function",
+      "name": "createLocationTag",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        175,
+        184
+      ],
+      "summary": "规范化标签文本并为当前用户创建地点标签。",
+      "tags": [
+        "data-access",
+        "create",
+        "location-tag",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:renameLocationTag",
+      "type": "function",
+      "name": "renameLocationTag",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        186,
+        195
+      ],
+      "summary": "规范化新文本并更新指定地点标签。",
+      "tags": [
+        "data-access",
+        "update",
+        "location-tag",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:deleteLocationTag",
+      "type": "function",
+      "name": "deleteLocationTag",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        197,
+        200
+      ],
+      "summary": "按标识删除地点标签。",
+      "tags": [
+        "data-access",
+        "delete",
+        "location-tag"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:setApplicationLocations",
+      "type": "function",
+      "name": "setApplicationLocations",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        202,
+        214
+      ],
+      "summary": "去重地点标签标识并调用数据库 RPC 原子替换投递与地点的多对多关联。",
+      "tags": [
+        "data-access",
+        "rpc",
+        "application",
+        "location-tag",
+        "relationship"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:createFollowUpTask",
+      "type": "function",
+      "name": "createFollowUpTask",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        216,
+        225
+      ],
+      "summary": "校验任务输入并为当前用户创建跟进任务。",
+      "tags": [
+        "data-access",
+        "create",
+        "follow-up-task",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:updateFollowUpTask",
+      "type": "function",
+      "name": "updateFollowUpTask",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        227,
+        240
+      ],
+      "summary": "校验并更新跟进任务的标题、备注和到期日。",
+      "tags": [
+        "data-access",
+        "update",
+        "follow-up-task",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:setFollowUpTaskCompleted",
+      "type": "function",
+      "name": "setFollowUpTaskCompleted",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        242,
+        255
+      ],
+      "summary": "通过设置或清除完成时间戳切换跟进任务完成状态。",
+      "tags": [
+        "data-access",
+        "update",
+        "follow-up-task",
+        "state-transition"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:deleteFollowUpTask",
+      "type": "function",
+      "name": "deleteFollowUpTask",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        257,
+        260
+      ],
+      "summary": "按标识删除跟进任务。",
+      "tags": [
+        "data-access",
+        "delete",
+        "follow-up-task"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:getProfile",
+      "type": "function",
+      "name": "getProfile",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        262,
+        267
+      ],
+      "summary": "读取当前用户资料并补齐旧 schema 缺失的默认字段。",
+      "tags": [
+        "data-access",
+        "query",
+        "profile",
+        "compatibility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/services.ts:updateProfile",
+      "type": "function",
+      "name": "updateProfile",
+      "filePath": "packages/core/src/services.ts",
+      "lineRange": [
+        269,
+        287
+      ],
+      "summary": "筛选并规范化可更新资料字段，保存后返回兼容当前类型的用户资料。",
+      "tags": [
+        "data-access",
+        "update",
+        "profile",
+        "normalization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:packages/core/src/stats.ts",
+      "type": "file",
+      "name": "stats.ts",
+      "filePath": "packages/core/src/stats.ts",
+      "summary": "计算投递漏斗指标、到期提醒和地点筛选，并把投递、任务和事件投影为统一日历条目。",
+      "tags": [
+        "analytics",
+        "calendar",
+        "filtering",
+        "reminder",
+        "domain-logic"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:packages/core/src/stats.ts:isFollowUpTaskDue",
+      "type": "function",
+      "name": "isFollowUpTaskDue",
+      "filePath": "packages/core/src/stats.ts",
+      "lineRange": [
+        11,
+        13
+      ],
+      "summary": "判断未完成跟进任务是否已到期。",
+      "tags": [
+        "predicate",
+        "follow-up-task",
+        "date"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/stats.ts:getReminderTasks",
+      "type": "function",
+      "name": "getReminderTasks",
+      "filePath": "packages/core/src/stats.ts",
+      "lineRange": [
+        15,
+        24
+      ],
+      "summary": "筛选提醒窗口内的未完成任务并按到期日排序。",
+      "tags": [
+        "filtering",
+        "reminder",
+        "follow-up-task",
+        "date"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/stats.ts:matchesLocationFilter",
+      "type": "function",
+      "name": "matchesLocationFilter",
+      "filePath": "packages/core/src/stats.ts",
+      "lineRange": [
+        26,
+        30
+      ],
+      "summary": "判断投递是否包含任一选中的地点标签。",
+      "tags": [
+        "filtering",
+        "location-tag",
+        "predicate"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/stats.ts:isDue",
+      "type": "function",
+      "name": "isDue",
+      "filePath": "packages/core/src/stats.ts",
+      "lineRange": [
+        32,
+        41
+      ],
+      "summary": "综合跟进任务、下一步日期和关闭状态判断投递是否需要处理。",
+      "tags": [
+        "predicate",
+        "reminder",
+        "application",
+        "domain-logic"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/stats.ts:isNotApplied",
+      "type": "function",
+      "name": "isNotApplied",
+      "filePath": "packages/core/src/stats.ts",
+      "lineRange": [
+        43,
+        45
+      ],
+      "summary": "判断投递记录是否仍处于未投递状态。",
+      "tags": [
+        "predicate",
+        "application",
+        "status"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/stats.ts:calculateMetrics",
+      "type": "function",
+      "name": "calculateMetrics",
+      "filePath": "packages/core/src/stats.ts",
+      "lineRange": [
+        47,
+        69
+      ],
+      "summary": "计算投递总量、面试与 Offer 数、关闭数及面试率和 Offer 率。",
+      "tags": [
+        "analytics",
+        "metrics",
+        "application",
+        "reporting"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:packages/core/src/stats.ts:buildCalendarItems",
+      "type": "function",
+      "name": "buildCalendarItems",
+      "filePath": "packages/core/src/stats.ts",
+      "lineRange": [
+        71,
+        118
+      ],
+      "summary": "把投递日期、下一步动作、跟进任务和时间线事件归一化为按日期排序的日历条目。",
+      "tags": [
+        "calendar",
+        "transformation",
+        "application",
+        "follow-up-task",
+        "timeline-event"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:packages/core/src/supabase.ts",
+      "type": "file",
+      "name": "supabase.ts",
+      "filePath": "packages/core/src/supabase.ts",
+      "summary": "创建带持久会话和自动刷新配置的浏览器 Supabase 客户端，并校验连接参数。",
+      "tags": [
+        "factory",
+        "supabase",
+        "authentication",
+        "client"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/supabase.ts:createBrowserSupabaseClient",
+      "type": "function",
+      "name": "createBrowserSupabaseClient",
+      "filePath": "packages/core/src/supabase.ts",
+      "lineRange": [
+        3,
+        15
+      ],
+      "summary": "校验 URL 与匿名密钥后构造适用于浏览器的 Supabase client。",
+      "tags": [
+        "factory",
+        "supabase",
+        "validation",
+        "authentication"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:packages/core/src/types.ts",
+      "type": "file",
+      "name": "types.ts",
+      "filePath": "packages/core/src/types.ts",
+      "summary": "定义跨桌面端和移动端共享的投递、事件、地点标签、跟进任务、资料、日历与输入输出类型契约。",
+      "tags": [
+        "type-definition",
+        "domain-model",
+        "public-api",
+        "typescript"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "以 TypeScript interface 和 union type 约束跨端公共领域模型。"
+    },
+    {
+      "id": "file:apps/desktop/src/App.tsx",
+      "type": "file",
+      "name": "App.tsx",
+      "filePath": "apps/desktop/src/App.tsx",
+      "summary": "桌面端单页应用主体，集中实现认证、投递 CRUD、筛选排序、地址标签、跟进任务、事件时间线、日历以及导入导出。",
+      "tags": [
+        "component",
+        "entry-point",
+        "dashboard",
+        "data-management",
+        "state-management"
+      ],
+      "complexity": "complex",
+      "languageNotes": "单个 React 函数组件超过 700 行并维护大量 useState 与事件处理器，形成明显的职责和状态耦合热点。"
+    },
+    {
+      "id": "function:apps/desktop/src/App.tsx:normalizeInput",
+      "type": "function",
+      "name": "normalizeInput",
+      "filePath": "apps/desktop/src/App.tsx",
+      "lineRange": [
+        150,
+        166
+      ],
+      "summary": "清理投递表单字符串并把空值归一为 null，同时根据状态补齐或清除投递日期。",
+      "tags": [
+        "utility",
+        "normalization",
+        "validation",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/desktop/src/App.tsx:inputFromApplication",
+      "type": "function",
+      "name": "inputFromApplication",
+      "filePath": "apps/desktop/src/App.tsx",
+      "lineRange": [
+        168,
+        185
+      ],
+      "summary": "将持久化的 Application 映射为可编辑表单输入，并为可空字段提供空字符串默认值。",
+      "tags": [
+        "utility",
+        "mapping",
+        "serialization",
+        "form-state"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/desktop/src/App.tsx:getMonthMatrix",
+      "type": "function",
+      "name": "getMonthMatrix",
+      "filePath": "apps/desktop/src/App.tsx",
+      "lineRange": [
+        196,
+        205
+      ],
+      "summary": "以指定月份为锚点生成从周一开始的 42 天日历矩阵，覆盖完整六周视图。",
+      "tags": [
+        "utility",
+        "calendar",
+        "date",
+        "data-transformation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/desktop/src/App.tsx:App",
+      "type": "function",
+      "name": "App",
+      "filePath": "apps/desktop/src/App.tsx",
+      "lineRange": [
+        211,
+        927
+      ],
+      "summary": "协调桌面端全部业务状态和 Supabase 操作，并在认证页、工作台列表、详情、统计、日历和编辑弹窗之间组织 UI。",
+      "tags": [
+        "component",
+        "entry-point",
+        "orchestrator",
+        "state-management",
+        "data-fetching"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:apps/desktop/src/main.tsx",
+      "type": "file",
+      "name": "main.tsx",
+      "filePath": "apps/desktop/src/main.tsx",
+      "summary": "桌面端 Vite/React 入口，在 root 容器中以 StrictMode 挂载 App 并加载全局样式。",
+      "tags": [
+        "entry-point",
+        "bootstrap",
+        "react",
+        "vite"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/desktop/src/supabaseClient.ts",
+      "type": "file",
+      "name": "supabaseClient.ts",
+      "filePath": "apps/desktop/src/supabaseClient.ts",
+      "summary": "读取 Vite 环境变量并创建供桌面端复用的浏览器 Supabase 客户端单例。",
+      "tags": [
+        "singleton",
+        "supabase",
+        "configuration",
+        "data-access"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/desktop/src/workbench.test.ts",
+      "type": "file",
+      "name": "workbench.test.ts",
+      "filePath": "apps/desktop/src/workbench.test.ts",
+      "summary": "验证地址标签去重计数，以及仅从未完成跟进任务中选择最早日期的工作台辅助逻辑。",
+      "tags": [
+        "test",
+        "unit-test",
+        "workbench",
+        "vitest"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/desktop/src/workbench.ts",
+      "type": "file",
+      "name": "workbench.ts",
+      "filePath": "apps/desktop/src/workbench.ts",
+      "summary": "提供桌面工作台的纯数据辅助函数，用于统计地址标签使用量和获取最近未完成跟进日期。",
+      "tags": [
+        "utility",
+        "workbench",
+        "aggregation",
+        "pure-function",
+        "tested"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/desktop/src/workbench.ts:countLocationUsage",
+      "type": "function",
+      "name": "countLocationUsage",
+      "filePath": "apps/desktop/src/workbench.ts",
+      "lineRange": [
+        3,
+        9
+      ],
+      "summary": "按投递记录统计地址标签出现次数，并确保同一记录中的重复标签只计一次。",
+      "tags": [
+        "utility",
+        "aggregation",
+        "deduplication",
+        "pure-function"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:apps/desktop/src/workbench.ts:getNextPendingTaskDate",
+      "type": "function",
+      "name": "getNextPendingTaskDate",
+      "filePath": "apps/desktop/src/workbench.ts",
+      "lineRange": [
+        11,
+        16
+      ],
+      "summary": "过滤已完成跟进任务并返回最早待办日期；无待办时返回 null。",
+      "tags": [
+        "utility",
+        "follow-up",
+        "date",
+        "pure-function"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:supabase/migrations/202605160001_initial_schema.sql:initial_schema",
+      "type": "table",
+      "name": "initial_schema",
+      "filePath": "supabase/migrations/202605160001_initial_schema.sql",
+      "summary": "建立求职跟踪核心数据库，包括枚举、更新时间触发器、用户资料、申请和申请事件，并为各表启用按用户隔离的 RLS 策略。",
+      "tags": [
+        "database",
+        "migration",
+        "supabase",
+        "row-level-security",
+        "schema-definition"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "PostgreSQL 迁移使用 enum、trigger、foreign key 与 auth.uid() 策略实现数据完整性和租户隔离。"
+    },
+    {
+      "id": "table:supabase/migrations/202605160001_initial_schema.sql:profiles",
+      "type": "table",
+      "name": "profiles",
+      "filePath": "supabase/migrations/202605160001_initial_schema.sql",
+      "summary": "存储与 auth.users 一一对应的用户显示名称和审计时间，并由新用户触发器自动创建。",
+      "tags": [
+        "database",
+        "user-profile",
+        "row-level-security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:supabase/migrations/202605160001_initial_schema.sql:applications",
+      "type": "table",
+      "name": "applications",
+      "filePath": "supabase/migrations/202605160001_initial_schema.sql",
+      "summary": "存储公司、职位、渠道、状态、优先级、日期和联系信息等求职申请主体数据。",
+      "tags": [
+        "database",
+        "application",
+        "data-model",
+        "row-level-security"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "table:supabase/migrations/202605160001_initial_schema.sql:application_events",
+      "type": "table",
+      "name": "application_events",
+      "filePath": "supabase/migrations/202605160001_initial_schema.sql",
+      "summary": "记录申请关联的备注、考试、面试、跟进、结果和状态变更事件。",
+      "tags": [
+        "database",
+        "event-log",
+        "application",
+        "row-level-security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:supabase/migrations/202607250001_add_manager_status.sql:manager_status",
+      "type": "table",
+      "name": "manager_status",
+      "filePath": "supabase/migrations/202607250001_add_manager_status.sql",
+      "summary": "向 application_status 枚举追加 manager 阶段，使申请流程覆盖主管面环节。",
+      "tags": [
+        "database",
+        "migration",
+        "enum",
+        "application-status"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:supabase/migrations/202607250002_mobile_workbench.sql:mobile_workbench",
+      "type": "table",
+      "name": "mobile_workbench",
+      "filePath": "supabase/migrations/202607250002_mobile_workbench.sql",
+      "summary": "扩展移动工作台数据模型，加入地点标签、多对多关联、跟进任务、头像存储和资料偏好，并迁移既有城市与下一步日期数据。",
+      "tags": [
+        "database",
+        "migration",
+        "supabase",
+        "row-level-security",
+        "data-migration"
+      ],
+      "complexity": "complex",
+      "languageNotes": "迁移通过复合外键、约束、advisory lock、security invoker 函数及 Storage policy 共同保证跨表所有权和并发上限。"
+    },
+    {
+      "id": "table:supabase/migrations/202607250002_mobile_workbench.sql:location_tags",
+      "type": "table",
+      "name": "location_tags",
+      "filePath": "supabase/migrations/202607250002_mobile_workbench.sql",
+      "summary": "保存用户私有的规范化地点标签，限制标签长度并保证每个用户下大小写无关唯一。",
+      "tags": [
+        "database",
+        "location",
+        "tagging",
+        "row-level-security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "table:supabase/migrations/202607250002_mobile_workbench.sql:application_location_tags",
+      "type": "table",
+      "name": "application_location_tags",
+      "filePath": "supabase/migrations/202607250002_mobile_workbench.sql",
+      "summary": "连接申请与地点标签，并用复合外键和触发器保证同一用户所有权及每个申请最多十个地点。",
+      "tags": [
+        "database",
+        "junction-table",
+        "location",
+        "data-integrity"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "table:supabase/migrations/202607250002_mobile_workbench.sql:follow_up_tasks",
+      "type": "table",
+      "name": "follow_up_tasks",
+      "filePath": "supabase/migrations/202607250002_mobile_workbench.sql",
+      "summary": "存储申请关联的跟进任务、到期日、完成时间和备注，并通过级联删除与 RLS 维持生命周期和隔离。",
+      "tags": [
+        "database",
+        "task-management",
+        "application",
+        "row-level-security"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:.env.example",
+      "type": "config",
+      "name": ".env.example",
+      "filePath": ".env.example",
+      "summary": "列出桌面端 Vite、移动端 Expo 和双用户 Supabase 集成测试所需的 URL、匿名密钥及测试账号环境变量。",
+      "tags": [
+        "configuration",
+        "environment",
+        "supabase",
+        "security",
+        "testing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "项目主入口文档，覆盖功能、目录结构、Windows 环境安装、桌面与移动端调试构建、数据库迁移和测试命令。",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "getting-started",
+        "development",
+        "deployment"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "pnpm monorepo 根配置，集中定义桌面端、移动端、测试、类型检查和生产构建命令及共享开发依赖。",
+      "tags": [
+        "configuration",
+        "monorepo",
+        "build-system",
+        "pnpm",
+        "scripts"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:pnpm-workspace.yaml",
+      "type": "config",
+      "name": "pnpm-workspace.yaml",
+      "filePath": "pnpm-workspace.yaml",
+      "summary": "声明 apps 与 packages 两类 pnpm workspace 包，使桌面端、移动端和共享 core 包参与统一依赖解析。",
+      "tags": [
+        "configuration",
+        "monorepo",
+        "pnpm",
+        "workspace"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:tsconfig.base.json",
+      "type": "config",
+      "name": "tsconfig.base.json",
+      "filePath": "tsconfig.base.json",
+      "summary": "为各 workspace 提供共享 TypeScript 编译基线，包括严格类型检查、现代模块解析、JSX 和一致性选项。",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system",
+        "strict-mode"
+      ],
+      "complexity": "simple",
+      "languageNotes": "作为各子包 tsconfig 的继承基线，集中控制 TypeScript 语义约束。"
+    },
+    {
+      "id": "file:apps/desktop/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "apps/desktop/index.html",
+      "summary": "桌面端 Vite HTML 外壳，声明中文页面元数据、root 挂载容器和 /src/main.tsx 模块入口。",
+      "tags": [
+        "entry-point",
+        "markup",
+        "vite",
+        "bootstrap"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/desktop/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "apps/desktop/package.json",
+      "summary": "定义桌面工作区的 Vite、TypeScript、Vitest 与 Tauri 命令，以及 React、Supabase、共享核心包和 Tauri 依赖。",
+      "tags": [
+        "configuration",
+        "package-manager",
+        "build-system",
+        "tauri",
+        "vite"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/desktop/tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "apps/desktop/tsconfig.json",
+      "summary": "继承仓库级 TypeScript 基础配置，为桌面端启用 React JSX、DOM/ES2022 库和 Vite 客户端类型。",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/desktop/src-tauri/gen/schemas/acl-manifests.json",
+      "type": "config",
+      "name": "acl-manifests.json",
+      "filePath": "apps/desktop/src-tauri/gen/schemas/acl-manifests.json",
+      "summary": "Tauri 自动生成的 ACL 清单，汇总 core、window、webview、menu、shell 等插件的默认权限、允许或拒绝命令与作用域 schema。",
+      "tags": [
+        "configuration",
+        "tauri",
+        "security",
+        "generated"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:apps/desktop/src-tauri/gen/schemas/capabilities.json",
+      "type": "config",
+      "name": "capabilities.json",
+      "filePath": "apps/desktop/src-tauri/gen/schemas/capabilities.json",
+      "summary": "Tauri 自动生成的应用 capability 集合；当前为空，表示项目尚未生成显式 capability 条目。",
+      "tags": [
+        "configuration",
+        "tauri",
+        "security",
+        "generated"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/desktop/src-tauri/gen/schemas/desktop-schema.json",
+      "type": "config",
+      "name": "desktop-schema.json",
+      "filePath": "apps/desktop/src-tauri/gen/schemas/desktop-schema.json",
+      "summary": "面向桌面平台的 Tauri capability JSON Schema，定义权限标识、远程 URL、平台目标和 shell 作用域等配置约束。",
+      "tags": [
+        "configuration",
+        "tauri",
+        "json-schema",
+        "security",
+        "generated"
+      ],
+      "complexity": "complex",
+      "languageNotes": "大型 JSON Schema 使用 anyOf 与 definitions 描述 Tauri ACL 的联合类型及平台条件。"
+    },
+    {
+      "id": "config:apps/desktop/src-tauri/gen/schemas/windows-schema.json",
+      "type": "config",
+      "name": "windows-schema.json",
+      "filePath": "apps/desktop/src-tauri/gen/schemas/windows-schema.json",
+      "summary": "面向 Windows 的 Tauri capability JSON Schema，供配置校验与编辑器提示使用，并包含 core 与 shell 权限枚举。",
+      "tags": [
+        "configuration",
+        "tauri",
+        "json-schema",
+        "windows",
+        "generated"
+      ],
+      "complexity": "complex",
+      "languageNotes": "该生成 schema 与 desktop 版本结构高度相似，主要用于目标平台专属校验。"
+    },
+    {
+      "id": "config:apps/mobile/android/app/src/main/res/values/colors.xml",
+      "type": "config",
+      "name": "colors.xml",
+      "filePath": "apps/mobile/android/app/src/main/res/values/colors.xml",
+      "summary": "定义 Android 浅色模式的品牌、表面、文本、导航、投递状态和优先级色彩资源。",
+      "tags": [
+        "configuration",
+        "android",
+        "theme",
+        "color-tokens"
+      ],
+      "complexity": "simple",
+      "languageNotes": "使用 Android XML resource 名称作为原生主题 token，并与应用语义状态保持对应。"
+    },
+    {
+      "id": "config:apps/mobile/android/app/src/main/res/values/strings.xml",
+      "type": "config",
+      "name": "strings.xml",
+      "filePath": "apps/mobile/android/app/src/main/res/values/strings.xml",
+      "summary": "定义 Android 应用名称“秋招投递助手”的本地化字符串资源。",
+      "tags": [
+        "configuration",
+        "android",
+        "localization",
+        "resources"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/android/app/src/main/res/values/styles.xml",
+      "type": "config",
+      "name": "styles.xml",
+      "filePath": "apps/mobile/android/app/src/main/res/values/styles.xml",
+      "summary": "配置 Android 主应用、文本输入重置和启动画面三组样式，并连接状态栏、主色与启动背景资源。",
+      "tags": [
+        "configuration",
+        "android",
+        "theme",
+        "splash-screen",
+        "resources"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/android/build.gradle",
+      "type": "config",
+      "name": "build.gradle",
+      "filePath": "apps/mobile/android/build.gradle",
+      "summary": "配置 React Native Android 根工程的 SDK、NDK、Kotlin 与 Gradle 插件版本，并声明 Google、Maven Central、JitPack 和 Node 解析出的 React Native/JSC 仓库。",
+      "tags": [
+        "configuration",
+        "android",
+        "gradle",
+        "build-system",
+        "react-native"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Groovy Gradle 脚本通过 Node require.resolve 动态定位 npm 中的 Android 构件仓库。"
+    },
+    {
+      "id": "config:apps/mobile/android/gradle.properties",
+      "type": "config",
+      "name": "gradle.properties",
+      "filePath": "apps/mobile/android/gradle.properties",
+      "summary": "集中控制 Android Gradle JVM 内存、目标架构、Hermes、新架构、Expo 图片能力、网络检查和 SDK/Kotlin 版本。",
+      "tags": [
+        "configuration",
+        "android",
+        "gradle",
+        "performance",
+        "react-native"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/gradlew.bat",
+      "type": "file",
+      "name": "gradlew.bat",
+      "filePath": "apps/mobile/android/gradlew.bat",
+      "summary": "Windows 平台的 Gradle Wrapper 启动脚本，解析工程目录与 Java 运行时后调用 GradleWrapperMain 并传播退出码。",
+      "tags": [
+        "script",
+        "gradle-wrapper",
+        "windows",
+        "build-system"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "使用 Batch 标签、goto 和环境变量完成 Java 探测与错误处理。"
+    },
+    {
+      "id": "function:apps/mobile/android/gradlew.bat:findJavaFromJavaHome",
+      "type": "function",
+      "name": "findJavaFromJavaHome",
+      "filePath": "apps/mobile/android/gradlew.bat",
+      "lineRange": [
+        56,
+        69
+      ],
+      "summary": "清理 JAVA_HOME 引号、构造 java.exe 路径并验证文件存在，否则输出配置错误后终止。",
+      "tags": [
+        "script",
+        "environment",
+        "java",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/android/settings.gradle",
+      "type": "config",
+      "name": "settings.gradle",
+      "filePath": "apps/mobile/android/settings.gradle",
+      "summary": "组装移动端 Android Gradle 工程，接入 React Native 与 Expo 插件、自动链接原生模块、版本目录和 app 子模块。",
+      "tags": [
+        "configuration",
+        "android",
+        "gradle",
+        "autolinking",
+        "expo"
+      ],
+      "complexity": "simple",
+      "languageNotes": "根据 EXPO_USE_COMMUNITY_AUTOLINKING 在社区命令与 Expo modules autolinking 之间切换。"
+    },
+    {
+      "id": "config:apps/mobile/app.json",
+      "type": "config",
+      "name": "app.json",
+      "filePath": "apps/mobile/app.json",
+      "summary": "定义 Expo 移动应用的名称、版本、平台标识、资源、Supabase 环境映射及 Android/iOS 插件配置。",
+      "tags": [
+        "configuration",
+        "expo",
+        "mobile",
+        "deployment",
+        "environment"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:apps/mobile/eas.json",
+      "type": "config",
+      "name": "eas.json",
+      "filePath": "apps/mobile/eas.json",
+      "summary": "定义 EAS CLI 约束及 development、preview、production 构建配置，分别产出内部 APK 或生产 AAB。",
+      "tags": [
+        "configuration",
+        "expo",
+        "eas",
+        "deployment",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "apps/mobile/package.json",
+      "summary": "定义 Expo/React Native 移动工作区的启动、原生构建、EAS 发布、测试和类型检查命令，以及导航、Supabase、存储和媒体依赖。",
+      "tags": [
+        "configuration",
+        "package-manager",
+        "react-native",
+        "expo",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "apps/mobile/tsconfig.json",
+      "summary": "继承仓库级 TypeScript 配置，为移动端启用 React JSX、ES2022 库和 React Native 类型，并限定 App 与 src 编译范围。",
+      "tags": [
+        "configuration",
+        "typescript",
+        "react-native",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.npmrc",
+      "type": "file",
+      "name": ".npmrc",
+      "filePath": ".npmrc",
+      "summary": "要求 pnpm 使用 hoisted node-linker，以兼容 Expo、React Native 和桌面子项目对扁平依赖布局的预期。",
+      "tags": [
+        "configuration",
+        "pnpm",
+        "dependency-management"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "列出 Understand Anything 扫描的默认排除说明和可选忽略模式；当前建议项均保持注释。",
+      "tags": [
+        "configuration",
+        "code-analysis",
+        "ignore-rules"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "将 Understand Anything 知识图谱的文本输出语言设为中文。",
+      "tags": [
+        "configuration",
+        "code-analysis",
+        "localization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/desktop/src-tauri/Cargo.toml",
+      "type": "config",
+      "name": "Cargo.toml",
+      "filePath": "apps/desktop/src-tauri/Cargo.toml",
+      "summary": "定义 Tauri 2 桌面壳 crate、构建依赖、shell 插件、Serde 序列化和 custom-protocol feature。",
+      "tags": [
+        "configuration",
+        "rust",
+        "tauri",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/desktop/src-tauri/build.rs",
+      "type": "file",
+      "name": "build.rs",
+      "filePath": "apps/desktop/src-tauri/build.rs",
+      "summary": "Tauri crate 构建脚本入口，委托 tauri-build 生成桌面应用所需构建元数据。",
+      "tags": [
+        "build-system",
+        "rust",
+        "tauri"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/desktop/src-tauri/src/main.rs",
+      "type": "file",
+      "name": "main.rs",
+      "filePath": "apps/desktop/src-tauri/src/main.rs",
+      "summary": "桌面原生入口，创建默认 Tauri Builder、加载生成上下文并启动事件循环。",
+      "tags": [
+        "entry-point",
+        "rust",
+        "tauri",
+        "desktop"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/desktop/src-tauri/tauri.conf.json",
+      "type": "config",
+      "name": "tauri.conf.json",
+      "filePath": "apps/desktop/src-tauri/tauri.conf.json",
+      "summary": "配置 Tauri 桌面产品标识、Vite 开发与构建命令、窗口尺寸，以及 Windows NSIS 打包目标。",
+      "tags": [
+        "configuration",
+        "tauri",
+        "desktop",
+        "deployment"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/desktop/src/rls.integration.test.ts",
+      "type": "file",
+      "name": "rls.integration.test.ts",
+      "filePath": "apps/desktop/src/rls.integration.test.ts",
+      "summary": "使用两个真实 Supabase 测试账号验证标签、申请、任务、关联表和私有头像的 RLS 隔离及级联删除。",
+      "tags": [
+        "test",
+        "integration-test",
+        "supabase",
+        "row-level-security"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "测试通过环境变量按条件跳过，并直接验证数据库与 Storage policy 的跨用户拒绝语义。"
+    },
+    {
+      "id": "file:apps/desktop/src/styles.css",
+      "type": "file",
+      "name": "styles.css",
+      "filePath": "apps/desktop/src/styles.css",
+      "summary": "定义桌面端完整视觉系统和响应式布局，覆盖认证页、侧栏、指标卡、申请看板、详情、统计、日历、对话框与交互状态。",
+      "tags": [
+        "stylesheet",
+        "desktop-ui",
+        "responsive-design",
+        "design-system"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:apps/desktop/vite.config.ts",
+      "type": "file",
+      "name": "vite.config.ts",
+      "filePath": "apps/desktop/vite.config.ts",
+      "summary": "配置桌面 React 前端的 Vite 插件，并将开发服务器固定在 Tauri 期望的 5173 端口。",
+      "tags": [
+        "configuration",
+        "vite",
+        "react",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:apps/mobile/.expo/README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "apps/mobile/.expo/README.md",
+      "summary": "Expo 自动生成说明，解释本机设备与开发服务器状态文件的用途，并明确该目录不应提交共享。",
+      "tags": [
+        "documentation",
+        "expo",
+        "generated",
+        "development"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/.expo/devices.json",
+      "type": "config",
+      "name": "devices.json",
+      "filePath": "apps/mobile/.expo/devices.json",
+      "summary": "记录最近打开本 Expo 项目的本机设备；当前设备列表为空。",
+      "tags": [
+        "configuration",
+        "expo",
+        "development",
+        "generated"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/android/app/build.gradle",
+      "type": "config",
+      "name": "build.gradle",
+      "filePath": "apps/mobile/android/app/build.gradle",
+      "summary": "配置 Expo/React Native Android 应用的 bundle 入口、Hermes/JSC、SDK、签名、ProGuard、资源压缩和可选图片格式依赖。",
+      "tags": [
+        "configuration",
+        "android",
+        "gradle",
+        "react-native",
+        "build-system"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Gradle 脚本动态调用 Node 解析 Expo 与 React Native 工具路径，并按属性切换 Hermes、GIF/WebP 与打包选项。"
+    },
+    {
+      "id": "file:apps/mobile/android/app/debug.keystore",
+      "type": "file",
+      "name": "debug.keystore",
+      "filePath": "apps/mobile/android/app/debug.keystore",
+      "summary": "Android 调试构建使用的开发签名密钥库，仅用于本地或测试 APK 签名。",
+      "tags": [
+        "android",
+        "debug-signing",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/proguard-rules.pro",
+      "type": "file",
+      "name": "proguard-rules.pro",
+      "filePath": "apps/mobile/android/app/proguard-rules.pro",
+      "summary": "补充 Android release 混淆规则，保留 Reanimated 与 React Native TurboModule 类。",
+      "tags": [
+        "android",
+        "proguard",
+        "build-system",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/android/app/src/debug/AndroidManifest.xml",
+      "type": "config",
+      "name": "AndroidManifest.xml",
+      "filePath": "apps/mobile/android/app/src/debug/AndroidManifest.xml",
+      "summary": "为 Android debug 变体开启悬浮窗权限和明文流量，以支持 React Native 开发服务器与调试覆盖层。",
+      "tags": [
+        "configuration",
+        "android",
+        "debug",
+        "permissions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/android/app/src/main/AndroidManifest.xml",
+      "type": "config",
+      "name": "AndroidManifest.xml",
+      "filePath": "apps/mobile/android/app/src/main/AndroidManifest.xml",
+      "summary": "声明移动应用权限、MainApplication、纵向 MainActivity、启动器入口和 com.jobtracker.mobile 深链。",
+      "tags": [
+        "configuration",
+        "android",
+        "permissions",
+        "deep-linking",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "type": "file",
+      "name": "MainActivity.kt",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "summary": "React Native Android 主 Activity，设置启动主题、暴露 JS 主组件、包装 Expo delegate，并兼容 Android S 前后的返回键行为。",
+      "tags": [
+        "entry-point",
+        "android",
+        "kotlin",
+        "react-native",
+        "expo"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "type": "file",
+      "name": "MainApplication.kt",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "summary": "Android Application 入口，构建 Expo 包装的 React Native Host，初始化 SoLoader、新架构入口和 Expo 生命周期分发。",
+      "tags": [
+        "entry-point",
+        "android",
+        "kotlin",
+        "react-native",
+        "expo"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:apps/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml",
+      "type": "config",
+      "name": "ic_launcher_background.xml",
+      "filePath": "apps/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml",
+      "summary": "组合启动页背景色与居中 logo，作为 Android 启动图层 drawable。",
+      "tags": [
+        "configuration",
+        "android-resource",
+        "launcher",
+        "branding"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+      "type": "config",
+      "name": "rn_edit_text_material.xml",
+      "filePath": "apps/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+      "summary": "提供 React Native EditText 的 Material inset/selector drawable，并规避旧默认状态项触发的空指针问题。",
+      "tags": [
+        "configuration",
+        "android-resource",
+        "react-native",
+        "compatibility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp",
+      "type": "file",
+      "name": "ic_launcher.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp",
+      "summary": "Android hdpi 密度的方形应用启动图标二进制资源。",
+      "tags": [
+        "android-resource",
+        "launcher-icon",
+        "branding"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp",
+      "type": "file",
+      "name": "ic_launcher_round.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp",
+      "summary": "Android hdpi 密度的圆形应用启动图标二进制资源。",
+      "tags": [
+        "android-resource",
+        "launcher-icon",
+        "branding"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp",
+      "type": "file",
+      "name": "ic_launcher.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp",
+      "summary": "Android mdpi 密度的方形应用启动图标二进制资源。",
+      "tags": [
+        "android-resource",
+        "launcher-icon",
+        "branding"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp",
+      "type": "file",
+      "name": "ic_launcher_round.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp",
+      "summary": "Android mdpi 密度的圆形应用启动图标二进制资源。",
+      "tags": [
+        "android-resource",
+        "launcher-icon",
+        "branding"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:MainActivity",
+      "type": "class",
+      "name": "MainActivity",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "summary": "承载 React Native 根 Activity，并定制 Expo delegate、启动主题与系统返回行为。",
+      "tags": [
+        "class",
+        "android",
+        "react-native",
+        "entry-point"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        13,
+        61
+      ]
+    },
+    {
+      "id": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:onCreate",
+      "type": "function",
+      "name": "onCreate",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "summary": "在 Activity 创建前应用启动主题并以空 saved state 初始化 React Native。",
+      "tags": [
+        "lifecycle",
+        "android",
+        "theme"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        14,
+        20
+      ]
+    },
+    {
+      "id": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:getMainComponentName",
+      "type": "function",
+      "name": "getMainComponentName",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "summary": "返回 JavaScript 注册的根组件名称 main。",
+      "tags": [
+        "entry-point",
+        "react-native",
+        "bridge"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        26,
+        26
+      ]
+    },
+    {
+      "id": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:createReactActivityDelegate",
+      "type": "function",
+      "name": "createReactActivityDelegate",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "summary": "创建由 Expo 包装且支持 Fabric 新架构开关的 ReactActivityDelegate。",
+      "tags": [
+        "factory",
+        "react-native",
+        "expo",
+        "new-architecture"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        32,
+        41
+      ]
+    },
+    {
+      "id": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:invokeDefaultOnBackPressed",
+      "type": "function",
+      "name": "invokeDefaultOnBackPressed",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "summary": "按 Android 版本区分根任务后台化与系统默认返回键处理。",
+      "tags": [
+        "event-handler",
+        "android",
+        "compatibility"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        48,
+        60
+      ]
+    },
+    {
+      "id": "class:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt:MainApplication",
+      "type": "class",
+      "name": "MainApplication",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "summary": "实现 ReactApplication 并管理 React Native Host、Hermes/新架构开关及 Expo 生命周期。",
+      "tags": [
+        "class",
+        "android",
+        "react-native",
+        "entry-point"
+      ],
+      "complexity": "moderate",
+      "lineRange": [
+        19,
+        57
+      ]
+    },
+    {
+      "id": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt:onCreate",
+      "type": "function",
+      "name": "onCreate",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "summary": "初始化 SoLoader，在启用时加载新架构，并通知 Expo 应用生命周期。",
+      "tags": [
+        "lifecycle",
+        "android",
+        "initialization"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        43,
+        51
+      ]
+    },
+    {
+      "id": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt:onConfigurationChanged",
+      "type": "function",
+      "name": "onConfigurationChanged",
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "summary": "将 Android 配置变化转发给父类和 Expo 生命周期分发器。",
+      "tags": [
+        "lifecycle",
+        "android",
+        "event-handler"
+      ],
+      "complexity": "simple",
+      "lineRange": [
+        53,
+        56
+      ]
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp",
+      "type": "file",
+      "name": "ic_launcher.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp",
+      "summary": "Android xhdpi 密度的方形应用启动图标位图资源。",
+      "tags": [
+        "asset",
+        "android",
+        "app-icon",
+        "webp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp",
+      "type": "file",
+      "name": "ic_launcher_round.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp",
+      "summary": "Android xhdpi 密度的圆形应用启动图标位图资源。",
+      "tags": [
+        "asset",
+        "android",
+        "round-icon",
+        "webp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp",
+      "type": "file",
+      "name": "ic_launcher.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp",
+      "summary": "Android xxhdpi 密度的方形应用启动图标位图资源。",
+      "tags": [
+        "asset",
+        "android",
+        "app-icon",
+        "webp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp",
+      "type": "file",
+      "name": "ic_launcher_round.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp",
+      "summary": "Android xxhdpi 密度的圆形应用启动图标位图资源。",
+      "tags": [
+        "asset",
+        "android",
+        "round-icon",
+        "webp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp",
+      "type": "file",
+      "name": "ic_launcher.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp",
+      "summary": "Android xxxhdpi 密度的方形应用启动图标位图资源。",
+      "tags": [
+        "asset",
+        "android",
+        "app-icon",
+        "webp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp",
+      "type": "file",
+      "name": "ic_launcher_round.webp",
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp",
+      "summary": "Android xxxhdpi 密度的圆形应用启动图标位图资源。",
+      "tags": [
+        "asset",
+        "android",
+        "round-icon",
+        "webp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/android/app/src/main/res/values-night/colors.xml",
+      "type": "config",
+      "name": "colors.xml",
+      "filePath": "apps/mobile/android/app/src/main/res/values-night/colors.xml",
+      "summary": "覆盖 Android 夜间模式的背景、表面、文本、导航、投递状态和优先级语义色彩。",
+      "tags": [
+        "configuration",
+        "android",
+        "dark-theme",
+        "color-tokens"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/gradle/wrapper/gradle-wrapper.jar",
+      "type": "file",
+      "name": "gradle-wrapper.jar",
+      "filePath": "apps/mobile/android/gradle/wrapper/gradle-wrapper.jar",
+      "summary": "随 Android 工程提交的 Gradle Wrapper 二进制引导程序，用于下载并启动锁定版本的 Gradle。",
+      "tags": [
+        "build-system",
+        "gradle",
+        "binary",
+        "android"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:apps/mobile/android/gradle/wrapper/gradle-wrapper.properties",
+      "type": "config",
+      "name": "gradle-wrapper.properties",
+      "filePath": "apps/mobile/android/gradle/wrapper/gradle-wrapper.properties",
+      "summary": "锁定 Gradle 8.10.2 完整发行包，并配置 wrapper 缓存路径、下载超时和 URL 校验。",
+      "tags": [
+        "configuration",
+        "gradle",
+        "build-system",
+        "version-lock"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/android/gradlew",
+      "type": "file",
+      "name": "gradlew",
+      "filePath": "apps/mobile/android/gradlew",
+      "summary": "Gradle 生成的 POSIX 启动脚本，解析跨平台路径与 JVM 选项后调用 GradleWrapperMain。",
+      "tags": [
+        "entry-point",
+        "gradle",
+        "build-system",
+        "shell",
+        "generated"
+      ],
+      "complexity": "complex",
+      "languageNotes": "采用 POSIX sh 兼容写法以覆盖 Linux、macOS、Cygwin、MSYS 和 NonStop。"
+    },
+    {
+      "id": "file:apps/mobile/babel.config.js",
+      "type": "file",
+      "name": "babel.config.js",
+      "filePath": "apps/mobile/babel.config.js",
+      "summary": "为 Expo 移动应用启用 babel-preset-expo，并缓存 Babel 配置结果。",
+      "tags": [
+        "configuration",
+        "babel",
+        "expo",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/jest.setup.js",
+      "type": "file",
+      "name": "jest.setup.js",
+      "filePath": "apps/mobile/jest.setup.js",
+      "summary": "为移动端 Jest 测试模拟 Expo 图标和 AsyncStorage，降低原生依赖对组件测试的影响。",
+      "tags": [
+        "test-setup",
+        "jest",
+        "mocking",
+        "react-native"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/metro.config.js",
+      "type": "file",
+      "name": "metro.config.js",
+      "filePath": "apps/mobile/metro.config.js",
+      "summary": "扩展 Expo Metro 默认配置以监听 monorepo 根目录，并从应用与 workspace 两级 node_modules 解析依赖。",
+      "tags": [
+        "configuration",
+        "metro",
+        "monorepo",
+        "expo",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/components/LocationTagSelector.test.tsx",
+      "type": "file",
+      "name": "LocationTagSelector.test.tsx",
+      "filePath": "apps/mobile/src/components/LocationTagSelector.test.tsx",
+      "summary": "验证地点标签选择器的标签切换、新建、重命名和删除交互。",
+      "tags": [
+        "test",
+        "component-test",
+        "location-tag",
+        "interaction"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apps/mobile/src/components/LocationTagSelector.tsx",
+      "type": "file",
+      "name": "LocationTagSelector.tsx",
+      "filePath": "apps/mobile/src/components/LocationTagSelector.tsx",
+      "summary": "移动端地点标签管理与多选组件，在同一区域支持新建、重命名、删除确认、使用次数提示和选中状态。",
+      "tags": [
+        "component",
+        "location-tag",
+        "form",
+        "crud",
+        "react-native",
+        "tested"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:apps/mobile/src/components/LocationTagSelector.tsx:LocationTagSelector",
+      "type": "function",
+      "name": "LocationTagSelector",
+      "filePath": "apps/mobile/src/components/LocationTagSelector.tsx",
+      "lineRange": [
+        17,
+        143
+      ],
+      "summary": "维护地点标签创建与行内编辑状态，渲染可切换标签列表，并将 CRUD 操作委托给外部回调。",
+      "tags": [
+        "component",
+        "location-tag",
+        "state-management",
+        "crud",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/ideas/mobile-workbench-v0.2.md",
+      "type": "document",
+      "name": "mobile-workbench-v0.2.md",
+      "filePath": "docs/ideas/mobile-workbench-v0.2.md",
+      "summary": "记录移动端投递工作台 v0.2 的问题、推荐方向、验证假设、MVP 范围、明确排除项和未决问题。",
+      "tags": [
+        "documentation",
+        "product-design",
+        "mobile-workbench",
+        "mvp",
+        "decision-record"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:docs/spec.md",
+      "type": "document",
+      "name": "spec.md",
+      "filePath": "docs/spec.md",
+      "summary": "项目主规格文档，系统定义产品目标、领域数据、公共接口、技术栈、环境安全、测试验收、边界及 v0.2 工作台要求。",
+      "tags": [
+        "documentation",
+        "specification",
+        "architecture",
+        "testing",
+        "product-requirements"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:packages/core/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "packages/core/package.json",
+      "summary": "声明共享 @job-hunting/core 包的入口、类型入口、构建检查脚本以及 Supabase 与 TypeScript 依赖。",
+      "tags": [
+        "configuration",
+        "package",
+        "public-api",
+        "build-system",
+        "typescript"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:packages/core/src/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "packages/core/src/index.ts",
+      "summary": "共享 core 包的公共 barrel，统一重导出常量、日期、导出器、服务、统计、Supabase 工厂和领域类型。",
+      "tags": [
+        "entry-point",
+        "barrel",
+        "public-api",
+        "exports",
+        "tested"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:packages/core/src/workbench.test.ts",
+      "type": "file",
+      "name": "workbench.test.ts",
+      "filePath": "packages/core/src/workbench.test.ts",
+      "summary": "覆盖 v0.2 工作台的地点筛选、到期判断、提醒窗口、指标计算与日历条目生成等共享领域逻辑。",
+      "tags": [
+        "test",
+        "domain-logic",
+        "mobile-workbench",
+        "analytics",
+        "calendar"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:packages/core/src/workbench.test.ts:application",
+      "type": "function",
+      "name": "application",
+      "filePath": "packages/core/src/workbench.test.ts",
+      "lineRange": [
+        14,
+        39
+      ],
+      "summary": "创建带默认字段且允许覆盖的投递测试夹具。",
+      "tags": [
+        "test-fixture",
+        "factory",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packages/core/src/workbench.test.ts:task",
+      "type": "function",
+      "name": "task",
+      "filePath": "packages/core/src/workbench.test.ts",
+      "lineRange": [
+        41,
+        54
+      ],
+      "summary": "创建带默认字段且允许覆盖的跟进任务测试夹具。",
+      "tags": [
+        "test-fixture",
+        "factory",
+        "follow-up-task"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:packages/core/tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "packages/core/tsconfig.json",
+      "summary": "继承仓库 TypeScript 基线，为 core 包开启声明文件输出并限定 src 编译范围。",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system",
+        "declaration-output"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/setup-windows.ps1",
+      "type": "file",
+      "name": "setup-windows.ps1",
+      "filePath": "scripts/setup-windows.ps1",
+      "summary": "Windows 开发环境自动化脚本，检查或安装 Node、Git、pnpm、Rust、Visual Studio C++、JDK 与 Android SDK，并可初始化和验证项目。",
+      "tags": [
+        "automation",
+        "windows",
+        "environment-setup",
+        "dependency-installation",
+        "verification"
+      ],
+      "complexity": "complex",
+      "languageNotes": "通过 PowerShell 函数分层封装 winget、PATH、Android SDK 与项目验证流程。"
+    },
+    {
+      "id": "function:scripts/setup-windows.ps1:Install-WingetPackage",
+      "type": "function",
+      "name": "Install-WingetPackage",
+      "filePath": "scripts/setup-windows.ps1",
+      "lineRange": [
+        85,
+        107
+      ],
+      "summary": "按包标识调用 winget 安装依赖，并在安装后刷新当前进程 PATH。",
+      "tags": [
+        "automation",
+        "winget",
+        "dependency-installation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/setup-windows.ps1:Ensure-CommandPackage",
+      "type": "function",
+      "name": "Ensure-CommandPackage",
+      "filePath": "scripts/setup-windows.ps1",
+      "lineRange": [
+        109,
+        129
+      ],
+      "summary": "检查命令是否可用，缺失时依据运行模式安装对应 winget 包或记录待处理项。",
+      "tags": [
+        "automation",
+        "dependency-check",
+        "winget",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/setup-windows.ps1:Ensure-DesktopTools",
+      "type": "function",
+      "name": "Ensure-DesktopTools",
+      "filePath": "scripts/setup-windows.ps1",
+      "lineRange": [
+        138,
+        177
+      ],
+      "summary": "确保 Rust 和 Visual Studio C++ Build Tools 满足 Tauri 桌面开发要求。",
+      "tags": [
+        "automation",
+        "tauri",
+        "rust",
+        "cpp-toolchain",
+        "dependency-installation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/setup-windows.ps1:Find-Jdk17",
+      "type": "function",
+      "name": "Find-Jdk17",
+      "filePath": "scripts/setup-windows.ps1",
+      "lineRange": [
+        179,
+        198
+      ],
+      "summary": "从环境变量和常见安装目录定位可用的 JDK 17。",
+      "tags": [
+        "automation",
+        "jdk",
+        "discovery",
+        "android"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/setup-windows.ps1:Install-AndroidCommandTools",
+      "type": "function",
+      "name": "Install-AndroidCommandTools",
+      "filePath": "scripts/setup-windows.ps1",
+      "lineRange": [
+        200,
+        239
+      ],
+      "summary": "下载并部署 Android command-line tools，准备 sdkmanager 所需目录结构。",
+      "tags": [
+        "automation",
+        "android-sdk",
+        "dependency-installation",
+        "download"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/setup-windows.ps1:Ensure-AndroidTools",
+      "type": "function",
+      "name": "Ensure-AndroidTools",
+      "filePath": "scripts/setup-windows.ps1",
+      "lineRange": [
+        245,
+        319
+      ],
+      "summary": "定位或安装 JDK 与 Android SDK 组件，设置相关环境变量并接受 SDK 许可。",
+      "tags": [
+        "automation",
+        "android-sdk",
+        "jdk",
+        "environment-setup",
+        "dependency-installation"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/setup-windows.ps1:Ensure-Pnpm",
+      "type": "function",
+      "name": "Ensure-Pnpm",
+      "filePath": "scripts/setup-windows.ps1",
+      "lineRange": [
+        321,
+        345
+      ],
+      "summary": "通过 Corepack 或 npm 确保指定版本的 pnpm 可用。",
+      "tags": [
+        "automation",
+        "pnpm",
+        "corepack",
+        "dependency-installation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/setup-windows.ps1:Ensure-Project",
+      "type": "function",
+      "name": "Ensure-Project",
+      "filePath": "scripts/setup-windows.ps1",
+      "lineRange": [
+        347,
+        374
+      ],
+      "summary": "验证仓库位置、生成环境变量文件并安装 workspace 依赖。",
+      "tags": [
+        "automation",
+        "project-bootstrap",
+        "pnpm",
+        "configuration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/setup-windows.ps1:Invoke-ProjectVerification",
+      "type": "function",
+      "name": "Invoke-ProjectVerification",
+      "filePath": "scripts/setup-windows.ps1",
+      "lineRange": [
+        376,
+        388
+      ],
+      "summary": "执行项目测试、类型检查或构建命令以验证开发环境完整性。",
+      "tags": [
+        "automation",
+        "verification",
+        "testing",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:supabase/rollbacks/202607250002_mobile_workbench.sql",
+      "type": "file",
+      "name": "202607250002_mobile_workbench.sql",
+      "filePath": "supabase/rollbacks/202607250002_mobile_workbench.sql",
+      "summary": "破坏性回滚 v0.2 工作台 schema，移除头像存储策略与对象、地点和任务结构及 profiles 新字段，同时保留不可安全删除的枚举值。",
+      "tags": [
+        "database",
+        "rollback",
+        "migration",
+        "supabase",
+        "destructive"
+      ],
+      "complexity": "simple",
+      "languageNotes": "回滚显式说明 PostgreSQL enum 值不能安全原地删除，需另行重建类型。"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:apps/mobile/App.tsx",
+      "target": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/App.tsx",
+      "target": "file:apps/mobile/src/supabaseClient.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/App.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/index.js",
+      "target": "file:apps/mobile/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "file:apps/mobile/src/navigation/types.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "file:apps/mobile/src/screens/LoginScreen.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "file:apps/mobile/src/screens/ProfileScreen.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "target": "file:apps/mobile/src/components/LocationTagSelector.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "target": "file:apps/mobile/src/navigation/types.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "target": "file:apps/mobile/src/supabaseClient.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/LoginScreen.test.tsx",
+      "target": "file:apps/mobile/src/screens/LoginScreen.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/LoginScreen.tsx",
+      "target": "file:apps/mobile/src/supabaseClient.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/LoginScreen.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ProfileScreen.tsx",
+      "target": "file:apps/mobile/src/settings.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ProfileScreen.tsx",
+      "target": "file:apps/mobile/src/supabaseClient.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ProfileScreen.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/settings.test.ts",
+      "target": "file:apps/mobile/src/settings.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/App.tsx",
+      "target": "function:apps/mobile/App.tsx:ProfileThemeSync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/App.tsx",
+      "target": "function:apps/mobile/App.tsx:ThemedApp",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/App.tsx",
+      "target": "function:apps/mobile/App.tsx:App",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "function:apps/mobile/src/navigation/AppNavigator.tsx:MainTabs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "function:apps/mobile/src/navigation/AppNavigator.tsx:AppNavigator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "target": "function:apps/mobile/src/screens/AddApplicationScreen.tsx:AddApplicationScreen",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "target": "function:apps/mobile/src/screens/AddApplicationScreen.tsx:PickerModal",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/screens/LoginScreen.tsx",
+      "target": "function:apps/mobile/src/screens/LoginScreen.tsx:LoginScreen",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ProfileScreen.tsx",
+      "target": "function:apps/mobile/src/screens/ProfileScreen.tsx:ProfileScreen",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ProfileScreen.tsx",
+      "target": "function:apps/mobile/src/screens/ProfileScreen.tsx:MenuItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/settings.ts",
+      "target": "function:apps/mobile/src/settings.ts:buildFeedbackMailto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/settings.ts",
+      "target": "function:apps/mobile/src/settings.ts:validatePasswordChange",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/App.tsx",
+      "target": "function:apps/mobile/App.tsx:App",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/navigation/AppNavigator.tsx",
+      "target": "function:apps/mobile/src/navigation/AppNavigator.tsx:AppNavigator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "target": "function:apps/mobile/src/screens/AddApplicationScreen.tsx:AddApplicationScreen",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/screens/LoginScreen.tsx",
+      "target": "function:apps/mobile/src/screens/LoginScreen.tsx:LoginScreen",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ProfileScreen.tsx",
+      "target": "function:apps/mobile/src/screens/ProfileScreen.tsx:ProfileScreen",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/settings.ts",
+      "target": "function:apps/mobile/src/settings.ts:buildFeedbackMailto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/settings.ts",
+      "target": "function:apps/mobile/src/settings.ts:validatePasswordChange",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/screens/LoginScreen.tsx",
+      "target": "file:apps/mobile/src/screens/LoginScreen.test.tsx",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:apps/mobile/src/settings.ts",
+      "target": "file:apps/mobile/src/settings.test.ts",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "function:apps/mobile/App.tsx:ThemedApp",
+      "target": "function:apps/mobile/App.tsx:ProfileThemeSync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:apps/mobile/src/screens/AddApplicationScreen.tsx:AddApplicationScreen",
+      "target": "function:apps/mobile/src/screens/AddApplicationScreen.tsx:PickerModal",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:apps/mobile/src/screens/ProfileScreen.tsx:ProfileScreen",
+      "target": "function:apps/mobile/src/screens/ProfileScreen.tsx:MenuItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/ApplicationCard.tsx",
+      "target": "file:apps/mobile/src/components/PriorityBadge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/ApplicationCard.tsx",
+      "target": "file:apps/mobile/src/components/StatusBadge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/ApplicationCard.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/CalendarGrid.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/FollowUpTaskSection.test.tsx",
+      "target": "file:apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/PriorityBadge.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/StatusBadge.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/TimelineItem.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "target": "file:apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "target": "file:apps/mobile/src/components/PriorityBadge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "target": "file:apps/mobile/src/components/StatusBadge.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "target": "file:apps/mobile/src/components/TimelineItem.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "target": "file:apps/mobile/src/navigation/types.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "target": "file:apps/mobile/src/supabaseClient.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "target": "file:apps/mobile/src/components/ApplicationCard.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "target": "file:apps/mobile/src/components/CalendarGrid.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "target": "file:apps/mobile/src/components/EmptyState.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "target": "file:apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "target": "file:apps/mobile/src/supabaseClient.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/ApplicationCard.tsx",
+      "target": "function:apps/mobile/src/components/ApplicationCard.tsx:ApplicationCard",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/CalendarGrid.tsx",
+      "target": "function:apps/mobile/src/components/CalendarGrid.tsx:CalendarGrid",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "target": "function:apps/mobile/src/components/FollowUpTaskSection.tsx:FollowUpTaskSection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/PriorityBadge.tsx",
+      "target": "function:apps/mobile/src/components/PriorityBadge.tsx:PriorityBadge",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/StatusBadge.tsx",
+      "target": "function:apps/mobile/src/components/StatusBadge.tsx:StatusBadge",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/TimelineItem.tsx",
+      "target": "function:apps/mobile/src/components/TimelineItem.tsx:TimelineItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "target": "function:apps/mobile/src/screens/ApplicationDetailScreen.tsx:ApplicationDetailScreen",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "target": "function:apps/mobile/src/screens/CalendarScreen.tsx:CalendarScreen",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/ApplicationCard.tsx",
+      "target": "function:apps/mobile/src/components/ApplicationCard.tsx:ApplicationCard",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/CalendarGrid.tsx",
+      "target": "function:apps/mobile/src/components/CalendarGrid.tsx:CalendarGrid",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "target": "function:apps/mobile/src/components/FollowUpTaskSection.tsx:FollowUpTaskSection",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/PriorityBadge.tsx",
+      "target": "function:apps/mobile/src/components/PriorityBadge.tsx:PriorityBadge",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/StatusBadge.tsx",
+      "target": "function:apps/mobile/src/components/StatusBadge.tsx:StatusBadge",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/TimelineItem.tsx",
+      "target": "function:apps/mobile/src/components/TimelineItem.tsx:TimelineItem",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "target": "function:apps/mobile/src/screens/ApplicationDetailScreen.tsx:ApplicationDetailScreen",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/screens/CalendarScreen.tsx",
+      "target": "function:apps/mobile/src/screens/CalendarScreen.tsx:CalendarScreen",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "target": "file:apps/mobile/src/components/FollowUpTaskSection.test.tsx",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:apps/mobile/src/components/EmptyState.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/FilterSheet.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/SearchBar.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/StatsBar.test.tsx",
+      "target": "file:apps/mobile/src/components/StatsBar.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/StatsBar.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "file:apps/mobile/src/components/ApplicationCard.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "file:apps/mobile/src/components/EmptyState.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "file:apps/mobile/src/components/FilterSheet.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "file:apps/mobile/src/components/SearchBar.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "file:apps/mobile/src/components/StatsBar.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "file:apps/mobile/src/navigation/types.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "file:apps/mobile/src/supabaseClient.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/theme.test.ts",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/theme.test.ts",
+      "target": "file:apps/mobile/src/themePreference.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/theme.ts",
+      "target": "file:apps/mobile/src/themePreference.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/EmptyState.tsx",
+      "target": "function:apps/mobile/src/components/EmptyState.tsx:EmptyState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/FilterSheet.tsx",
+      "target": "function:apps/mobile/src/components/FilterSheet.tsx:FilterSheet",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/SearchBar.tsx",
+      "target": "function:apps/mobile/src/components/SearchBar.tsx:SearchBar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/StatsBar.tsx",
+      "target": "function:apps/mobile/src/components/StatsBar.tsx:StatsBar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "function:apps/mobile/src/screens/DashboardScreen.tsx:DashboardScreen",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/theme.ts",
+      "target": "function:apps/mobile/src/theme.ts:ThemeProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/theme.ts",
+      "target": "function:apps/mobile/src/theme.ts:useAppTheme",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/themePreference.ts",
+      "target": "function:apps/mobile/src/themePreference.ts:resolveThemePreference",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/EmptyState.tsx",
+      "target": "function:apps/mobile/src/components/EmptyState.tsx:EmptyState",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/FilterSheet.tsx",
+      "target": "function:apps/mobile/src/components/FilterSheet.tsx:FilterSheet",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/SearchBar.tsx",
+      "target": "function:apps/mobile/src/components/SearchBar.tsx:SearchBar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/StatsBar.tsx",
+      "target": "function:apps/mobile/src/components/StatsBar.tsx:StatsBar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/screens/DashboardScreen.tsx",
+      "target": "function:apps/mobile/src/screens/DashboardScreen.tsx:DashboardScreen",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/theme.ts",
+      "target": "function:apps/mobile/src/theme.ts:ThemeProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/theme.ts",
+      "target": "function:apps/mobile/src/theme.ts:useAppTheme",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/themePreference.ts",
+      "target": "function:apps/mobile/src/themePreference.ts:resolveThemePreference",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/StatsBar.tsx",
+      "target": "file:apps/mobile/src/components/StatsBar.test.tsx",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:apps/mobile/src/theme.ts",
+      "target": "file:apps/mobile/src/theme.test.ts",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:apps/mobile/src/themePreference.ts",
+      "target": "file:apps/mobile/src/theme.test.ts",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "function:apps/mobile/src/theme.ts:ThemeProvider",
+      "target": "function:apps/mobile/src/themePreference.ts:resolveThemePreference",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/exporters.ts",
+      "target": "file:packages/core/src/constants.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/exporters.ts",
+      "target": "file:packages/core/src/date.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/exporters.ts",
+      "target": "file:packages/core/src/types.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/services.compatibility.test.ts",
+      "target": "file:packages/core/src/services.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "file:packages/core/src/supabase.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "file:packages/core/src/types.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "file:packages/core/src/constants.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "file:packages/core/src/date.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "file:packages/core/src/types.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/types.ts",
+      "target": "file:packages/core/src/constants.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "file:packages/core/src/services.compatibility.test.ts",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "function:packages/core/src/exporters.ts:exportApplicationsExcel",
+      "target": "function:packages/core/src/constants.ts:getStatus",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/exporters.ts:exportApplicationsExcel",
+      "target": "function:packages/core/src/constants.ts:getPriorityLabel",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/exporters.ts:exportApplicationsExcel",
+      "target": "function:packages/core/src/constants.ts:getEventTypeLabel",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/exporters.ts:exportApplicationsExcel",
+      "target": "function:packages/core/src/date.ts:todayISO",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/stats.ts:isFollowUpTaskDue",
+      "target": "function:packages/core/src/date.ts:todayISO",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/stats.ts:getReminderTasks",
+      "target": "function:packages/core/src/date.ts:todayISO",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/stats.ts:isDue",
+      "target": "function:packages/core/src/date.ts:todayISO",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/stats.ts:isDue",
+      "target": "function:packages/core/src/constants.ts:getStatus",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/stats.ts:calculateMetrics",
+      "target": "function:packages/core/src/constants.ts:isInterviewStatus",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/stats.ts:calculateMetrics",
+      "target": "function:packages/core/src/constants.ts:getStatus",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/stats.ts:buildCalendarItems",
+      "target": "function:packages/core/src/constants.ts:getStatus",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:packages/core/src/stats.ts:buildCalendarItems",
+      "target": "function:packages/core/src/constants.ts:getEventTypeLabel",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/constants.ts",
+      "target": "function:packages/core/src/constants.ts:getStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/constants.ts",
+      "target": "function:packages/core/src/constants.ts:getPriorityLabel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/constants.ts",
+      "target": "function:packages/core/src/constants.ts:getEventTypeLabel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/constants.ts",
+      "target": "function:packages/core/src/constants.ts:isInterviewStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/date.ts",
+      "target": "function:packages/core/src/date.ts:todayISO",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/date.ts",
+      "target": "function:packages/core/src/date.ts:formatDate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/date.ts",
+      "target": "function:packages/core/src/date.ts:formatFullDate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/exporters.ts",
+      "target": "function:packages/core/src/exporters.ts:exportApplicationsJSON",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/exporters.ts",
+      "target": "function:packages/core/src/exporters.ts:exportApplicationsExcel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:normalizeProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:normalizeLocationLabel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:listApplications",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:createApplication",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:updateApplication",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:deleteApplication",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:createEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:deleteEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:listLocationTags",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:createLocationTag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:renameLocationTag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:deleteLocationTag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:setApplicationLocations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:createFollowUpTask",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:updateFollowUpTask",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:setFollowUpTaskCompleted",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:deleteFollowUpTask",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:getProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:updateProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:isFollowUpTaskDue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:getReminderTasks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:matchesLocationFilter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:isDue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:isNotApplied",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:calculateMetrics",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:buildCalendarItems",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/supabase.ts",
+      "target": "function:packages/core/src/supabase.ts:createBrowserSupabaseClient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/constants.ts",
+      "target": "function:packages/core/src/constants.ts:getStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/constants.ts",
+      "target": "function:packages/core/src/constants.ts:getPriorityLabel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/constants.ts",
+      "target": "function:packages/core/src/constants.ts:getEventTypeLabel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/constants.ts",
+      "target": "function:packages/core/src/constants.ts:isInterviewStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/date.ts",
+      "target": "function:packages/core/src/date.ts:todayISO",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/date.ts",
+      "target": "function:packages/core/src/date.ts:formatDate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/date.ts",
+      "target": "function:packages/core/src/date.ts:formatFullDate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/exporters.ts",
+      "target": "function:packages/core/src/exporters.ts:exportApplicationsJSON",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/exporters.ts",
+      "target": "function:packages/core/src/exporters.ts:exportApplicationsExcel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:normalizeLocationLabel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:listApplications",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:createApplication",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:updateApplication",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:deleteApplication",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:createEvent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:deleteEvent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:listLocationTags",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:createLocationTag",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:renameLocationTag",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:deleteLocationTag",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:setApplicationLocations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:createFollowUpTask",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:updateFollowUpTask",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:setFollowUpTaskCompleted",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:deleteFollowUpTask",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:getProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/services.ts",
+      "target": "function:packages/core/src/services.ts:updateProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:isFollowUpTaskDue",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:getReminderTasks",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:matchesLocationFilter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:isDue",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:isNotApplied",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:calculateMetrics",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/stats.ts",
+      "target": "function:packages/core/src/stats.ts:buildCalendarItems",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:packages/core/src/supabase.ts",
+      "target": "function:packages/core/src/supabase.ts:createBrowserSupabaseClient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/desktop/src/App.tsx",
+      "target": "file:apps/desktop/src/supabaseClient.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/desktop/src/App.tsx",
+      "target": "file:apps/desktop/src/workbench.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/desktop/src/main.tsx",
+      "target": "file:apps/desktop/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/desktop/src/main.tsx",
+      "target": "file:apps/desktop/src/styles.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/desktop/src/workbench.test.ts",
+      "target": "file:apps/desktop/src/workbench.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/desktop/src/App.tsx",
+      "target": "function:apps/desktop/src/App.tsx:normalizeInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/desktop/src/App.tsx",
+      "target": "function:apps/desktop/src/App.tsx:inputFromApplication",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/desktop/src/App.tsx",
+      "target": "function:apps/desktop/src/App.tsx:getMonthMatrix",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/desktop/src/App.tsx",
+      "target": "function:apps/desktop/src/App.tsx:App",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/desktop/src/workbench.ts",
+      "target": "function:apps/desktop/src/workbench.ts:countLocationUsage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/desktop/src/workbench.ts",
+      "target": "function:apps/desktop/src/workbench.ts:getNextPendingTaskDate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/desktop/src/App.tsx",
+      "target": "function:apps/desktop/src/App.tsx:App",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/desktop/src/workbench.ts",
+      "target": "function:apps/desktop/src/workbench.ts:countLocationUsage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/desktop/src/workbench.ts",
+      "target": "function:apps/desktop/src/workbench.ts:getNextPendingTaskDate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/desktop/src/workbench.ts",
+      "target": "file:apps/desktop/src/workbench.test.ts",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "function:apps/desktop/src/App.tsx:App",
+      "target": "function:apps/desktop/src/App.tsx:normalizeInput",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:apps/desktop/src/App.tsx:App",
+      "target": "function:apps/desktop/src/App.tsx:inputFromApplication",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:apps/desktop/src/App.tsx:App",
+      "target": "function:apps/desktop/src/App.tsx:getMonthMatrix",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:apps/desktop/src/App.tsx:App",
+      "target": "function:apps/desktop/src/workbench.ts:countLocationUsage",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:apps/desktop/src/App.tsx:App",
+      "target": "function:apps/desktop/src/workbench.ts:getNextPendingTaskDate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "table:supabase/migrations/202605160001_initial_schema.sql:initial_schema",
+      "target": "table:supabase/migrations/202605160001_initial_schema.sql:profiles",
+      "type": "migrates",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "table:supabase/migrations/202605160001_initial_schema.sql:initial_schema",
+      "target": "table:supabase/migrations/202605160001_initial_schema.sql:applications",
+      "type": "migrates",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "table:supabase/migrations/202605160001_initial_schema.sql:initial_schema",
+      "target": "table:supabase/migrations/202605160001_initial_schema.sql:application_events",
+      "type": "migrates",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "table:supabase/migrations/202607250001_add_manager_status.sql:manager_status",
+      "target": "table:supabase/migrations/202605160001_initial_schema.sql:applications",
+      "type": "migrates",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "table:supabase/migrations/202607250002_mobile_workbench.sql:mobile_workbench",
+      "target": "table:supabase/migrations/202605160001_initial_schema.sql:profiles",
+      "type": "migrates",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "table:supabase/migrations/202607250002_mobile_workbench.sql:mobile_workbench",
+      "target": "table:supabase/migrations/202605160001_initial_schema.sql:applications",
+      "type": "migrates",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "table:supabase/migrations/202607250002_mobile_workbench.sql:mobile_workbench",
+      "target": "table:supabase/migrations/202607250002_mobile_workbench.sql:location_tags",
+      "type": "migrates",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "table:supabase/migrations/202607250002_mobile_workbench.sql:mobile_workbench",
+      "target": "table:supabase/migrations/202607250002_mobile_workbench.sql:application_location_tags",
+      "type": "migrates",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "table:supabase/migrations/202607250002_mobile_workbench.sql:mobile_workbench",
+      "target": "table:supabase/migrations/202607250002_mobile_workbench.sql:follow_up_tasks",
+      "type": "migrates",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "table:supabase/migrations/202607250002_mobile_workbench.sql:application_location_tags",
+      "target": "table:supabase/migrations/202605160001_initial_schema.sql:applications",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "table:supabase/migrations/202607250002_mobile_workbench.sql:application_location_tags",
+      "target": "table:supabase/migrations/202607250002_mobile_workbench.sql:location_tags",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "table:supabase/migrations/202607250002_mobile_workbench.sql:follow_up_tasks",
+      "target": "table:supabase/migrations/202605160001_initial_schema.sql:applications",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:README.md",
+      "target": "config:package.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:pnpm-workspace.yaml",
+      "target": "config:package.json",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:tsconfig.base.json",
+      "target": "config:package.json",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.env.example",
+      "target": "config:package.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:apps/desktop/package.json",
+      "target": "file:apps/desktop/index.html",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/desktop/package.json",
+      "target": "config:apps/desktop/tsconfig.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/desktop/src-tauri/gen/schemas/acl-manifests.json",
+      "target": "config:apps/desktop/src-tauri/gen/schemas/desktop-schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:apps/desktop/src-tauri/gen/schemas/acl-manifests.json",
+      "target": "config:apps/desktop/src-tauri/gen/schemas/windows-schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:apps/desktop/src-tauri/gen/schemas/capabilities.json",
+      "target": "config:apps/desktop/src-tauri/gen/schemas/desktop-schema.json",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/desktop/src-tauri/gen/schemas/capabilities.json",
+      "target": "config:apps/desktop/src-tauri/gen/schemas/windows-schema.json",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/android/app/src/main/res/values/colors.xml",
+      "target": "config:apps/mobile/android/app/src/main/res/values/styles.xml",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/android/app/src/main/res/values/strings.xml",
+      "target": "config:apps/mobile/android/app/src/main/res/values/styles.xml",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:apps/mobile/android/gradlew.bat",
+      "target": "function:apps/mobile/android/gradlew.bat:findJavaFromJavaHome",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "config:apps/mobile/android/gradle.properties",
+      "target": "config:apps/mobile/android/build.gradle",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/android/settings.gradle",
+      "target": "config:apps/mobile/android/build.gradle",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:apps/mobile/android/gradlew.bat",
+      "target": "config:apps/mobile/android/build.gradle",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/eas.json",
+      "target": "config:apps/mobile/app.json",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/package.json",
+      "target": "config:apps/mobile/app.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/tsconfig.json",
+      "target": "config:apps/mobile/package.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "class:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:MainActivity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "class:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:MainActivity",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:onCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:onCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:getMainComponentName",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:getMainComponentName",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:createReactActivityDelegate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:createReactActivityDelegate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:invokeDefaultOnBackPressed",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt:invokeDefaultOnBackPressed",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "target": "class:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt:MainApplication",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "target": "class:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt:MainApplication",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt:onCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt:onCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt:onConfigurationChanged",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "target": "function:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt:onConfigurationChanged",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "config:apps/desktop/src-tauri/Cargo.toml",
+      "target": "file:apps/desktop/src-tauri/build.rs",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/desktop/src-tauri/Cargo.toml",
+      "target": "file:apps/desktop/src-tauri/src/main.rs",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/desktop/src-tauri/tauri.conf.json",
+      "target": "file:apps/desktop/src-tauri/src/main.rs",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:apps/desktop/vite.config.ts",
+      "target": "file:apps/desktop/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:apps/desktop/src/styles.css",
+      "target": "file:apps/desktop/src/main.tsx",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:apps/mobile/.expo/README.md",
+      "target": "config:apps/mobile/.expo/devices.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:apps/mobile/android/app/build.gradle",
+      "target": "file:apps/mobile/android/app/debug.keystore",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/android/app/build.gradle",
+      "target": "file:apps/mobile/android/app/proguard-rules.pro",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/android/app/build.gradle",
+      "target": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/android/app/src/main/AndroidManifest.xml",
+      "target": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/android/app/src/main/AndroidManifest.xml",
+      "target": "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml",
+      "target": "file:apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:apps/mobile/src/components/LocationTagSelector.test.tsx",
+      "target": "file:apps/mobile/src/components/LocationTagSelector.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/LocationTagSelector.tsx",
+      "target": "file:apps/mobile/src/theme.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:packages/core/src/workbench.test.ts",
+      "target": "file:packages/core/src/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:apps/mobile/src/components/LocationTagSelector.tsx",
+      "target": "function:apps/mobile/src/components/LocationTagSelector.tsx:LocationTagSelector",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/workbench.test.ts",
+      "target": "function:packages/core/src/workbench.test.ts:application",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:packages/core/src/workbench.test.ts",
+      "target": "function:packages/core/src/workbench.test.ts:task",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "function:scripts/setup-windows.ps1:Install-WingetPackage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "function:scripts/setup-windows.ps1:Ensure-CommandPackage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "function:scripts/setup-windows.ps1:Ensure-DesktopTools",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "function:scripts/setup-windows.ps1:Find-Jdk17",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "function:scripts/setup-windows.ps1:Install-AndroidCommandTools",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "function:scripts/setup-windows.ps1:Ensure-AndroidTools",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "function:scripts/setup-windows.ps1:Ensure-Pnpm",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "function:scripts/setup-windows.ps1:Ensure-Project",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "function:scripts/setup-windows.ps1:Invoke-ProjectVerification",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:apps/mobile/src/components/LocationTagSelector.tsx",
+      "target": "function:apps/mobile/src/components/LocationTagSelector.tsx:LocationTagSelector",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:apps/mobile/src/components/LocationTagSelector.tsx",
+      "target": "file:apps/mobile/src/components/LocationTagSelector.test.tsx",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:packages/core/src/index.ts",
+      "target": "file:packages/core/src/workbench.test.ts",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:apps/mobile/android/gradle/wrapper/gradle-wrapper.properties",
+      "target": "file:apps/mobile/android/gradle/wrapper/gradle-wrapper.jar",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:apps/mobile/android/gradlew",
+      "target": "file:apps/mobile/android/gradle/wrapper/gradle-wrapper.jar",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:docs/ideas/mobile-workbench-v0.2.md",
+      "target": "file:apps/mobile/src/components/LocationTagSelector.tsx",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:docs/spec.md",
+      "target": "file:packages/core/src/index.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:packages/core/package.json",
+      "target": "file:packages/core/src/index.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:packages/core/tsconfig.json",
+      "target": "file:packages/core/src/index.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:scripts/setup-windows.ps1",
+      "target": "config:packages/core/package.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:apps/mobile/android/app/src/main/res/values-night/colors.xml",
+      "target": "config:apps/mobile/android/gradle/wrapper/gradle-wrapper.properties",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:desktop-ui",
+      "name": "桌面端交互层",
+      "description": "承载 Tauri 桌面应用的 React 入口、工作台界面、样式系统及浏览器侧 Supabase 接入。",
+      "nodeIds": [
+        "file:apps/desktop/index.html",
+        "file:apps/desktop/src/App.tsx",
+        "file:apps/desktop/src/main.tsx",
+        "file:apps/desktop/src/styles.css",
+        "file:apps/desktop/src/supabaseClient.ts",
+        "file:apps/desktop/src/workbench.ts"
+      ]
+    },
+    {
+      "id": "layer:mobile-ui",
+      "name": "移动端交互层",
+      "description": "组织 Expo/React Native 的应用入口、导航、业务页面、复用组件、主题与移动端数据接入。",
+      "nodeIds": [
+        "file:apps/mobile/App.tsx",
+        "file:apps/mobile/index.js",
+        "file:apps/mobile/src/components/ApplicationCard.tsx",
+        "file:apps/mobile/src/components/CalendarGrid.tsx",
+        "file:apps/mobile/src/components/EmptyState.tsx",
+        "file:apps/mobile/src/components/FilterSheet.tsx",
+        "file:apps/mobile/src/components/FollowUpTaskSection.tsx",
+        "file:apps/mobile/src/components/LocationTagSelector.tsx",
+        "file:apps/mobile/src/components/PriorityBadge.tsx",
+        "file:apps/mobile/src/components/SearchBar.tsx",
+        "file:apps/mobile/src/components/StatsBar.tsx",
+        "file:apps/mobile/src/components/StatusBadge.tsx",
+        "file:apps/mobile/src/components/TimelineItem.tsx",
+        "file:apps/mobile/src/navigation/AppNavigator.tsx",
+        "file:apps/mobile/src/navigation/types.ts",
+        "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+        "file:apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+        "file:apps/mobile/src/screens/CalendarScreen.tsx",
+        "file:apps/mobile/src/screens/DashboardScreen.tsx",
+        "file:apps/mobile/src/screens/LoginScreen.tsx",
+        "file:apps/mobile/src/screens/ProfileScreen.tsx",
+        "file:apps/mobile/src/settings.ts",
+        "file:apps/mobile/src/supabaseClient.ts",
+        "file:apps/mobile/src/theme.ts",
+        "file:apps/mobile/src/themePreference.ts"
+      ]
+    },
+    {
+      "id": "layer:shared-domain",
+      "name": "共享领域核心层",
+      "description": "提供桌面端与移动端可复用的求职领域类型、状态常量、统计、日期、导出及 Supabase 服务。",
+      "nodeIds": [
+        "file:packages/core/src/constants.ts",
+        "file:packages/core/src/date.ts",
+        "file:packages/core/src/exporters.ts",
+        "file:packages/core/src/index.ts",
+        "file:packages/core/src/services.ts",
+        "file:packages/core/src/stats.ts",
+        "file:packages/core/src/supabase.ts",
+        "file:packages/core/src/types.ts"
+      ]
+    },
+    {
+      "id": "layer:desktop-native",
+      "name": "桌面原生运行层",
+      "description": "封装 Tauri/Rust 桌面壳、能力权限、构建脚本、应用清单与生成的安全 Schema。",
+      "nodeIds": [
+        "config:apps/desktop/src-tauri/Cargo.toml",
+        "config:apps/desktop/src-tauri/gen/schemas/acl-manifests.json",
+        "config:apps/desktop/src-tauri/gen/schemas/capabilities.json",
+        "config:apps/desktop/src-tauri/gen/schemas/desktop-schema.json",
+        "config:apps/desktop/src-tauri/gen/schemas/windows-schema.json",
+        "config:apps/desktop/src-tauri/tauri.conf.json",
+        "file:apps/desktop/src-tauri/build.rs",
+        "file:apps/desktop/src-tauri/src/main.rs"
+      ]
+    },
+    {
+      "id": "layer:android-native",
+      "name": "Android 原生运行层",
+      "description": "包含 Expo 预构建后的 Android/Kotlin 宿主、Gradle 工具链、Manifest、资源与调试签名材料。",
+      "nodeIds": [
+        "config:apps/mobile/android/app/build.gradle",
+        "config:apps/mobile/android/app/src/debug/AndroidManifest.xml",
+        "config:apps/mobile/android/app/src/main/AndroidManifest.xml",
+        "config:apps/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml",
+        "config:apps/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+        "config:apps/mobile/android/app/src/main/res/values-night/colors.xml",
+        "config:apps/mobile/android/app/src/main/res/values/colors.xml",
+        "config:apps/mobile/android/app/src/main/res/values/strings.xml",
+        "config:apps/mobile/android/app/src/main/res/values/styles.xml",
+        "config:apps/mobile/android/build.gradle",
+        "config:apps/mobile/android/gradle.properties",
+        "config:apps/mobile/android/gradle/wrapper/gradle-wrapper.properties",
+        "config:apps/mobile/android/settings.gradle",
+        "file:apps/mobile/android/app/debug.keystore",
+        "file:apps/mobile/android/app/proguard-rules.pro",
+        "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+        "file:apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+        "file:apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp",
+        "file:apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp",
+        "file:apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp",
+        "file:apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp",
+        "file:apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp",
+        "file:apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp",
+        "file:apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp",
+        "file:apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp",
+        "file:apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp",
+        "file:apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp",
+        "file:apps/mobile/android/gradle/wrapper/gradle-wrapper.jar",
+        "file:apps/mobile/android/gradlew",
+        "file:apps/mobile/android/gradlew.bat"
+      ]
+    },
+    {
+      "id": "layer:data",
+      "name": "数据与安全策略层",
+      "description": "定义 Supabase 数据表、迁移、回滚、枚举、关联约束和 Row Level Security 策略。",
+      "nodeIds": [
+        "file:supabase/rollbacks/202607250002_mobile_workbench.sql",
+        "table:supabase/migrations/202605160001_initial_schema.sql:application_events",
+        "table:supabase/migrations/202605160001_initial_schema.sql:applications",
+        "table:supabase/migrations/202605160001_initial_schema.sql:initial_schema",
+        "table:supabase/migrations/202605160001_initial_schema.sql:profiles",
+        "table:supabase/migrations/202607250001_add_manager_status.sql:manager_status",
+        "table:supabase/migrations/202607250002_mobile_workbench.sql:application_location_tags",
+        "table:supabase/migrations/202607250002_mobile_workbench.sql:follow_up_tasks",
+        "table:supabase/migrations/202607250002_mobile_workbench.sql:location_tags",
+        "table:supabase/migrations/202607250002_mobile_workbench.sql:mobile_workbench"
+      ]
+    },
+    {
+      "id": "layer:test",
+      "name": "测试与质量保障层",
+      "description": "覆盖共享领域逻辑、桌面工作台、移动组件、认证、主题、设置及 Supabase RLS 集成行为。",
+      "nodeIds": [
+        "file:apps/desktop/src/rls.integration.test.ts",
+        "file:apps/desktop/src/workbench.test.ts",
+        "file:apps/mobile/jest.setup.js",
+        "file:apps/mobile/src/components/FollowUpTaskSection.test.tsx",
+        "file:apps/mobile/src/components/LocationTagSelector.test.tsx",
+        "file:apps/mobile/src/components/StatsBar.test.tsx",
+        "file:apps/mobile/src/screens/LoginScreen.test.tsx",
+        "file:apps/mobile/src/settings.test.ts",
+        "file:apps/mobile/src/theme.test.ts",
+        "file:packages/core/src/services.compatibility.test.ts",
+        "file:packages/core/src/workbench.test.ts"
+      ]
+    },
+    {
+      "id": "layer:config",
+      "name": "工程配置与构建层",
+      "description": "统一管理 pnpm monorepo、TypeScript、Vite、Expo、Metro、Babel、EAS、环境变量和包级构建配置。",
+      "nodeIds": [
+        "config:.env.example",
+        "config:apps/desktop/package.json",
+        "config:apps/desktop/tsconfig.json",
+        "config:apps/mobile/.expo/devices.json",
+        "config:apps/mobile/app.json",
+        "config:apps/mobile/eas.json",
+        "config:apps/mobile/package.json",
+        "config:apps/mobile/tsconfig.json",
+        "config:package.json",
+        "config:packages/core/package.json",
+        "config:packages/core/tsconfig.json",
+        "config:pnpm-workspace.yaml",
+        "config:tsconfig.base.json",
+        "file:.npmrc",
+        "file:apps/desktop/vite.config.ts",
+        "file:apps/mobile/babel.config.js",
+        "file:apps/mobile/metro.config.js"
+      ]
+    },
+    {
+      "id": "layer:documentation",
+      "name": "产品与工程文档层",
+      "description": "记录项目上手方式、产品规格、移动工作台设计决策及 Expo 本地开发说明。",
+      "nodeIds": [
+        "document:README.md",
+        "document:apps/mobile/.expo/README.md",
+        "document:docs/ideas/mobile-workbench-v0.2.md",
+        "document:docs/spec.md"
+      ]
+    },
+    {
+      "id": "layer:project-tooling",
+      "name": "项目辅助工具层",
+      "description": "承载 Windows 环境初始化自动化和 Understand Anything 本地分析配置。",
+      "nodeIds": [
+        "config:.understand-anything/config.json",
+        "file:.understand-anything/.understandignore",
+        "file:scripts/setup-windows.ps1"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "项目全景",
+      "description": "先从 README 建立产品与工程全景：这是一个同时覆盖桌面端和移动端的求职投递跟踪系统，数据统一落在 Supabase。文档还串起目录结构、数据库迁移、调试构建与测试命令，为后续阅读提供路线图。",
+      "nodeIds": [
+        "document:README.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "工作区骨架",
+      "description": "在理解产品目标后，根 package.json 与 pnpm workspace 定义了 apps 和 packages 的协作边界。这里也是统一执行桌面端、移动端、类型检查、测试和生产构建的工程控制面。",
+      "nodeIds": [
+        "config:package.json",
+        "config:pnpm-workspace.yaml"
+      ],
+      "languageLesson": "pnpm workspace 让多个应用共享本地包和锁文件，并可通过根脚本统一驱动各工作区任务。"
+    },
+    {
+      "order": 3,
+      "title": "桌面端启动",
+      "description": "桌面端由 Vite/React 入口挂载应用，再由 Tauri 配置把前端开发服务器、生产构建和 Windows 安装包串联起来。沿这条路径可以先分清浏览器 UI 与 Rust 原生壳各自负责的生命周期。",
+      "nodeIds": [
+        "file:apps/desktop/src/main.tsx",
+        "file:apps/desktop/src-tauri/src/main.rs",
+        "config:apps/desktop/src-tauri/tauri.conf.json"
+      ],
+      "languageLesson": "Tauri 采用 Web 前端加 Rust 原生壳的双层结构；React 入口负责渲染，Rust 入口负责创建原生窗口和事件循环。"
+    },
+    {
+      "order": 4,
+      "title": "桌面工作台",
+      "description": "进入桌面应用主体后，可以看到认证、投递 CRUD、筛选排序、跟进任务、时间线、日历和导入导出如何汇聚到同一工作台。Supabase 客户端提供远端会话与数据连接，而纯函数 workbench 把可独立验证的统计逻辑从界面中抽离出来。",
+      "nodeIds": [
+        "file:apps/desktop/src/App.tsx",
+        "file:apps/desktop/src/supabaseClient.ts",
+        "file:apps/desktop/src/workbench.ts"
+      ],
+      "languageLesson": "React 函数组件通过 Hooks 编排状态和副作用；把无 UI 的计算提取成纯函数，可以降低组件耦合并简化单元测试。"
+    },
+    {
+      "order": 5,
+      "title": "移动端启动",
+      "description": "移动端从 Expo 注册入口进入根组件，初始化 Supabase 会话和主题后，再按认证状态切换到登录页或主导航。导航器进一步把投递、日历和个人中心组织成栈导航与底部标签页。",
+      "nodeIds": [
+        "file:apps/mobile/index.js",
+        "file:apps/mobile/App.tsx",
+        "file:apps/mobile/src/navigation/AppNavigator.tsx"
+      ],
+      "languageLesson": "React Navigation 用带类型的路由参数约束页面跳转；根组件则以 Context 和 Hooks 向整棵组件树传播会话与主题状态。"
+    },
+    {
+      "order": 6,
+      "title": "移动业务流",
+      "description": "在启动链路之上，Dashboard 负责加载、搜索、筛选和汇总投递，新增编辑页负责表单持久化与初始事件写入。全局主题模块被大量移动组件依赖，它用语义颜色与持久化偏好保证不同平台上的视觉一致性。",
+      "nodeIds": [
+        "file:apps/mobile/src/screens/DashboardScreen.tsx",
+        "file:apps/mobile/src/screens/AddApplicationScreen.tsx",
+        "file:apps/mobile/src/theme.ts"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "共享领域契约",
+      "description": "桌面与移动两条路径最终在共享 core 包会合。公共 barrel 暴露稳定入口，types 和 constants 则定义投递、事件、任务、资料及状态枚举等共同语言，避免两个客户端各自复制领域规则。",
+      "nodeIds": [
+        "file:packages/core/src/index.ts",
+        "file:packages/core/src/types.ts",
+        "file:packages/core/src/constants.ts"
+      ],
+      "languageLesson": "TypeScript barrel 文件集中重导出公共 API；共享类型契约能在编译期约束跨应用的数据形状。"
+    },
+    {
+      "order": 8,
+      "title": "领域服务计算",
+      "description": "基于前一步的契约，services 封装 Supabase 数据访问及旧版 schema 的兼容降级，stats 与 date 提供可复用的提醒、指标、日历和本地日期计算。exporters 把同一领域数据投影为 JSON 或电子表格，说明共享核心不仅服务界面，也承载跨端业务能力。",
+      "nodeIds": [
+        "file:packages/core/src/services.ts",
+        "file:packages/core/src/stats.ts",
+        "file:packages/core/src/date.ts",
+        "file:packages/core/src/exporters.ts"
+      ]
+    },
+    {
+      "order": 9,
+      "title": "数据安全边界",
+      "description": "数据库迁移把领域契约落成 profiles、applications、事件、地点标签和跟进任务，并通过外键、触发器及 Row Level Security 维持所有权边界。先读初始 schema，再读移动工作台扩展，可以理解数据模型如何从基础投递流程演进到跨端协作。",
+      "nodeIds": [
+        "table:supabase/migrations/202605160001_initial_schema.sql:initial_schema",
+        "table:supabase/migrations/202605160001_initial_schema.sql:applications",
+        "table:supabase/migrations/202607250002_mobile_workbench.sql:mobile_workbench",
+        "table:supabase/migrations/202607250002_mobile_workbench.sql:application_location_tags",
+        "table:supabase/migrations/202607250002_mobile_workbench.sql:follow_up_tasks"
+      ],
+      "languageLesson": "SQL 迁移按顺序演进 schema；复合外键保证关联双方属于同一用户，RLS 则在数据库层阻止跨用户读写。"
+    },
+    {
+      "order": 10,
+      "title": "回归验证网",
+      "description": "完成数据链路后，用测试观察系统如何守住核心行为：共享层验证统计与兼容降级，桌面层验证纯工作台逻辑，移动层验证登录交互。RLS 集成测试再使用两个真实账号检查数据隔离、私有头像与级联删除，把前一步的安全策略变成可执行证据。",
+      "nodeIds": [
+        "file:packages/core/src/workbench.test.ts",
+        "file:packages/core/src/services.compatibility.test.ts",
+        "file:apps/desktop/src/workbench.test.ts",
+        "file:apps/mobile/src/screens/LoginScreen.test.tsx",
+        "file:apps/desktop/src/rls.integration.test.ts"
+      ]
+    },
+    {
+      "order": 11,
+      "title": "构建交付闭环",
+      "description": "最后回到工程入口，Windows 初始化脚本负责准备 Node、pnpm、Rust、JDK 与 Android SDK，并能触发项目验证。桌面端 Tauri 包配置和移动端 EAS 配置分别定义 Windows 安装包与 Android 构建档位，由根脚本将类型检查、测试和构建汇成完整交付闭环。",
+      "nodeIds": [
+        "file:scripts/setup-windows.ps1",
+        "config:apps/desktop/package.json",
+        "config:apps/mobile/package.json",
+        "config:apps/mobile/eas.json"
+      ]
+    }
+  ]
+}

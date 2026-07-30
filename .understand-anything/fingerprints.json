@@ -1,0 +1,3829 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "0444f04d07d13ec286e168f0b5827ee79a55ddb5",
+  "generatedAt": "2026-07-28T16:03:33.310Z",
+  "files": {
+    ".env.example": {
+      "filePath": ".env.example",
+      "contentHash": "b273c3071fc3ffea5bdf460f2bbbf1001a69a803619e73c5d9d19ae945ffb44d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    ".npmrc": {
+      "filePath": ".npmrc",
+      "contentHash": "46649e6174842b4e02fee7dad40d66efc6f91541f1902b6eb8af6d453f9f53c7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": false
+    },
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "1fac2cf29e67a85ecbe918fc8b6b8b779ac612376004d05a1a3fa8e81bff3012",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": false
+    },
+    ".understand-anything/config.json": {
+      "filePath": ".understand-anything/config.json",
+      "contentHash": "5d2ff006cff22c68edd4776249d562ea8c73915a61c6214eb85933865a9402e7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "2748e370d7c3428bff7a4d1832217e6bd3c3ac12021819aff78c050197afa7e8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 277,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/index.html": {
+      "filePath": "apps/desktop/index.html",
+      "contentHash": "7fa722f1223b6939bcc24916a448252ea200e10db1a9c17009e0530c77eb0515",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": false
+    },
+    "apps/desktop/package.json": {
+      "filePath": "apps/desktop/package.json",
+      "contentHash": "652af67a375216e8a97c896abea2645153acffb31708f44b3704e84a4617b8ed",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src-tauri/Cargo.toml": {
+      "filePath": "apps/desktop/src-tauri/Cargo.toml",
+      "contentHash": "471241075af8fc05d61afc19e5d85ae63d7e60cb9626ab1181d0ceded06371a5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src-tauri/build.rs": {
+      "filePath": "apps/desktop/src-tauri/build.rs",
+      "contentHash": "475e2e09e57f802634b6b3719b5e7a85e10db76a945e80f4f82b4ef63f28042c",
+      "functions": [
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src-tauri/gen/schemas/acl-manifests.json": {
+      "filePath": "apps/desktop/src-tauri/gen/schemas/acl-manifests.json",
+      "contentHash": "962be3dd20826e5772bee8061a598ad868b3c5aa4882fb232e94d2d8b9c3929c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src-tauri/gen/schemas/capabilities.json": {
+      "filePath": "apps/desktop/src-tauri/gen/schemas/capabilities.json",
+      "contentHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src-tauri/gen/schemas/desktop-schema.json": {
+      "filePath": "apps/desktop/src-tauri/gen/schemas/desktop-schema.json",
+      "contentHash": "5d891e1e2dfc3460fcc4afbe7c728fce5ad56c44291664882c35e5432e194347",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2612,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src-tauri/gen/schemas/windows-schema.json": {
+      "filePath": "apps/desktop/src-tauri/gen/schemas/windows-schema.json",
+      "contentHash": "5d891e1e2dfc3460fcc4afbe7c728fce5ad56c44291664882c35e5432e194347",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2612,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src-tauri/src/main.rs": {
+      "filePath": "apps/desktop/src-tauri/src/main.rs",
+      "contentHash": "97ecaec231756c7aca1b30060e80090cc2a8d13aaf443110bde640e88ea7bd95",
+      "functions": [
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src-tauri/tauri.conf.json": {
+      "filePath": "apps/desktop/src-tauri/tauri.conf.json",
+      "contentHash": "623c62ad27b950c05a4186cc27e6e9bfaf4051e625d7b778daec24d60232eaaf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 29,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src/App.tsx": {
+      "filePath": "apps/desktop/src/App.tsx",
+      "contentHash": "3a38928ef138b7beabe13411c59e9a3f0ba04db7159ef090218627c0adc63b95",
+      "functions": [
+        {
+          "name": "normalizeInput",
+          "params": [
+            "input"
+          ],
+          "returnType": "ApplicationInput",
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "inputFromApplication",
+          "params": [
+            "application"
+          ],
+          "returnType": "ApplicationInput",
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "getTodayLabel",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "getMonthMatrix",
+          "params": [
+            "anchor"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "toISODate",
+          "params": [
+            "date"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "App",
+          "params": [],
+          "exported": true,
+          "lineCount": 717
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "APPLICATION_STATUSES",
+            "DEFAULT_APP_TITLE",
+            "EVENT_TYPES",
+            "PRIORITIES",
+            "Application",
+            "ApplicationInput",
+            "ApplicationStatus",
+            "EventType",
+            "FollowUpTask",
+            "FollowUpTaskInput",
+            "LocationTag",
+            "Priority",
+            "buildCalendarItems",
+            "calculateMetrics",
+            "createApplication",
+            "createEvent",
+            "createFollowUpTask",
+            "createLocationTag",
+            "deleteApplication",
+            "deleteEvent",
+            "deleteFollowUpTask",
+            "deleteLocationTag",
+            "exportApplicationsExcel",
+            "exportApplicationsJSON",
+            "formatDate",
+            "formatFullDate",
+            "getEventTypeLabel",
+            "getPriorityLabel",
+            "getStatus",
+            "isDue",
+            "isNotApplied",
+            "listApplications",
+            "listLocationTags",
+            "matchesLocationFilter",
+            "renameLocationTag",
+            "setFollowUpTaskCompleted",
+            "todayISO",
+            "updateApplication",
+            "updateFollowUpTask"
+          ]
+        },
+        {
+          "source": "@supabase/supabase-js",
+          "specifiers": [
+            "Session"
+          ]
+        },
+        {
+          "source": "react",
+          "specifiers": [
+            "ChangeEvent",
+            "FormEvent"
+          ]
+        },
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useMemo",
+            "useState"
+          ]
+        },
+        {
+          "source": "./supabaseClient",
+          "specifiers": [
+            "supabase"
+          ]
+        },
+        {
+          "source": "./workbench",
+          "specifiers": [
+            "countLocationUsage",
+            "getNextPendingTaskDate"
+          ]
+        }
+      ],
+      "exports": [
+        "App"
+      ],
+      "totalLines": 928,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src/main.tsx": {
+      "filePath": "apps/desktop/src/main.tsx",
+      "contentHash": "d8da93ead654ed3883edd6e2541aa0a52e95ec3bf7d02d037ad3bb5107dd3288",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "React"
+          ]
+        },
+        {
+          "source": "react-dom/client",
+          "specifiers": [
+            "ReactDOM"
+          ]
+        },
+        {
+          "source": "./App",
+          "specifiers": [
+            "App"
+          ]
+        },
+        {
+          "source": "./styles.css",
+          "specifiers": []
+        }
+      ],
+      "exports": [],
+      "totalLines": 11,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src/rls.integration.test.ts": {
+      "filePath": "apps/desktop/src/rls.integration.test.ts",
+      "contentHash": "ffba70995d249b3d2baff64a1683f86b59ca5e064b423d319cef39021d2c27c4",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vitest",
+          "specifiers": [
+            "afterAll",
+            "beforeAll",
+            "describe",
+            "expect",
+            "it"
+          ]
+        },
+        {
+          "source": "@supabase/supabase-js",
+          "specifiers": [
+            "createClient",
+            "SupabaseClient"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "createApplication",
+            "createFollowUpTask",
+            "createLocationTag",
+            "deleteApplication",
+            "deleteLocationTag",
+            "listApplications",
+            "listLocationTags",
+            "todayISO"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 119,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src/styles.css": {
+      "filePath": "apps/desktop/src/styles.css",
+      "contentHash": "cc3db96bf38b13aba1c679a8ffb8db11329b841b03a66d4946180cc877e32860",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1177,
+      "hasStructuralAnalysis": false
+    },
+    "apps/desktop/src/supabaseClient.ts": {
+      "filePath": "apps/desktop/src/supabaseClient.ts",
+      "contentHash": "98dc765c87651375325805e78a671f756263edcf92201f5219f7f58afed4c69d",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "createBrowserSupabaseClient"
+          ]
+        }
+      ],
+      "exports": [
+        "supabase"
+      ],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src/workbench.test.ts": {
+      "filePath": "apps/desktop/src/workbench.test.ts",
+      "contentHash": "902f79603360c437bdf67d69b7fcb110ecec154755bfbc41f6de2717c55c7c03",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vitest",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it"
+          ]
+        },
+        {
+          "source": "./workbench",
+          "specifiers": [
+            "countLocationUsage",
+            "getNextPendingTaskDate"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "Application"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/src/workbench.ts": {
+      "filePath": "apps/desktop/src/workbench.ts",
+      "contentHash": "1748b76f9e1d034fbc7308646011d590150cadcce917b9e17db1af5c420a4877",
+      "functions": [
+        {
+          "name": "countLocationUsage",
+          "params": [
+            "applications"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "getNextPendingTaskDate",
+          "params": [
+            "application"
+          ],
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "Application"
+          ]
+        }
+      ],
+      "exports": [
+        "countLocationUsage",
+        "getNextPendingTaskDate"
+      ],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/tsconfig.json": {
+      "filePath": "apps/desktop/tsconfig.json",
+      "contentHash": "1795c5d1cf930e36c5ee8eec44e7f208becb95137c61d79f7a347dab1b6632ec",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "apps/desktop/vite.config.ts": {
+      "filePath": "apps/desktop/vite.config.ts",
+      "contentHash": "a0dbb94b774062873fb354e801bb35331b27e413344fc2b2c26f2fd598c02436",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@vitejs/plugin-react",
+          "specifiers": [
+            "react"
+          ]
+        },
+        {
+          "source": "vite",
+          "specifiers": [
+            "defineConfig"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 11,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/.expo/README.md": {
+      "filePath": "apps/mobile/.expo/README.md",
+      "contentHash": "f7fa8374343414cec1bbfdcf649246f075338317208ffa51916434be8b9e3cbb",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/.expo/devices.json": {
+      "filePath": "apps/mobile/.expo/devices.json",
+      "contentHash": "4999f4b7b0c9228e1d00365cd633ba1366884a1aa6b52c7fbc654987161ec8a2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/App.tsx": {
+      "filePath": "apps/mobile/App.tsx",
+      "contentHash": "937fda2d6dbb9f127e6c9795ca25fcaa1bbb47058e41bfecce6f6a810832e19b",
+      "functions": [
+        {
+          "name": "ProfileThemeSync",
+          "params": [
+            "{ userId }"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "ThemedApp",
+          "params": [
+            "{ session }"
+          ],
+          "exported": false,
+          "lineCount": 28
+        },
+        {
+          "name": "App",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "StatusBar"
+          ]
+        },
+        {
+          "source": "@react-navigation/native",
+          "specifiers": [
+            "DarkTheme",
+            "DefaultTheme",
+            "NavigationContainer"
+          ]
+        },
+        {
+          "source": "react-native-safe-area-context",
+          "specifiers": [
+            "SafeAreaProvider"
+          ]
+        },
+        {
+          "source": "./src/supabaseClient",
+          "specifiers": [
+            "supabase"
+          ]
+        },
+        {
+          "source": "./src/navigation/AppNavigator",
+          "specifiers": [
+            "AppNavigator"
+          ]
+        },
+        {
+          "source": "@supabase/supabase-js",
+          "specifiers": [
+            "Session"
+          ]
+        },
+        {
+          "source": "./src/theme",
+          "specifiers": [
+            "colors",
+            "ThemeProvider",
+            "useAppTheme"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "getProfile"
+          ]
+        }
+      ],
+      "exports": [
+        "App"
+      ],
+      "totalLines": 75,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/android/app/build.gradle": {
+      "filePath": "apps/mobile/android/app/build.gradle",
+      "contentHash": "861d83b49f3411871723d1c2b4938f49d56275567a04a6d1d720910ffd648e22",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 177,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/debug.keystore": {
+      "filePath": "apps/mobile/android/app/debug.keystore",
+      "contentHash": "14e4e310d7c7037238ab569ecd66f150fcd0c12854f0de0e919c2def8ad4209c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/proguard-rules.pro": {
+      "filePath": "apps/mobile/android/app/proguard-rules.pro",
+      "contentHash": "9c7c7e281cde20c2c77db0f62fc0e7b2205eb1fb1471bcf521986811bb843fd3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/debug/AndroidManifest.xml": {
+      "filePath": "apps/mobile/android/app/src/debug/AndroidManifest.xml",
+      "contentHash": "524511ea714502e140d5b5d013cd27b68f4f92e127d84d9441fa8b4841c6d9c7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 8,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/AndroidManifest.xml": {
+      "filePath": "apps/mobile/android/app/src/main/AndroidManifest.xml",
+      "contentHash": "bdb1a597e092e352e0c9cca6c8c4f133cda2170a9f380eb944c40d2b6e747106",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt": {
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainActivity.kt",
+      "contentHash": "5437c4a46203bbd6e444ff65e61168101208c10ad61c0fd5f59a01e986e89282",
+      "functions": [
+        {
+          "name": "onCreate",
+          "params": [
+            "savedInstanceState"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "getMainComponentName",
+          "params": [],
+          "returnType": "String",
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "createReactActivityDelegate",
+          "params": [],
+          "returnType": "ReactActivityDelegate",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "invokeDefaultOnBackPressed",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [
+        {
+          "name": "MainActivity",
+          "methods": [
+            "onCreate",
+            "getMainComponentName",
+            "createReactActivityDelegate",
+            "invokeDefaultOnBackPressed"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 49
+        }
+      ],
+      "imports": [
+        {
+          "source": "android.os.Build",
+          "specifiers": [
+            "Build"
+          ]
+        },
+        {
+          "source": "android.os.Bundle",
+          "specifiers": [
+            "Bundle"
+          ]
+        },
+        {
+          "source": "com.facebook.react.ReactActivity",
+          "specifiers": [
+            "ReactActivity"
+          ]
+        },
+        {
+          "source": "com.facebook.react.ReactActivityDelegate",
+          "specifiers": [
+            "ReactActivityDelegate"
+          ]
+        },
+        {
+          "source": "com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled",
+          "specifiers": [
+            "fabricEnabled"
+          ]
+        },
+        {
+          "source": "com.facebook.react.defaults.DefaultReactActivityDelegate",
+          "specifiers": [
+            "DefaultReactActivityDelegate"
+          ]
+        },
+        {
+          "source": "expo.modules.ReactActivityDelegateWrapper",
+          "specifiers": [
+            "ReactActivityDelegateWrapper"
+          ]
+        }
+      ],
+      "exports": [
+        "onCreate",
+        "getMainComponentName",
+        "createReactActivityDelegate",
+        "invokeDefaultOnBackPressed",
+        "MainActivity"
+      ],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt": {
+      "filePath": "apps/mobile/android/app/src/main/java/com/jobtracker/mobile/MainApplication.kt",
+      "contentHash": "94b692fb991d6c8d9177260e7b08c770c294e8c2e62110d9a75e6eae31345bc8",
+      "functions": [
+        {
+          "name": "onCreate",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "onConfigurationChanged",
+          "params": [
+            "newConfig"
+          ],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [
+        {
+          "name": "MainApplication",
+          "methods": [
+            "onCreate",
+            "onConfigurationChanged"
+          ],
+          "properties": [
+            "reactNativeHost",
+            "reactHost"
+          ],
+          "exported": true,
+          "lineCount": 39
+        }
+      ],
+      "imports": [
+        {
+          "source": "android.app.Application",
+          "specifiers": [
+            "Application"
+          ]
+        },
+        {
+          "source": "android.content.res.Configuration",
+          "specifiers": [
+            "Configuration"
+          ]
+        },
+        {
+          "source": "com.facebook.react.PackageList",
+          "specifiers": [
+            "PackageList"
+          ]
+        },
+        {
+          "source": "com.facebook.react.ReactApplication",
+          "specifiers": [
+            "ReactApplication"
+          ]
+        },
+        {
+          "source": "com.facebook.react.ReactNativeHost",
+          "specifiers": [
+            "ReactNativeHost"
+          ]
+        },
+        {
+          "source": "com.facebook.react.ReactPackage",
+          "specifiers": [
+            "ReactPackage"
+          ]
+        },
+        {
+          "source": "com.facebook.react.ReactHost",
+          "specifiers": [
+            "ReactHost"
+          ]
+        },
+        {
+          "source": "com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load",
+          "specifiers": [
+            "load"
+          ]
+        },
+        {
+          "source": "com.facebook.react.defaults.DefaultReactNativeHost",
+          "specifiers": [
+            "DefaultReactNativeHost"
+          ]
+        },
+        {
+          "source": "com.facebook.react.soloader.OpenSourceMergedSoMapping",
+          "specifiers": [
+            "OpenSourceMergedSoMapping"
+          ]
+        },
+        {
+          "source": "com.facebook.soloader.SoLoader",
+          "specifiers": [
+            "SoLoader"
+          ]
+        },
+        {
+          "source": "expo.modules.ApplicationLifecycleDispatcher",
+          "specifiers": [
+            "ApplicationLifecycleDispatcher"
+          ]
+        },
+        {
+          "source": "expo.modules.ReactNativeHostWrapper",
+          "specifiers": [
+            "ReactNativeHostWrapper"
+          ]
+        }
+      ],
+      "exports": [
+        "reactNativeHost",
+        "reactHost",
+        "onCreate",
+        "onConfigurationChanged",
+        "MainApplication"
+      ],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml": {
+      "filePath": "apps/mobile/android/app/src/main/res/drawable/ic_launcher_background.xml",
+      "contentHash": "011a87abac1f8636d23aff6e8ca7e49837d92f4fe48a911a87e31bbee99769c3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml": {
+      "filePath": "apps/mobile/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+      "contentHash": "a0ffe99c6c5b933311be2b56a1769600dcdca909289cb4446e58cac2b6c27c7c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 38,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp",
+      "contentHash": "bd14f3a6de1c2427d7379afaa1531e4d5042d5d935d21e8211f167c38faf6c3b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp",
+      "contentHash": "a038717751f2914bb9916d27551b75e04f3a488bedeb51a867440df862258cfc",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 14,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp",
+      "contentHash": "bec707d17cbe230ccb9f64ce67677bff4a3ee1c02c2c9fd0a03de07732db1f43",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 16,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp",
+      "contentHash": "036ccdfcb25585d80e212469f12c5e29f5940d7245b8e0206a3f0a26170c9306",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 20,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp",
+      "contentHash": "f562b4e010f5d8c1c677a4a9539eb0fc2a1bbfe300bc9b1a5d878172b77ce980",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp",
+      "contentHash": "ae1d1e23ed2971fea2bbb523e8d436a615df1823c3f8d8adf7257eda345b09cf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp",
+      "contentHash": "d0911c8f890cf555e518681e1e668d1c400b7d8994d8d0941fd1cad012ec0041",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 37,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp",
+      "contentHash": "13397069e5b39d2a27d3a329a491d106d42cd19cd44085fa9674353a5192cd0c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 41,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp",
+      "contentHash": "823a78aadbf870abfaa7a7a835b61eec604592c40cf0235c934c92dd6655a64d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 29,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp": {
+      "filePath": "apps/mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp",
+      "contentHash": "7a0e5fa72847bcc4eac22c3be3b568450b8da7fd31f0def1ef5c71bf0fbd90f7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 61,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/values-night/colors.xml": {
+      "filePath": "apps/mobile/android/app/src/main/res/values-night/colors.xml",
+      "contentHash": "9fdf30117bf502bf3a2b6c8d439132c36fd21785e6d4ee562bbb1cfd95735dce",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 46,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/values/colors.xml": {
+      "filePath": "apps/mobile/android/app/src/main/res/values/colors.xml",
+      "contentHash": "2f0f7e7c6df42e5965c0fca167396b97ce458b791ef00600a4b5a267eb82d7d4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/values/strings.xml": {
+      "filePath": "apps/mobile/android/app/src/main/res/values/strings.xml",
+      "contentHash": "8acafbb101766619deb0b13420c8cbbd8111ca36ff49a3880f135640e3ad1f8e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 3,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/app/src/main/res/values/styles.xml": {
+      "filePath": "apps/mobile/android/app/src/main/res/values/styles.xml",
+      "contentHash": "3a806aa801088618c4027e265d4bb90eb0d14cdee7dafd8316ebabf754d581ed",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/build.gradle": {
+      "filePath": "apps/mobile/android/build.gradle",
+      "contentHash": "858123e07b7fc32a6baf34f168b7faf74f365605049e8ec51fdd6d9450406135",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 42,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/gradle.properties": {
+      "filePath": "apps/mobile/android/gradle.properties",
+      "contentHash": "3a2a2bc2b7aa85b3472f400a43ffd9a3bf6008d79b4c5f9741aae46ae86f0099",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 61,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/gradle/wrapper/gradle-wrapper.jar": {
+      "filePath": "apps/mobile/android/gradle/wrapper/gradle-wrapper.jar",
+      "contentHash": "809f7d03c4b935f944b16736dc7e55390b4bf0da487c2de65a04cb00d603be1b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 152,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/gradle/wrapper/gradle-wrapper.properties": {
+      "filePath": "apps/mobile/android/gradle/wrapper/gradle-wrapper.properties",
+      "contentHash": "f1db0bf526be8430f60982937d2f5a7e7319913c75c92ef1311ab992dcaf6b08",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 8,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/gradlew": {
+      "filePath": "apps/mobile/android/gradlew",
+      "contentHash": "1ce03a421a975125820e1e4b7230f6a151617255b39cf84758505c7e67b316fa",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 253,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/gradlew.bat": {
+      "filePath": "apps/mobile/android/gradlew.bat",
+      "contentHash": "57931b17dd228e5c24dac90e815d0bf82477e831a4618dfab4136f5446b42a9f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 95,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/android/settings.gradle": {
+      "filePath": "apps/mobile/android/settings.gradle",
+      "contentHash": "95abe25ea9cb0b2480330b8a16509d9eb409dc7238ffa28a1a6a4db2a873063f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": false
+    },
+    "apps/mobile/app.json": {
+      "filePath": "apps/mobile/app.json",
+      "contentHash": "2d33d841f1be04eac3f7037e811e38ce8818ab4b9ea949a4bab8c34f7fa71984",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/babel.config.js": {
+      "filePath": "apps/mobile/babel.config.js",
+      "contentHash": "cd6408b5c58316947628563dce1a5827449fdac0ce74040329a07753723455d1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/eas.json": {
+      "filePath": "apps/mobile/eas.json",
+      "contentHash": "b38cd807489516344c4b7ed9f0a5fb816944c79dfa3f5d551559f22bfa11dc45",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/index.js": {
+      "filePath": "apps/mobile/index.js",
+      "contentHash": "9a3b5f2be71e5b6735a0091aaf227f4fbb0da11b9a77c4668626e5e24689b417",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "expo",
+          "specifiers": [
+            "registerRootComponent"
+          ]
+        },
+        {
+          "source": "./App",
+          "specifiers": [
+            "App"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 5,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/jest.setup.js": {
+      "filePath": "apps/mobile/jest.setup.js",
+      "contentHash": "980b645b32bc7332b88a9014f77996f9cc76ddf9689759f19749b8d0b9141f9b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/metro.config.js": {
+      "filePath": "apps/mobile/metro.config.js",
+      "contentHash": "f23e5227be1cef058791a264ecca1c1660770913c2a8bdb5b73b3638f2a42031",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/package.json": {
+      "filePath": "apps/mobile/package.json",
+      "contentHash": "44adab317dfd13c3b9c816c7e1637b1b63c8513a316ff7e13b6818b7162d0731",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/ApplicationCard.tsx": {
+      "filePath": "apps/mobile/src/components/ApplicationCard.tsx",
+      "contentHash": "ebd743b693a3fb417b09cd1a6ddf72ba16ede55d6b6456c7eb1b0966576a3fa7",
+      "functions": [
+        {
+          "name": "ApplicationCard",
+          "params": [
+            "{ application, onPress }"
+          ],
+          "exported": true,
+          "lineCount": 35
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-native",
+          "specifiers": [
+            "StyleSheet",
+            "Text",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "formatDate",
+            "getStatus"
+          ]
+        },
+        {
+          "source": "./StatusBadge",
+          "specifiers": [
+            "StatusBadge"
+          ]
+        },
+        {
+          "source": "./PriorityBadge",
+          "specifiers": [
+            "PriorityBadge"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "Application"
+          ]
+        }
+      ],
+      "exports": [
+        "ApplicationCard"
+      ],
+      "totalLines": 87,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/CalendarGrid.tsx": {
+      "filePath": "apps/mobile/src/components/CalendarGrid.tsx",
+      "contentHash": "254ee49495fb8058cc89bd09ff2cd3ce6eff19e54bf96e85c70d934ab156f1d7",
+      "functions": [
+        {
+          "name": "CalendarGrid",
+          "params": [
+            "{ year, month, selectedDate, today, events, onSelectDate, onPrevMonth, onNextMonth }"
+          ],
+          "exported": true,
+          "lineCount": 74
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-native",
+          "specifiers": [
+            "StyleSheet",
+            "Text",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "eventDotColors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "CalendarItem"
+          ]
+        }
+      ],
+      "exports": [
+        "CalendarGrid"
+      ],
+      "totalLines": 117,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/EmptyState.tsx": {
+      "filePath": "apps/mobile/src/components/EmptyState.tsx",
+      "contentHash": "50dde92eea9c7941a3095fe7715ebd5131609c126361a3856616b03873efae51",
+      "functions": [
+        {
+          "name": "EmptyState",
+          "params": [
+            "{ icon = \"document-text-outline\", message }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-native",
+          "specifiers": [
+            "StyleSheet",
+            "Text",
+            "View"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "spacing"
+          ]
+        }
+      ],
+      "exports": [
+        "EmptyState"
+      ],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/FilterSheet.tsx": {
+      "filePath": "apps/mobile/src/components/FilterSheet.tsx",
+      "contentHash": "7ceeee776d3cb70f65332f2bedfc6d95bb67ff670c7b46a302707fdb259b26b3",
+      "functions": [
+        {
+          "name": "FilterSheet",
+          "params": [
+            "{ visible, onClose, filters, onApply, locations, channels }"
+          ],
+          "exported": true,
+          "lineCount": 103
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-native",
+          "specifiers": [
+            "Modal",
+            "ScrollView",
+            "StyleSheet",
+            "Text",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "APPLICATION_STATUSES",
+            "PRIORITIES",
+            "LocationTag"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        }
+      ],
+      "exports": [
+        "FilterSheet"
+      ],
+      "totalLines": 182,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/FollowUpTaskSection.test.tsx": {
+      "filePath": "apps/mobile/src/components/FollowUpTaskSection.test.tsx",
+      "contentHash": "7f196eacaf057c02c1c5b3ad04043c1ddfc208d012f3ef8d8916d2c57309b7b9",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@testing-library/react-native",
+          "specifiers": [
+            "fireEvent",
+            "render",
+            "waitFor"
+          ]
+        },
+        {
+          "source": "@jest/globals",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it",
+            "jest"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "FollowUpTask",
+            "FollowUpTaskInput"
+          ]
+        },
+        {
+          "source": "./FollowUpTaskSection",
+          "specifiers": [
+            "FollowUpTaskSection"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/FollowUpTaskSection.tsx": {
+      "filePath": "apps/mobile/src/components/FollowUpTaskSection.tsx",
+      "contentHash": "a4e03efe165832073f5bfa0470198ef4aa38a13d4768105911cdf399e2d449c1",
+      "functions": [
+        {
+          "name": "FollowUpTaskSection",
+          "params": [
+            "{\r\n  applicationId,\r\n  tasks,\r\n  onCreate,\r\n  onUpdate,\r\n  onToggle,\r\n  onDelete,\r\n  initialEditingTaskId,\r\n  startCreating = false,\r\n  initialDueDate,\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 178
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "Alert",
+            "StyleSheet",
+            "Text",
+            "TextInput",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "formatDate",
+            "todayISO",
+            "FollowUpTask",
+            "FollowUpTaskInput"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        }
+      ],
+      "exports": [
+        "FollowUpTaskSection"
+      ],
+      "totalLines": 238,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/LocationTagSelector.test.tsx": {
+      "filePath": "apps/mobile/src/components/LocationTagSelector.test.tsx",
+      "contentHash": "64e169111cb87e9bde414ebe2a82dd8a20f5f6c1836f9b299e8d7aa9c6306792",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@testing-library/react-native",
+          "specifiers": [
+            "fireEvent",
+            "render",
+            "waitFor"
+          ]
+        },
+        {
+          "source": "@jest/globals",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it",
+            "jest"
+          ]
+        },
+        {
+          "source": "./LocationTagSelector",
+          "specifiers": [
+            "LocationTagSelector"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/LocationTagSelector.tsx": {
+      "filePath": "apps/mobile/src/components/LocationTagSelector.tsx",
+      "contentHash": "e0ccdeca290df53b0f8eb3763f2ac9b8e4076545b7d661894c924064f95fdd9a",
+      "functions": [
+        {
+          "name": "LocationTagSelector",
+          "params": [
+            "{\r\n  tags,\r\n  selectedIds,\r\n  onToggle,\r\n  onCreate,\r\n  onRename,\r\n  onDelete,\r\n  usageCounts = {},\r\n}"
+          ],
+          "exported": true,
+          "lineCount": 127
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "Alert",
+            "TouchableOpacity",
+            "StyleSheet",
+            "Text",
+            "TextInput",
+            "View"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "LocationTag"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        }
+      ],
+      "exports": [
+        "LocationTagSelector"
+      ],
+      "totalLines": 197,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/PriorityBadge.tsx": {
+      "filePath": "apps/mobile/src/components/PriorityBadge.tsx",
+      "contentHash": "4fd2407f3d1271b23fb1b05119dd038eca561c004fa39f8c55a5d9a4812dc4dd",
+      "functions": [
+        {
+          "name": "PriorityBadge",
+          "params": [
+            "{ priority }"
+          ],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-native",
+          "specifiers": [
+            "StyleSheet",
+            "Text",
+            "View"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "priorityColors",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "getPriorityLabel"
+          ]
+        }
+      ],
+      "exports": [
+        "PriorityBadge"
+      ],
+      "totalLines": 27,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/SearchBar.tsx": {
+      "filePath": "apps/mobile/src/components/SearchBar.tsx",
+      "contentHash": "58b93261f1281bdbd3b7afea14b893f0af91918f5c6ebaf2584ff86d678f3065",
+      "functions": [
+        {
+          "name": "SearchBar",
+          "params": [
+            "{ value, onChangeText, placeholder = \"搜索公司、岗位、城市\", onFilterPress }"
+          ],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-native",
+          "specifiers": [
+            "StyleSheet",
+            "TextInput",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "radius",
+            "spacing"
+          ]
+        }
+      ],
+      "exports": [
+        "SearchBar"
+      ],
+      "totalLines": 65,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/StatsBar.test.tsx": {
+      "filePath": "apps/mobile/src/components/StatsBar.test.tsx",
+      "contentHash": "e8b9d888290ac13d609f681eee76adc317e4ca5e37cafdc902ce608b26a997f5",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@testing-library/react-native",
+          "specifiers": [
+            "fireEvent",
+            "render"
+          ]
+        },
+        {
+          "source": "@jest/globals",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it",
+            "jest"
+          ]
+        },
+        {
+          "source": "./StatsBar",
+          "specifiers": [
+            "StatsBar"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 37,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/StatsBar.tsx": {
+      "filePath": "apps/mobile/src/components/StatsBar.tsx",
+      "contentHash": "cff18a8c438347bc69c96d0be476ee7517e80632be36945a57df66991c7efcfe",
+      "functions": [
+        {
+          "name": "StatsBar",
+          "params": [
+            "{ metrics, activeKey, onPress }"
+          ],
+          "exported": true,
+          "lineCount": 26
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-native",
+          "specifiers": [
+            "StyleSheet",
+            "Text",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "DashboardMetrics"
+          ]
+        }
+      ],
+      "exports": [
+        "StatsBar"
+      ],
+      "totalLines": 83,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/StatusBadge.tsx": {
+      "filePath": "apps/mobile/src/components/StatusBadge.tsx",
+      "contentHash": "fe233e32fe794b48284627b8a6f9f6364d7fa02c419e8f6d8b4a688fe1f5e87b",
+      "functions": [
+        {
+          "name": "StatusBadge",
+          "params": [
+            "{ status }"
+          ],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-native",
+          "specifiers": [
+            "StyleSheet",
+            "Text",
+            "View"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "statusColors",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "getStatus"
+          ]
+        }
+      ],
+      "exports": [
+        "StatusBadge"
+      ],
+      "totalLines": 28,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/components/TimelineItem.tsx": {
+      "filePath": "apps/mobile/src/components/TimelineItem.tsx",
+      "contentHash": "35594354cf7d41b522219ec39fd85beb7a3f20ff26d5cb796ffa27198a535886",
+      "functions": [
+        {
+          "name": "TimelineItem",
+          "params": [
+            "{ event, isLast, isActive, onPress, onDelete }"
+          ],
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-native",
+          "specifiers": [
+            "StyleSheet",
+            "Text",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "formatDate"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "ApplicationEvent"
+          ]
+        }
+      ],
+      "exports": [
+        "TimelineItem"
+      ],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/navigation/AppNavigator.tsx": {
+      "filePath": "apps/mobile/src/navigation/AppNavigator.tsx",
+      "contentHash": "f9bf31732309c60005a83ae0be1f9aa8c2c7f580bab31d598d172c89cf37f628",
+      "functions": [
+        {
+          "name": "DashboardStack",
+          "params": [],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "MainTabs",
+          "params": [],
+          "exported": false,
+          "lineCount": 30
+        },
+        {
+          "name": "AppNavigator",
+          "params": [
+            "{ isLoggedIn }"
+          ],
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@react-navigation/native-stack",
+          "specifiers": [
+            "createNativeStackNavigator"
+          ]
+        },
+        {
+          "source": "@react-navigation/bottom-tabs",
+          "specifiers": [
+            "createBottomTabNavigator"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts"
+          ]
+        },
+        {
+          "source": "../screens/LoginScreen",
+          "specifiers": [
+            "LoginScreen"
+          ]
+        },
+        {
+          "source": "../screens/DashboardScreen",
+          "specifiers": [
+            "DashboardScreen"
+          ]
+        },
+        {
+          "source": "../screens/AddApplicationScreen",
+          "specifiers": [
+            "AddApplicationScreen"
+          ]
+        },
+        {
+          "source": "../screens/ApplicationDetailScreen",
+          "specifiers": [
+            "ApplicationDetailScreen"
+          ]
+        },
+        {
+          "source": "../screens/CalendarScreen",
+          "specifiers": [
+            "CalendarScreen"
+          ]
+        },
+        {
+          "source": "../screens/ProfileScreen",
+          "specifiers": [
+            "ProfileScreen"
+          ]
+        },
+        {
+          "source": "./types",
+          "specifiers": [
+            "DashboardStackParamList",
+            "MainTabParamList",
+            "RootStackParamList"
+          ]
+        }
+      ],
+      "exports": [
+        "AppNavigator"
+      ],
+      "totalLines": 69,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/navigation/types.ts": {
+      "filePath": "apps/mobile/src/navigation/types.ts",
+      "contentHash": "8923cbb2b8413ad69d77f4cc5a3205fcfdd33d64150b11f4f4395a5b4ff46e0b",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@react-navigation/native",
+          "specifiers": [
+            "NavigatorScreenParams"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "Application"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/screens/AddApplicationScreen.tsx": {
+      "filePath": "apps/mobile/src/screens/AddApplicationScreen.tsx",
+      "contentHash": "afe97132d80fa07c7b4dd3a574c557287677ea1849ecd6ddc0223a87b90d179a",
+      "functions": [
+        {
+          "name": "AddApplicationScreen",
+          "params": [
+            "{ navigation, route }"
+          ],
+          "exported": true,
+          "lineCount": 230
+        },
+        {
+          "name": "PickerModal",
+          "params": [
+            "{ visible, items, labels, selected, onSelect, onClose }"
+          ],
+          "exported": false,
+          "lineCount": 30
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useMemo",
+            "useState"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "Alert",
+            "KeyboardAvoidingView",
+            "Modal",
+            "Platform",
+            "ScrollView",
+            "StyleSheet",
+            "Text",
+            "TextInput",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "react-native-safe-area-context",
+          "specifiers": [
+            "SafeAreaView"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "APPLICATION_STATUSES",
+            "Application",
+            "ApplicationInput",
+            "LocationTag",
+            "createApplication",
+            "createEvent",
+            "createLocationTag",
+            "deleteLocationTag",
+            "getStatus",
+            "listApplications",
+            "listLocationTags",
+            "renameLocationTag",
+            "todayISO",
+            "updateApplication"
+          ]
+        },
+        {
+          "source": "../supabaseClient",
+          "specifiers": [
+            "supabase"
+          ]
+        },
+        {
+          "source": "@react-navigation/native-stack",
+          "specifiers": [
+            "NativeStackNavigationProp"
+          ]
+        },
+        {
+          "source": "@react-native-community/datetimepicker",
+          "specifiers": [
+            "DateTimePicker"
+          ]
+        },
+        {
+          "source": "../navigation/types",
+          "specifiers": [
+            "DashboardStackParamList"
+          ]
+        },
+        {
+          "source": "../components/LocationTagSelector",
+          "specifiers": [
+            "LocationTagSelector"
+          ]
+        }
+      ],
+      "exports": [
+        "AddApplicationScreen"
+      ],
+      "totalLines": 372,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/screens/ApplicationDetailScreen.tsx": {
+      "filePath": "apps/mobile/src/screens/ApplicationDetailScreen.tsx",
+      "contentHash": "3365f3a2a4799bb2eec3889fad1992d477344843dcc865d976f7766385841ba1",
+      "functions": [
+        {
+          "name": "ApplicationDetailScreen",
+          "params": [
+            "{ navigation, route }"
+          ],
+          "exported": true,
+          "lineCount": 215
+        },
+        {
+          "name": "InfoRow",
+          "params": [
+            "{ label, value }"
+          ],
+          "exported": false,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useCallback",
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "Alert",
+            "ScrollView",
+            "StyleSheet",
+            "Text",
+            "TextInput",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "react-native-safe-area-context",
+          "specifiers": [
+            "SafeAreaView"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "Application",
+            "ApplicationEvent",
+            "FollowUpTask",
+            "FollowUpTaskInput",
+            "createFollowUpTask",
+            "createEvent",
+            "deleteApplication",
+            "deleteEvent",
+            "deleteFollowUpTask",
+            "formatDate",
+            "getStatus",
+            "listApplications",
+            "setFollowUpTaskCompleted",
+            "todayISO",
+            "updateFollowUpTask"
+          ]
+        },
+        {
+          "source": "../supabaseClient",
+          "specifiers": [
+            "supabase"
+          ]
+        },
+        {
+          "source": "../components/StatusBadge",
+          "specifiers": [
+            "StatusBadge"
+          ]
+        },
+        {
+          "source": "../components/PriorityBadge",
+          "specifiers": [
+            "PriorityBadge"
+          ]
+        },
+        {
+          "source": "../components/TimelineItem",
+          "specifiers": [
+            "TimelineItem"
+          ]
+        },
+        {
+          "source": "@react-navigation/native-stack",
+          "specifiers": [
+            "NativeStackNavigationProp"
+          ]
+        },
+        {
+          "source": "../navigation/types",
+          "specifiers": [
+            "DashboardStackParamList"
+          ]
+        },
+        {
+          "source": "../components/FollowUpTaskSection",
+          "specifiers": [
+            "FollowUpTaskSection"
+          ]
+        }
+      ],
+      "exports": [
+        "ApplicationDetailScreen"
+      ],
+      "totalLines": 357,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/screens/CalendarScreen.tsx": {
+      "filePath": "apps/mobile/src/screens/CalendarScreen.tsx",
+      "contentHash": "11fa54195df9691982877d00e24ea699468a9fb054ae69792fd83e75bfead872",
+      "functions": [
+        {
+          "name": "CalendarScreen",
+          "params": [],
+          "exported": true,
+          "lineCount": 219
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useCallback",
+            "useEffect",
+            "useMemo",
+            "useState"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "Alert",
+            "FlatList",
+            "Modal",
+            "ScrollView",
+            "StyleSheet",
+            "Text",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "react-native-safe-area-context",
+          "specifiers": [
+            "SafeAreaView"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "Application",
+            "CalendarItem",
+            "FollowUpTask",
+            "FollowUpTaskInput",
+            "buildCalendarItems",
+            "createFollowUpTask",
+            "deleteFollowUpTask",
+            "listApplications",
+            "setFollowUpTaskCompleted",
+            "updateFollowUpTask"
+          ]
+        },
+        {
+          "source": "../supabaseClient",
+          "specifiers": [
+            "supabase"
+          ]
+        },
+        {
+          "source": "../components/CalendarGrid",
+          "specifiers": [
+            "CalendarGrid"
+          ]
+        },
+        {
+          "source": "../components/ApplicationCard",
+          "specifiers": [
+            "ApplicationCard"
+          ]
+        },
+        {
+          "source": "../components/EmptyState",
+          "specifiers": [
+            "EmptyState"
+          ]
+        },
+        {
+          "source": "../components/FollowUpTaskSection",
+          "specifiers": [
+            "FollowUpTaskSection"
+          ]
+        }
+      ],
+      "exports": [
+        "CalendarScreen"
+      ],
+      "totalLines": 321,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/screens/DashboardScreen.tsx": {
+      "filePath": "apps/mobile/src/screens/DashboardScreen.tsx",
+      "contentHash": "f54abb57261cc7e9b265e25412ed749d212ae70dd6bb582e1c0637b8aaff723b",
+      "functions": [
+        {
+          "name": "DashboardScreen",
+          "params": [
+            "{ navigation }"
+          ],
+          "exported": true,
+          "lineCount": 185
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useCallback",
+            "useEffect",
+            "useMemo",
+            "useState"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "Alert",
+            "FlatList",
+            "Modal",
+            "RefreshControl",
+            "ScrollView",
+            "StyleSheet",
+            "Text",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "react-native-safe-area-context",
+          "specifiers": [
+            "SafeAreaView"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "Application",
+            "calculateMetrics",
+            "getProfile",
+            "getReminderTasks",
+            "isInterviewStatus",
+            "listApplications",
+            "matchesLocationFilter",
+            "todayISO"
+          ]
+        },
+        {
+          "source": "../supabaseClient",
+          "specifiers": [
+            "supabase"
+          ]
+        },
+        {
+          "source": "../components/StatsBar",
+          "specifiers": [
+            "StatsBar"
+          ]
+        },
+        {
+          "source": "../components/StatsBar",
+          "specifiers": [
+            "QuickFilterKey"
+          ]
+        },
+        {
+          "source": "../components/SearchBar",
+          "specifiers": [
+            "SearchBar"
+          ]
+        },
+        {
+          "source": "../components/ApplicationCard",
+          "specifiers": [
+            "ApplicationCard"
+          ]
+        },
+        {
+          "source": "../components/FilterSheet",
+          "specifiers": [
+            "FilterSheet"
+          ]
+        },
+        {
+          "source": "../components/EmptyState",
+          "specifiers": [
+            "EmptyState"
+          ]
+        },
+        {
+          "source": "@react-navigation/native-stack",
+          "specifiers": [
+            "NativeStackNavigationProp"
+          ]
+        },
+        {
+          "source": "../navigation/types",
+          "specifiers": [
+            "DashboardStackParamList"
+          ]
+        }
+      ],
+      "exports": [
+        "DashboardScreen"
+      ],
+      "totalLines": 272,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/screens/LoginScreen.test.tsx": {
+      "filePath": "apps/mobile/src/screens/LoginScreen.test.tsx",
+      "contentHash": "d02638f273e2ed69433e81210980db55403d62a26ca58baf82f8007a5a4c0448",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@testing-library/react-native",
+          "specifiers": [
+            "render"
+          ]
+        },
+        {
+          "source": "@jest/globals",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it",
+            "jest"
+          ]
+        },
+        {
+          "source": "./LoginScreen",
+          "specifiers": [
+            "LoginScreen"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/screens/LoginScreen.tsx": {
+      "filePath": "apps/mobile/src/screens/LoginScreen.tsx",
+      "contentHash": "5496b9006b8c0ef3f2c258436e1c0a84ac9fc2919e5e225a69924c12f9467ed6",
+      "functions": [
+        {
+          "name": "LoginScreen",
+          "params": [],
+          "exported": true,
+          "lineCount": 132
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "KeyboardAvoidingView",
+            "Platform",
+            "ScrollView",
+            "StyleSheet",
+            "Text",
+            "TextInput",
+            "TouchableOpacity",
+            "View",
+            "Alert"
+          ]
+        },
+        {
+          "source": "react-native-safe-area-context",
+          "specifiers": [
+            "SafeAreaView"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing"
+          ]
+        },
+        {
+          "source": "../supabaseClient",
+          "specifiers": [
+            "supabase"
+          ]
+        }
+      ],
+      "exports": [
+        "LoginScreen"
+      ],
+      "totalLines": 210,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/screens/ProfileScreen.tsx": {
+      "filePath": "apps/mobile/src/screens/ProfileScreen.tsx",
+      "contentHash": "bc36c5da74d92e741ecc031d7e0815a33aa42e86c7fe5dcb031fd7b668072d29",
+      "functions": [
+        {
+          "name": "ProfileScreen",
+          "params": [],
+          "exported": true,
+          "lineCount": 277
+        },
+        {
+          "name": "SettingLabel",
+          "params": [
+            "{ children }"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "SectionTitle",
+          "params": [
+            "{ icon, children }"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "MenuItem",
+          "params": [
+            "{ icon, label, detail, onPress, last = false }"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "HelpItem",
+          "params": [
+            "{ title, text }"
+          ],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useCallback",
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "Alert",
+            "Image",
+            "Linking",
+            "Modal",
+            "Platform",
+            "ScrollView",
+            "StyleSheet",
+            "Switch",
+            "Text",
+            "TextInput",
+            "TouchableOpacity",
+            "View"
+          ]
+        },
+        {
+          "source": "react-native-safe-area-context",
+          "specifiers": [
+            "SafeAreaView"
+          ]
+        },
+        {
+          "source": "@expo/vector-icons",
+          "specifiers": [
+            "Ionicons"
+          ]
+        },
+        {
+          "source": "expo-image-picker",
+          "specifiers": [
+            "* as ImagePicker"
+          ]
+        },
+        {
+          "source": "expo-constants",
+          "specifiers": [
+            "Constants"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "getProfile",
+            "updateProfile",
+            "Profile",
+            "ProfilePreferences",
+            "ThemePreference"
+          ]
+        },
+        {
+          "source": "../theme",
+          "specifiers": [
+            "colors",
+            "fonts",
+            "radius",
+            "spacing",
+            "useAppTheme"
+          ]
+        },
+        {
+          "source": "../settings",
+          "specifiers": [
+            "buildFeedbackMailto",
+            "validatePasswordChange"
+          ]
+        },
+        {
+          "source": "../supabaseClient",
+          "specifiers": [
+            "supabase"
+          ]
+        }
+      ],
+      "exports": [
+        "ProfileScreen"
+      ],
+      "totalLines": 389,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/settings.test.ts": {
+      "filePath": "apps/mobile/src/settings.test.ts",
+      "contentHash": "8aec81474ad4a04010cde4f09ae959088a11feed8e31c1337763304957f9e83f",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@jest/globals",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it"
+          ]
+        },
+        {
+          "source": "./settings",
+          "specifiers": [
+            "buildFeedbackMailto",
+            "validatePasswordChange"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/settings.ts": {
+      "filePath": "apps/mobile/src/settings.ts",
+      "contentHash": "f97b011f736afaa119a1ef064b168141240ad7c9888dddcd58daab30197e29b4",
+      "functions": [
+        {
+          "name": "buildFeedbackMailto",
+          "params": [
+            "{ version, build, platform }"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "validatePasswordChange",
+          "params": [
+            "password",
+            "confirmation"
+          ],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "buildFeedbackMailto",
+        "validatePasswordChange"
+      ],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/supabaseClient.ts": {
+      "filePath": "apps/mobile/src/supabaseClient.ts",
+      "contentHash": "688b2f94432bd811ba6302210d5798fafa1aac8378f20083b0efd8a643ea95fd",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@react-native-async-storage/async-storage",
+          "specifiers": [
+            "AsyncStorage"
+          ]
+        },
+        {
+          "source": "@supabase/supabase-js",
+          "specifiers": [
+            "createClient"
+          ]
+        }
+      ],
+      "exports": [
+        "supabase"
+      ],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/theme.test.ts": {
+      "filePath": "apps/mobile/src/theme.test.ts",
+      "contentHash": "be52c3fda3e630ca3ddb8eeaf61cf677db4dade05e12a5cbba2c40e0e805800d",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@jest/globals",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it"
+          ]
+        },
+        {
+          "source": "./theme",
+          "specifiers": [
+            "androidColorTokens"
+          ]
+        },
+        {
+          "source": "./themePreference",
+          "specifiers": [
+            "resolveThemePreference"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/theme.ts": {
+      "filePath": "apps/mobile/src/theme.ts",
+      "contentHash": "ca1c366327e2798a8ff38522c340c91bac6d7518e37b8b194b046cb90733180e",
+      "functions": [
+        {
+          "name": "dynamicColor",
+          "params": [
+            "light",
+            "dark",
+            "androidToken"
+          ],
+          "returnType": "ColorValue",
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "themedStatus",
+          "params": [
+            "lightBg",
+            "lightText",
+            "darkBg",
+            "darkText",
+            "token"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "ThemeProvider",
+          "params": [
+            "{ children }"
+          ],
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "useAppTheme",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "createContext",
+            "createElement",
+            "useCallback",
+            "useContext",
+            "useEffect",
+            "useMemo",
+            "useState",
+            "ReactNode"
+          ]
+        },
+        {
+          "source": "@react-native-async-storage/async-storage",
+          "specifiers": [
+            "AsyncStorage"
+          ]
+        },
+        {
+          "source": "react-native",
+          "specifiers": [
+            "Appearance",
+            "DynamicColorIOS",
+            "Platform",
+            "PlatformColor",
+            "StyleSheet",
+            "useColorScheme",
+            "ColorValue"
+          ]
+        },
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "ThemePreference"
+          ]
+        },
+        {
+          "source": "./themePreference",
+          "specifiers": [
+            "resolveThemePreference",
+            "ResolvedTheme"
+          ]
+        }
+      ],
+      "exports": [
+        "resolveThemePreference",
+        "ResolvedTheme",
+        "androidColorTokens",
+        "colors",
+        "statusColors",
+        "priorityColors",
+        "eventDotColors",
+        "ThemeProvider",
+        "useAppTheme",
+        "fonts",
+        "spacing",
+        "radius",
+        "sharedStyles"
+      ],
+      "totalLines": 167,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/src/themePreference.ts": {
+      "filePath": "apps/mobile/src/themePreference.ts",
+      "contentHash": "154b86008fd9f36d135cdd3499a8424835a2e9190983539584655d435c659738",
+      "functions": [
+        {
+          "name": "resolveThemePreference",
+          "params": [
+            "preference",
+            "systemScheme"
+          ],
+          "returnType": "ResolvedTheme",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@job-tracker/core",
+          "specifiers": [
+            "ThemePreference"
+          ]
+        }
+      ],
+      "exports": [
+        "resolveThemePreference"
+      ],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    "apps/mobile/tsconfig.json": {
+      "filePath": "apps/mobile/tsconfig.json",
+      "contentHash": "5922f5d94bb7022fe196f9de17f30ab86247d4c37d47443e5f34661c86ad0d1e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "docs/ideas/mobile-workbench-v0.2.md": {
+      "filePath": "docs/ideas/mobile-workbench-v0.2.md",
+      "contentHash": "a60f01ba16ffc3e229daf36160b7407e6511dbeeaf7a793a56567f3f11a79912",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 63,
+      "hasStructuralAnalysis": true
+    },
+    "docs/spec.md": {
+      "filePath": "docs/spec.md",
+      "contentHash": "36c49104040a5c58dd3a18ef67e4edcce0c10e46b7692f43257ad1e6507d4a04",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 611,
+      "hasStructuralAnalysis": true
+    },
+    "package.json": {
+      "filePath": "package.json",
+      "contentHash": "4b4ed9c07e569196b52dee0b8ac55d460e1363200dac91cc261acd0a529e65b4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/package.json": {
+      "filePath": "packages/core/package.json",
+      "contentHash": "0ff88c162f7ca62544bc67c30e38e9dea7cd31307e85e5016af98bbf401bf0f1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/constants.ts": {
+      "filePath": "packages/core/src/constants.ts",
+      "contentHash": "78eaab1b9f7be8619e336b71df2b517db512a236e6f20e39b9a6b6ca1175a09d",
+      "functions": [
+        {
+          "name": "getStatus",
+          "params": [
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getPriorityLabel",
+          "params": [
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getEventTypeLabel",
+          "params": [
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "isInterviewStatus",
+          "params": [
+            "status"
+          ],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "APPLICATION_STATUSES",
+        "PRIORITIES",
+        "EVENT_TYPES",
+        "DEFAULT_APP_TITLE",
+        "getStatus",
+        "getPriorityLabel",
+        "getEventTypeLabel",
+        "isInterviewStatus"
+      ],
+      "totalLines": 50,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/date.ts": {
+      "filePath": "packages/core/src/date.ts",
+      "contentHash": "6805eea717bd4540aca676e5d806725639c3c5b5ca118a23b892971caf6037a6",
+      "functions": [
+        {
+          "name": "todayISO",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "formatDate",
+          "params": [
+            "value"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "formatFullDate",
+          "params": [
+            "value"
+          ],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "todayISO",
+        "formatDate",
+        "formatFullDate"
+      ],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/exporters.ts": {
+      "filePath": "packages/core/src/exporters.ts",
+      "contentHash": "e3463b2a20e3d278f6ef0732fe636fe3b8f1e70e860e18ea9c5cd40163b5c676",
+      "functions": [
+        {
+          "name": "escapeXML",
+          "params": [
+            "value"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "cell",
+          "params": [
+            "value",
+            "style"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "row",
+          "params": [
+            "values"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "exportApplicationsJSON",
+          "params": [
+            "applications"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "exportApplicationsExcel",
+          "params": [
+            "applications",
+            "title"
+          ],
+          "exported": true,
+          "lineCount": 76
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "./constants",
+          "specifiers": [
+            "getEventTypeLabel",
+            "getPriorityLabel",
+            "getStatus"
+          ]
+        },
+        {
+          "source": "./date",
+          "specifiers": [
+            "todayISO"
+          ]
+        },
+        {
+          "source": "./types",
+          "specifiers": [
+            "Application"
+          ]
+        }
+      ],
+      "exports": [
+        "exportApplicationsJSON",
+        "exportApplicationsExcel"
+      ],
+      "totalLines": 102,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/index.ts": {
+      "filePath": "packages/core/src/index.ts",
+      "contentHash": "b02ceb50ded4afb343b3cac5d6675eff0006abeccafeabd029bdc74decc6c023",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/services.compatibility.test.ts": {
+      "filePath": "packages/core/src/services.compatibility.test.ts",
+      "contentHash": "514460d8faa69822fbf2de9f4edb291ed7cf37f7f571002313400f10533275ce",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vitest",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it",
+            "vi"
+          ]
+        },
+        {
+          "source": "./services",
+          "specifiers": [
+            "getProfile",
+            "listApplications",
+            "listLocationTags"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 115,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/services.ts": {
+      "filePath": "packages/core/src/services.ts",
+      "contentHash": "4a89fcf0f168f95a829a3eecf8167678b45f77a7ad5c20d0bc3468bc9c528af8",
+      "functions": [
+        {
+          "name": "hasPostgrestCode",
+          "params": [
+            "error",
+            "codes"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "isMissingWorkbenchRelation",
+          "params": [
+            "error"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "isMissingWorkbenchTable",
+          "params": [
+            "error"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "normalizeProfile",
+          "params": [
+            "profile"
+          ],
+          "returnType": "Profile",
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "getCurrentUserId",
+          "params": [
+            "client"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "normalizeLocationLabel",
+          "params": [
+            "label"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "normalizeTaskInput",
+          "params": [
+            "input"
+          ],
+          "returnType": "FollowUpTaskInput",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "listApplications",
+          "params": [
+            "client"
+          ],
+          "returnType": "Promise<Application[]>",
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "createApplication",
+          "params": [
+            "client",
+            "input",
+            "locationTagIds"
+          ],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "updateApplication",
+          "params": [
+            "client",
+            "id",
+            "patch",
+            "locationTagIds"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "deleteApplication",
+          "params": [
+            "client",
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "createEvent",
+          "params": [
+            "client",
+            "input"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "deleteEvent",
+          "params": [
+            "client",
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "listLocationTags",
+          "params": [
+            "client"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "createLocationTag",
+          "params": [
+            "client",
+            "label"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "renameLocationTag",
+          "params": [
+            "client",
+            "id",
+            "label"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "deleteLocationTag",
+          "params": [
+            "client",
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "setApplicationLocations",
+          "params": [
+            "client",
+            "applicationId",
+            "locationTagIds"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "createFollowUpTask",
+          "params": [
+            "client",
+            "input"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "updateFollowUpTask",
+          "params": [
+            "client",
+            "id",
+            "input"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "setFollowUpTaskCompleted",
+          "params": [
+            "client",
+            "id",
+            "completed"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "deleteFollowUpTask",
+          "params": [
+            "client",
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "getProfile",
+          "params": [
+            "client"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "updateProfile",
+          "params": [
+            "client",
+            "patch"
+          ],
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "./types",
+          "specifiers": [
+            "Application",
+            "ApplicationInput",
+            "EventInput",
+            "FollowUpTask",
+            "FollowUpTaskInput",
+            "LocationTag",
+            "Profile"
+          ]
+        },
+        {
+          "source": "./supabase",
+          "specifiers": [
+            "SupabaseClientLike"
+          ]
+        }
+      ],
+      "exports": [
+        "normalizeLocationLabel",
+        "listApplications",
+        "createApplication",
+        "updateApplication",
+        "deleteApplication",
+        "createEvent",
+        "deleteEvent",
+        "listLocationTags",
+        "createLocationTag",
+        "renameLocationTag",
+        "deleteLocationTag",
+        "setApplicationLocations",
+        "createFollowUpTask",
+        "updateFollowUpTask",
+        "setFollowUpTaskCompleted",
+        "deleteFollowUpTask",
+        "getProfile",
+        "updateProfile"
+      ],
+      "totalLines": 288,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/stats.ts": {
+      "filePath": "packages/core/src/stats.ts",
+      "contentHash": "1cbe82bb65278b40b569c9c888f06370abd21ae54940215714e73edc2aca55ff",
+      "functions": [
+        {
+          "name": "addDaysISO",
+          "params": [
+            "value",
+            "days"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "isFollowUpTaskDue",
+          "params": [
+            "task",
+            "today"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getReminderTasks",
+          "params": [
+            "tasks",
+            "today",
+            "leadDays"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "matchesLocationFilter",
+          "params": [
+            "application",
+            "selectedTagIds"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "isDue",
+          "params": [
+            "application"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "isNotApplied",
+          "params": [
+            "application"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "calculateMetrics",
+          "params": [
+            "applications"
+          ],
+          "returnType": "DashboardMetrics",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "buildCalendarItems",
+          "params": [
+            "applications"
+          ],
+          "returnType": "CalendarItem[]",
+          "exported": true,
+          "lineCount": 48
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "./constants",
+          "specifiers": [
+            "getEventTypeLabel",
+            "getStatus",
+            "isInterviewStatus"
+          ]
+        },
+        {
+          "source": "./date",
+          "specifiers": [
+            "todayISO"
+          ]
+        },
+        {
+          "source": "./types",
+          "specifiers": [
+            "Application",
+            "CalendarItem",
+            "DashboardMetrics",
+            "FollowUpTask"
+          ]
+        }
+      ],
+      "exports": [
+        "isFollowUpTaskDue",
+        "getReminderTasks",
+        "matchesLocationFilter",
+        "isDue",
+        "isNotApplied",
+        "calculateMetrics",
+        "buildCalendarItems"
+      ],
+      "totalLines": 119,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/supabase.ts": {
+      "filePath": "packages/core/src/supabase.ts",
+      "contentHash": "36497642532c63cd02481f99248dc284808cbc082386e677d933cc1e4118c063",
+      "functions": [
+        {
+          "name": "createBrowserSupabaseClient",
+          "params": [
+            "url",
+            "anonKey"
+          ],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@supabase/supabase-js",
+          "specifiers": [
+            "createClient"
+          ]
+        }
+      ],
+      "exports": [
+        "createBrowserSupabaseClient"
+      ],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/types.ts": {
+      "filePath": "packages/core/src/types.ts",
+      "contentHash": "8a4cb609ae11e09ea042510ce226dd62a95864239370ed4a5d25b2cb20a049b2",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "./constants",
+          "specifiers": [
+            "APPLICATION_STATUSES",
+            "EVENT_TYPES",
+            "PRIORITIES"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 112,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/src/workbench.test.ts": {
+      "filePath": "packages/core/src/workbench.test.ts",
+      "contentHash": "528cc9d3da79a7a55dd7e18cded0b7503d9d245ec4d94c97cc4e8683e3db314f",
+      "functions": [
+        {
+          "name": "application",
+          "params": [
+            "overrides"
+          ],
+          "returnType": "Application",
+          "exported": false,
+          "lineCount": 26
+        },
+        {
+          "name": "task",
+          "params": [
+            "overrides"
+          ],
+          "returnType": "FollowUpTask",
+          "exported": false,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vitest",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it"
+          ]
+        },
+        {
+          "source": "./index",
+          "specifiers": [
+            "APPLICATION_STATUSES",
+            "buildCalendarItems",
+            "calculateMetrics",
+            "getReminderTasks",
+            "isFollowUpTaskDue",
+            "isInterviewStatus",
+            "matchesLocationFilter",
+            "Application",
+            "FollowUpTask"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 129,
+      "hasStructuralAnalysis": true
+    },
+    "packages/core/tsconfig.json": {
+      "filePath": "packages/core/tsconfig.json",
+      "contentHash": "0339903f8337105d48ef3cdf80ae78d65e111140d540abf50012e40040393f9f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    "pnpm-workspace.yaml": {
+      "filePath": "pnpm-workspace.yaml",
+      "contentHash": "5e5ddd04430189ef06cfb4f36d45f805c18c64da1aec437353cdad61a2f6fdee",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/setup-windows.ps1": {
+      "filePath": "scripts/setup-windows.ps1",
+      "contentHash": "1fad31d5bc6ade922c85306ef4242417fef42d04d72f4140e7ddd021fb85206d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 440,
+      "hasStructuralAnalysis": false
+    },
+    "supabase/migrations/202605160001_initial_schema.sql": {
+      "filePath": "supabase/migrations/202605160001_initial_schema.sql",
+      "contentHash": "2871bed049e69138ad3c072315026ec1e06f15ed45123cf77ca9b460a1b2fed9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 143,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/migrations/202607250001_add_manager_status.sql": {
+      "filePath": "supabase/migrations/202607250001_add_manager_status.sql",
+      "contentHash": "77875a5ee744102258d37a7efc007bf7306443595b9ef115217f08c21d8d0340",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/migrations/202607250002_mobile_workbench.sql": {
+      "filePath": "supabase/migrations/202607250002_mobile_workbench.sql",
+      "contentHash": "ffeeeccad48729e0072fe71c6a28f3e8c72e0f2f0e7d57227dec928d757e169e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 303,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/rollbacks/202607250002_mobile_workbench.sql": {
+      "filePath": "supabase/rollbacks/202607250002_mobile_workbench.sql",
+      "contentHash": "791d3f24970e560c7d25f5570934d36468c10ee0d61c522adfa1f28eeb96e685",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "tsconfig.base.json": {
+      "filePath": "tsconfig.base.json",
+      "contentHash": "64d2248c0a33b17e5dc5de6ffdaf5eed6b68636bdd97522acc8384126d45f298",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    }
+  }
+}
