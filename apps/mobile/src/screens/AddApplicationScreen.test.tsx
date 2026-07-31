@@ -6,6 +6,11 @@ import AddApplicationScreen from "./AddApplicationScreen";
 
 jest.mock("@react-native-community/datetimepicker", () => () => null);
 
+jest.mock("react-native-safe-area-context", () => ({
+  ...jest.requireActual<typeof import("react-native-safe-area-context")>("react-native-safe-area-context"),
+  useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 0, left: 0 }),
+}));
+
 jest.mock("../supabaseClient", () => ({ supabase: {} }));
 
 jest.mock("@job-tracker/core", () => ({
@@ -110,6 +115,17 @@ describe("AddApplicationScreen", () => {
     expect(screen.getByText("其他")).toBeTruthy();
     expect(screen.getByText("远程")).toBeTruthy();
     expect(screen.getByTestId("picker-options-scroll-view")).toBeTruthy();
+  });
+
+  it("keeps the scrollable picker outside the dismiss backdrop press target", () => {
+    const screen = renderScreen({ ...existingApplication, city: null, locations: [] });
+    fireEvent.press(screen.getByRole("button", { name: "选择城市" }));
+
+    let ancestor = screen.getByTestId("picker-options-scroll-view").parent;
+    while (ancestor) {
+      expect(ancestor.props.onPress).toBeUndefined();
+      ancestor = ancestor.parent;
+    }
   });
 
   it.each(["惠州", "其他", "远程"])("selects and saves the city list tail option %s", async (city) => {

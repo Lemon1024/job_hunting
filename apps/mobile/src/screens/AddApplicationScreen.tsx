@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Alert,
+  FlatList,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -11,7 +12,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fonts, radius, spacing } from "../theme";
 import {
@@ -263,6 +264,7 @@ function ResumeVersionModal({ visible, options, selected, onSelect, onClose }: {
   onClose: () => void;
 }) {
   const [draft, setDraft] = useState("");
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     if (visible) setDraft("");
@@ -274,8 +276,8 @@ function ResumeVersionModal({ visible, options, selected, onSelect, onClose }: {
   }
 
   return (
-    <Modal visible={visible} animationType="fade" transparent presentationStyle="overFullScreen" onRequestClose={onClose}>
-      <View style={pickerStyles.backdrop}>
+    <Modal visible={visible} animationType="fade" transparent presentationStyle="overFullScreen" statusBarTranslucent onRequestClose={onClose}>
+      <View style={[pickerStyles.backdrop, { paddingTop: Math.max(insets.top, spacing.xl), paddingBottom: Math.max(insets.bottom, spacing.xl) }]}>
         <TouchableOpacity accessibilityRole="button" accessibilityLabel="关闭简历版本选择器" style={StyleSheet.absoluteFill} onPress={onClose} />
         <KeyboardAvoidingView style={pickerStyles.resumeSheet} behavior={Platform.OS === "ios" ? "padding" : undefined}>
           <Text style={pickerStyles.title}>选择简历版本</Text>
@@ -342,38 +344,48 @@ function PickerModal({ visible, items, labels, selected, onSelect, onClose }: {
   onSelect: (v: string) => void;
   onClose: () => void;
 }) {
+  const insets = useSafeAreaInsets();
+
   return (
-    <Modal visible={visible} animationType="fade" transparent onRequestClose={onClose}>
-      <TouchableOpacity style={pickerStyles.backdrop} onPress={onClose}>
-        <View style={pickerStyles.sheet}>
+    <Modal visible={visible} animationType="fade" transparent presentationStyle="overFullScreen" statusBarTranslucent onRequestClose={onClose}>
+      <View style={[pickerStyles.backdrop, { paddingTop: Math.max(insets.top, spacing.xl), paddingBottom: Math.max(insets.bottom, spacing.xl) }]}>
+        <TouchableOpacity accessibilityRole="button" accessibilityLabel="关闭选择器" style={StyleSheet.absoluteFill} onPress={onClose} />
+        <View testID="picker-sheet" style={pickerStyles.sheet}>
           <Text style={pickerStyles.title}>请选择</Text>
-          <ScrollView testID="picker-options-scroll-view" nestedScrollEnabled showsVerticalScrollIndicator>
-            {items.map((item, i) => (
+          <FlatList
+            testID="picker-options-scroll-view"
+            data={items}
+            initialNumToRender={items.length}
+            style={pickerStyles.options}
+            contentContainerStyle={pickerStyles.optionsContent}
+            nestedScrollEnabled
+            showsVerticalScrollIndicator
+            keyExtractor={(item) => item}
+            renderItem={({ item, index }) => (
               <TouchableOpacity
                 accessibilityRole="button"
-                accessibilityLabel={labels ? labels[i] : item}
+                accessibilityLabel={labels ? labels[index] : item}
                 accessibilityState={{ selected: selected === item }}
-                key={item}
                 style={[pickerStyles.item, selected === item && pickerStyles.itemActive]}
                 onPress={() => onSelect(item)}
               >
                 <Text style={[pickerStyles.itemText, selected === item && pickerStyles.itemTextActive]}>
-                  {labels ? labels[i] : item}
+                  {labels ? labels[index] : item}
                 </Text>
                 {selected === item && <Ionicons name="checkmark" size={18} color={colors.primary} />}
               </TouchableOpacity>
-            ))}
-          </ScrollView>
+            )}
+          />
         </View>
-      </TouchableOpacity>
+      </View>
     </Modal>
   );
 }
 
 const pickerStyles = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: "rgba(0,0,0,0.4)", justifyContent: "center", padding: spacing.xl },
-  sheet: { maxHeight: "80%", backgroundColor: colors.surface, borderRadius: radius.xl, padding: spacing.lg },
-  resumeSheet: { height: "80%", backgroundColor: colors.surface, borderRadius: radius.xl, padding: spacing.lg },
+  sheet: { height: "80%", overflow: "hidden", backgroundColor: colors.surface, borderRadius: radius.xl, padding: spacing.lg },
+  resumeSheet: { height: "80%", overflow: "hidden", backgroundColor: colors.surface, borderRadius: radius.xl, padding: spacing.lg },
   title: { fontSize: 16, fontWeight: fonts.bold, color: colors.text, marginBottom: spacing.md, textAlign: "center" },
   options: { flex: 1 },
   optionsContent: { paddingBottom: spacing.md },

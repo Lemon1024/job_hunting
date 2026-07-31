@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fonts } from "../theme";
 import LoginScreen from "../screens/LoginScreen";
@@ -44,6 +45,7 @@ function MainTabs() {
           borderTopColor: colors.border,
           paddingBottom: 4,
           height: 56,
+          display: route.name === "DashboardTab" && getFocusedRouteNameFromRoute(route) === "AddApplication" ? "none" : "flex",
         },
         tabBarLabelStyle: { fontSize: 11, fontWeight: fonts.semibold },
       })}
