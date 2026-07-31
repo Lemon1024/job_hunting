@@ -82,7 +82,7 @@ export default function ApplicationDetailScreen({ navigation, route }: Props) {
   function confirmDeleteApplication() {
     Alert.alert(
       "永久删除投递",
-      `将删除 ${application.company_name} · ${application.position_name}，以及关联的时间线和待办。个人地址标签会保留。此操作无法撤销。`,
+      `将删除 ${application.company_name} · ${application.position_name}，以及关联的时间线和待办。此操作无法撤销。`,
       [
         { text: "取消", style: "cancel" },
         {
@@ -145,27 +145,6 @@ export default function ApplicationDetailScreen({ navigation, route }: Props) {
             <Text style={styles.metaText}>{application.city || "未填写"} / {application.channel || "未填写"}</Text>
           </View>
           <StatusBadge status={application.status} />
-        </View>
-
-        <View style={styles.card}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>地址标签</Text>
-            <TouchableOpacity
-              style={styles.addBtn}
-              onPress={() => navigation.navigate("AddApplication", { application, mode: "edit" })}
-            >
-              <Ionicons name="create-outline" size={18} color={colors.primary} />
-              <Text style={styles.addBtnText}>维护</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.locationRow}>
-            {(application.locations ?? []).length > 0 ? application.locations?.map((location) => (
-              <View key={location.id} style={styles.locationChip}>
-                <Ionicons name="location-outline" size={14} color={colors.primary} />
-                <Text style={styles.locationText}>{location.label}</Text>
-              </View>
-            )) : <Text style={styles.emptyTimeline}>暂未设置地址</Text>}
-          </View>
         </View>
 
         {/* Basic Info */}
@@ -328,9 +307,6 @@ const styles = StyleSheet.create({
   notesText: { fontSize: 14, color: colors.text, lineHeight: 20, marginTop: spacing.sm },
   addBtn: { flexDirection: "row", alignItems: "center", gap: 4 },
   addBtnText: { fontSize: 13, color: colors.primary, fontWeight: fonts.semibold },
-  locationRow: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
-  locationChip: { flexDirection: "row", alignItems: "center", gap: spacing.xs, backgroundColor: colors.primaryLight, borderRadius: radius.full, paddingHorizontal: spacing.md, paddingVertical: spacing.sm },
-  locationText: { color: colors.primaryText, fontSize: 13, fontWeight: fonts.semibold },
   addEventRow: { flexDirection: "row", gap: spacing.sm, marginBottom: spacing.md },
   eventInput: {
     flex: 1,
