@@ -2,6 +2,7 @@ import { describe, expect, it } from "@jest/globals";
 import {
   CHANNEL_OPTIONS,
   CITY_OPTIONS,
+  collectResumeVersionOptions,
   getErrorMessage,
   normalizeChannel,
   resolveInitialCity,
@@ -40,5 +41,27 @@ describe("application form options", () => {
     expect(getErrorMessage(new Error("网络中断"))).toBe("网络中断");
     expect(getErrorMessage({ message: "会话已失效" })).toBe("会话已失效");
     expect(getErrorMessage({ code: "UNKNOWN" })).toBe("请稍后重试");
+  });
+
+  it("collects trimmed resume versions in recent-use order and ignores case duplicates", () => {
+    const applications = [
+      { resume_version: "  产品经理-v3  " },
+      { resume_version: null },
+      { resume_version: "产品经理-V3" },
+      { resume_version: "嵌入式-校招-v2" },
+      { resume_version: "   " },
+    ];
+
+    expect(collectResumeVersionOptions(applications)).toEqual([
+      "产品经理-v3",
+      "嵌入式-校招-v2",
+    ]);
+  });
+
+  it("keeps a current resume version available without disturbing history order", () => {
+    expect(collectResumeVersionOptions(
+      [{ resume_version: "通用版-v2" }, { resume_version: "技术版-v1" }],
+      "  当前定制版  ",
+    )).toEqual(["通用版-v2", "技术版-v1", "当前定制版"]);
   });
 });

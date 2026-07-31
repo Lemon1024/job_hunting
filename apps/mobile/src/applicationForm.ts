@@ -51,6 +51,28 @@ export function resolveInitialCity(application?: {
   return locations.some((location) => location.label.trim()) ? "其他" : "";
 }
 
+export function collectResumeVersionOptions(
+  applications: ReadonlyArray<{ resume_version?: string | null }>,
+  currentVersion?: string | null,
+) {
+  const options: string[] = [];
+  const seen = new Set<string>();
+
+  for (const value of [
+    ...applications.map((application) => application.resume_version),
+    currentVersion,
+  ]) {
+    const version = value?.trim();
+    if (!version) continue;
+    const normalized = version.toLocaleLowerCase();
+    if (seen.has(normalized)) continue;
+    seen.add(normalized);
+    options.push(version);
+  }
+
+  return options;
+}
+
 export function getErrorMessage(error: unknown, fallback = "请稍后重试") {
   if (error instanceof Error && error.message) return error.message;
   if (error && typeof error === "object" && "message" in error) {
