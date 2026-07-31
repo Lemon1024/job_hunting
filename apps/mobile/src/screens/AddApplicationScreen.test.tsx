@@ -1,7 +1,7 @@
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import { afterEach, beforeEach, describe, expect, it, jest } from "@jest/globals";
 import { Alert } from "react-native";
-import { type Application, createApplication, createEvent, updateApplication } from "@job-tracker/core";
+import { type Application, createApplication, createEvent, listApplications, updateApplication } from "@job-tracker/core";
 import AddApplicationScreen from "./AddApplicationScreen";
 
 jest.mock("@react-native-community/datetimepicker", () => () => null);
@@ -27,17 +27,18 @@ jest.mock("@job-tracker/core", () => ({
 
 const mockCreateApplication = jest.mocked(createApplication);
 const mockCreateEvent = jest.mocked(createEvent);
+const mockListApplications = jest.mocked(listApplications);
 const mockUpdateApplication = jest.mocked(updateApplication);
 
-const existingApplication = {
+const existingApplication: Application = {
   id: "application-1",
   user_id: "user-1",
   company_name: "示例公司",
   position_name: "产品经理",
   city: null,
   channel: "Boss 直聘",
-  status: "applied" as const,
-  priority: "medium" as const,
+  status: "applied",
+  priority: "medium",
   applied_date: "2026-07-20",
   next_action_date: "2026-08-01",
   job_url: null,
@@ -74,6 +75,7 @@ describe("AddApplicationScreen", () => {
     jest.spyOn(Alert, "alert").mockImplementation(() => undefined);
     mockCreateApplication.mockResolvedValue({ ...existingApplication, id: "new-application", locations: [] });
     mockCreateEvent.mockResolvedValue({ id: "event-1" });
+    mockListApplications.mockResolvedValue([]);
     mockUpdateApplication.mockResolvedValue(existingApplication);
   });
 
@@ -108,6 +110,101 @@ describe("AddApplicationScreen", () => {
     expect(screen.getByText("其他")).toBeTruthy();
     expect(screen.getByText("远程")).toBeTruthy();
     expect(screen.getByTestId("picker-options-scroll-view")).toBeTruthy();
+  });
+
+  it.each(["惠州", "其他", "远程"])("selects and saves the city list tail option %s", async (city) => {
+    const screen = renderScreen({ ...existingApplication, city: null, locations: [] });
+
+    fireEvent.press(screen.getByRole("button", { name: "选择城市" }));
+    fireEvent.press(screen.getByRole("button", { name: city }));
+    fireEvent.press(screen.getByText("保存"));
+
+    await waitFor(() => expect(mockUpdateApplication).toHaveBeenCalledWith(
+      expect.anything(),
+      "application-1",
+      expect.objectContaining({ city }),
+    ));
+  });
+
+  it("prefills and saves an existing resume version without clearing hidden fields", async () => {
+    const application = {
+      ...existingApplication,
+      resume_version: "产品经理-v2",
+      job_url: "https://example.com/job",
+      salary_range: "20k-30k",
+      contact_name: "招聘经理",
+      contact_info: "hr@example.com",
+    };
+    const screen = renderScreen(application);
+
+    expect(screen.getByText("产品经理-v2")).toBeTruthy();
+    fireEvent.press(screen.getByText("保存"));
+
+    await waitFor(() => expect(mockUpdateApplication).toHaveBeenCalledWith(
+      expect.anything(),
+      "application-1",
+      expect.objectContaining({
+        resume_version: "产品经理-v2",
+        job_url: "https://example.com/job",
+        salary_range: "20k-30k",
+        contact_name: "招聘经理",
+        contact_info: "hr@example.com",
+      }),
+    ));
+  });
+
+  it("selects a historical resume version on a new application", async () => {
+    mockListApplications.mockResolvedValue([
+      { ...existingApplication, id: "history-1", resume_version: "嵌入式-校招-v3" },
+    ]);
+    const goBack = jest.fn();
+    const screen = render(
+      <AddApplicationScreen navigation={{ goBack } as never} route={{ params: undefined }} />,
+    );
+    fireEvent.changeText(screen.getByPlaceholderText("输入公司名称"), "新公司");
+    fireEvent.changeText(screen.getByPlaceholderText("输入岗位名称"), "新岗位");
+
+    await waitFor(() => expect(mockListApplications).toHaveBeenCalled());
+    fireEvent.press(screen.getByRole("button", { name: "选择简历版本" }));
+    fireEvent.press(screen.getByRole("button", { name: "嵌入式-校招-v3" }));
+    fireEvent.press(screen.getByText("保存"));
+
+    await waitFor(() => expect(mockCreateApplication).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ resume_version: "嵌入式-校招-v3" }),
+    ));
+  });
+
+  it("creates a trimmed custom resume version after history loading fails", async () => {
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => undefined);
+    mockListApplications.mockRejectedValue({ message: "history unavailable" });
+    const screen = renderScreen();
+
+    fireEvent.press(screen.getByRole("button", { name: "选择简历版本" }));
+    fireEvent.changeText(screen.getByPlaceholderText("输入新版本名称"), "  中兴定制版-v1  ");
+    fireEvent.press(screen.getByRole("button", { name: "使用新简历版本" }));
+    fireEvent.press(screen.getByText("保存"));
+
+    await waitFor(() => expect(mockUpdateApplication).toHaveBeenCalledWith(
+      expect.anything(),
+      "application-1",
+      expect.objectContaining({ resume_version: "中兴定制版-v1" }),
+    ));
+    expect(warn).toHaveBeenCalledWith("Failed to load resume versions", { message: "history unavailable" });
+  });
+
+  it("clears the resume version to null", async () => {
+    const screen = renderScreen({ ...existingApplication, resume_version: "旧版本" });
+
+    fireEvent.press(screen.getByRole("button", { name: "选择简历版本" }));
+    fireEvent.press(screen.getByRole("button", { name: "未指定" }));
+    fireEvent.press(screen.getByText("保存"));
+
+    await waitFor(() => expect(mockUpdateApplication).toHaveBeenCalledWith(
+      expect.anything(),
+      "application-1",
+      expect.objectContaining({ resume_version: null }),
+    ));
   });
 
   it("creates an application with the selected city", async () => {
