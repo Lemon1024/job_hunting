@@ -1,32 +1,28 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Alert,
+  FlatList,
   KeyboardAvoidingView,
   Modal,
   Platform,
+  Pressable as TouchableOpacity,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors, fonts, radius, spacing } from "../theme";
 import {
   APPLICATION_STATUSES,
   type Application,
   type ApplicationInput,
-  type LocationTag,
   createApplication,
   createEvent,
-  createLocationTag,
-  deleteLocationTag,
   getStatus,
   listApplications,
-  listLocationTags,
-  renameLocationTag,
   todayISO,
   updateApplication,
 } from "@job-tracker/core";
@@ -34,7 +30,14 @@ import { supabase } from "../supabaseClient";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import type { DashboardStackParamList } from "../navigation/types";
-import LocationTagSelector from "../components/LocationTagSelector";
+import {
+  CHANNEL_OPTIONS,
+  CITY_OPTIONS,
+  collectResumeVersionOptions,
+  getErrorMessage,
+  normalizeChannel,
+  resolveInitialCity,
+} from "../applicationForm";
 
 type Props = {
   navigation: NativeStackNavigationProp<DashboardStackParamList, "AddApplication">;
@@ -44,18 +47,18 @@ type Props = {
 const PRIORITIES = ["high", "medium", "low"] as const;
 const priorityLabels: Record<string, string> = { high: "高", medium: "中", low: "低" };
 
-const CHANNELS = ["官网投递","Boss 直聘","猎聘","脉脉","内推","实习僧","牛客网","其他"];
-
 export default function AddApplicationScreen({ navigation, route }: Props) {
   const existing = route.params?.application;
   const isEdit = route.params?.mode === "edit" || existing != null;
 
   const [company, setCompany] = useState(existing?.company_name ?? "");
   const [position, setPosition] = useState(existing?.position_name ?? "");
-  const [locationTags, setLocationTags] = useState<LocationTag[]>([]);
-  const [selectedLocationIds, setSelectedLocationIds] = useState<string[]>(existing?.locations?.map((tag) => tag.id) ?? []);
-  const [locationUsageCounts, setLocationUsageCounts] = useState<Record<string, number>>({});
-  const [channel, setChannel] = useState(existing?.channel ?? "");
+  const [city, setCity] = useState(resolveInitialCity(existing));
+  const [channel, setChannel] = useState(normalizeChannel(existing?.channel));
+  const [resumeVersion, setResumeVersion] = useState(existing?.resume_version?.trim() ?? "");
+  const [resumeVersionOptions, setResumeVersionOptions] = useState<string[]>(() =>
+    collectResumeVersionOptions([], existing?.resume_version),
+  );
   const [status, setStatus] = useState(existing?.status ?? "applied");
   const [appliedDate, setAppliedDate] = useState<Date>(
     existing?.applied_date ? new Date(existing.applied_date) : new Date(),
@@ -63,111 +66,86 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
   const [priority, setPriority] = useState<string>(existing?.priority ?? "medium");
   const [notes, setNotes] = useState(existing?.notes ?? "");
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showCityPicker, setShowCityPicker] = useState(false);
   const [showChannelPicker, setShowChannelPicker] = useState(false);
+  const [showResumeVersionPicker, setShowResumeVersionPicker] = useState(false);
   const [showStatusPicker, setShowStatusPicker] = useState(false);
   const [saving, setSaving] = useState(false);
+  const savingRef = useRef(false);
 
   useEffect(() => {
-    Promise.all([listLocationTags(supabase as never), listApplications(supabase as never)])
-      .then(([tags, applications]) => {
-        setLocationTags(tags);
-        const counts: Record<string, number> = {};
-        applications.forEach((application) => {
-          application.locations?.forEach((tag) => { counts[tag.id] = (counts[tag.id] ?? 0) + 1; });
-        });
-        setLocationUsageCounts(counts);
+    let cancelled = false;
+    void listApplications(supabase as never)
+      .then((applications) => {
+        if (!cancelled) {
+          const options = collectResumeVersionOptions(applications, existing?.resume_version);
+          const initialOptions = collectResumeVersionOptions([], existing?.resume_version);
+          if (options.some((option, index) => option !== initialOptions[index])) {
+            setResumeVersionOptions(options);
+          }
+        }
       })
-      .catch((error) => Alert.alert("地址加载失败", error instanceof Error ? error.message : "请稍后重试"));
-  }, []);
-
-  const selectedLocations = useMemo(
-    () => locationTags.filter((tag) => selectedLocationIds.includes(tag.id)),
-    [locationTags, selectedLocationIds],
-  );
-
-  function toggleLocation(id: string) {
-    setSelectedLocationIds((current) => {
-      if (current.includes(id)) return current.filter((item) => item !== id);
-      if (current.length >= 10) {
-        Alert.alert("最多选择 10 个地址");
-        return current;
-      }
-      return [...current, id];
-    });
-  }
-
-  async function addLocationTag(label: string) {
-    const existingTag = locationTags.find((tag) => tag.label.localeCompare(label, undefined, { sensitivity: "accent" }) === 0);
-    if (existingTag) {
-      if (!selectedLocationIds.includes(existingTag.id)) toggleLocation(existingTag.id);
-      return;
-    }
-    if (selectedLocationIds.length >= 10) {
-      Alert.alert("最多选择 10 个地址", "请先取消一个已选地址，再创建并选择新标签。");
-      return;
-    }
-    try {
-      const created = await createLocationTag(supabase as never, label);
-      setLocationTags((current) => [...current, created].sort((a, b) => a.label.localeCompare(b.label, "zh-CN")));
-      setSelectedLocationIds((current) => [...current, created.id]);
-    } catch (error) {
-      Alert.alert("创建失败", error instanceof Error ? error.message : "请稍后重试");
-    }
-  }
+      .catch((error) => console.warn("Failed to load resume versions", error));
+    return () => { cancelled = true; };
+  }, [existing?.id, existing?.resume_version]);
 
   async function save() {
+    if (savingRef.current) return;
     if (!company.trim() || !position.trim()) {
       Alert.alert("请填写", "公司和岗位为必填项");
       return;
     }
+    savingRef.current = true;
     setSaving(true);
     try {
       const payload: ApplicationInput = {
         company_name: company.trim(),
         position_name: position.trim(),
-        city: existing?.city ?? null,
+        city: city || null,
         channel: channel || null,
         status: status as ApplicationInput["status"],
         priority: priority as ApplicationInput["priority"],
         applied_date: status === "todo" ? null : appliedDate.toISOString().split("T")[0],
         next_action_date: existing?.next_action_date ?? null,
-        job_url: "",
-        salary_range: "",
-        resume_version: "",
-        contact_name: "",
-        contact_info: "",
+        job_url: existing?.job_url ?? null,
+        salary_range: existing?.salary_range ?? null,
+        resume_version: resumeVersion.trim() || null,
+        contact_name: existing?.contact_name ?? null,
+        contact_info: existing?.contact_info ?? null,
         notes: notes.trim() || null,
       };
 
       if (isEdit && existing) {
-        await updateApplication(supabase as never, existing.id, payload, selectedLocationIds);
+        await updateApplication(supabase as never, existing.id, payload);
       } else {
-        const created = await createApplication(supabase as never, payload, selectedLocationIds);
-        await createEvent(supabase as never, {
+        const created = await createApplication(supabase as never, payload);
+        void createEvent(supabase as never, {
           application_id: created.id,
           type: "create",
           title: `创建投递记录，状态为「${getStatus(created.status).label}」`,
           description: null,
           event_date: payload.applied_date ?? todayISO(),
-        });
+        }).catch((error) => console.warn("Failed to create application event", error));
       }
-      navigation.goBack();
     } catch (e) {
-      Alert.alert("保存失败", e instanceof Error ? e.message : "未知错误");
+      Alert.alert("保存失败", getErrorMessage(e));
+      return;
     } finally {
+      savingRef.current = false;
       setSaving(false);
     }
+    navigation.goBack();
   }
 
   return (
     <SafeAreaView style={styles.shell} edges={["top", "bottom"]}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity accessibilityRole="button" accessibilityLabel="返回" onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={22} color={colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{isEdit ? "编辑投递" : "新增投递"}</Text>
-        <TouchableOpacity style={styles.saveBtn} onPress={save} disabled={saving}>
+        <TouchableOpacity accessibilityRole="button" accessibilityLabel="保存投递" style={styles.saveBtn} onPress={save} disabled={saving}>
           <Text style={styles.saveText}>{saving ? "保存中..." : "保存"}</Text>
         </TouchableOpacity>
       </View>
@@ -182,39 +160,32 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
           <Text style={styles.label}>岗位</Text>
           <TextInput style={styles.input} value={position} onChangeText={setPosition} placeholder="输入岗位名称" placeholderTextColor={colors.muted} />
 
-          <Text style={styles.label}>地址标签</Text>
-          <LocationTagSelector
-            tags={locationTags}
-            selectedIds={selectedLocationIds}
-            onToggle={toggleLocation}
-            onCreate={addLocationTag}
-            usageCounts={locationUsageCounts}
-            onRename={async (tag, label) => {
-              try {
-                const renamed = await renameLocationTag(supabase as never, tag.id, label);
-                setLocationTags((current) => current.map((item) => item.id === tag.id ? renamed : item));
-              } catch (error) {
-                Alert.alert("重命名失败", error instanceof Error ? error.message : "请稍后重试");
-              }
-            }}
-            onDelete={async (tag) => {
-              try {
-                await deleteLocationTag(supabase as never, tag.id);
-                setLocationTags((current) => current.filter((item) => item.id !== tag.id));
-                setSelectedLocationIds((current) => current.filter((id) => id !== tag.id));
-              } catch (error) {
-                Alert.alert("删除失败", error instanceof Error ? error.message : "请稍后重试");
-              }
-            }}
-          />
-          {selectedLocations.length > 0 ? (
-            <Text style={styles.selectionSummary}>已选：{selectedLocations.map((tag) => tag.label).join("、")}</Text>
-          ) : null}
+          {/* City */}
+          <Text style={styles.label}>城市</Text>
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel="选择城市"
+            style={styles.input}
+            onPress={() => setShowCityPicker(true)}
+          >
+            <Text style={city ? styles.inputText : styles.inputPlaceholder}>{city || "选择城市"}</Text>
+          </TouchableOpacity>
 
           {/* Channel */}
           <Text style={styles.label}>渠道</Text>
-          <TouchableOpacity style={styles.input} onPress={() => setShowChannelPicker(true)}>
+          <TouchableOpacity accessibilityRole="button" accessibilityLabel="选择渠道" style={styles.input} onPress={() => setShowChannelPicker(true)}>
             <Text style={channel ? styles.inputText : styles.inputPlaceholder}>{channel || "选择渠道"}</Text>
+          </TouchableOpacity>
+
+          {/* Resume version */}
+          <Text style={styles.label}>简历版本</Text>
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel="选择简历版本"
+            style={styles.input}
+            onPress={() => setShowResumeVersionPicker(true)}
+          >
+            <Text style={resumeVersion ? styles.inputText : styles.inputPlaceholder}>{resumeVersion || "未指定"}</Text>
           </TouchableOpacity>
 
           {/* Status */}
@@ -271,51 +242,164 @@ export default function AddApplicationScreen({ navigation, route }: Props) {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <PickerModal visible={showChannelPicker} items={CHANNELS} selected={channel} onSelect={(v) => { setChannel(v); setShowChannelPicker(false); }} onClose={() => setShowChannelPicker(false)} />
+      <PickerModal visible={showCityPicker} items={CITY_OPTIONS} selected={city} onSelect={(v) => { setCity(v); setShowCityPicker(false); }} onClose={() => setShowCityPicker(false)} />
+      <PickerModal visible={showChannelPicker} items={CHANNEL_OPTIONS} selected={channel} onSelect={(v) => { setChannel(v); setShowChannelPicker(false); }} onClose={() => setShowChannelPicker(false)} />
       <PickerModal visible={showStatusPicker} items={APPLICATION_STATUSES.map((s) => s.id)} labels={APPLICATION_STATUSES.map((s) => s.label)} selected={status} onSelect={(v) => { setStatus(v as ApplicationInput["status"]); setShowStatusPicker(false); }} onClose={() => setShowStatusPicker(false)} />
+      <ResumeVersionModal
+        visible={showResumeVersionPicker}
+        options={resumeVersionOptions}
+        selected={resumeVersion}
+        onSelect={setResumeVersion}
+        onClose={() => setShowResumeVersionPicker(false)}
+      />
     </SafeAreaView>
+  );
+}
+
+function ResumeVersionModal({ visible, options, selected, onSelect, onClose }: {
+  visible: boolean;
+  options: readonly string[];
+  selected: string;
+  onSelect: (value: string) => void;
+  onClose: () => void;
+}) {
+  const [draft, setDraft] = useState("");
+  const insets = useSafeAreaInsets();
+
+  useEffect(() => {
+    if (visible) setDraft("");
+  }, [visible]);
+
+  function select(value: string) {
+    onSelect(value);
+    onClose();
+  }
+
+  return (
+    <Modal visible={visible} animationType="fade" transparent presentationStyle="overFullScreen" statusBarTranslucent onRequestClose={onClose}>
+      <View style={[pickerStyles.backdrop, { paddingTop: Math.max(insets.top, spacing.xl), paddingBottom: Math.max(insets.bottom, spacing.xl) }]}>
+        <TouchableOpacity accessibilityRole="button" accessibilityLabel="关闭简历版本选择器" style={StyleSheet.absoluteFill} onPress={onClose} />
+        <KeyboardAvoidingView style={pickerStyles.resumeSheet} behavior={Platform.OS === "ios" ? "padding" : undefined}>
+          <Text style={pickerStyles.title}>选择简历版本</Text>
+          <ScrollView style={pickerStyles.options} contentContainerStyle={pickerStyles.optionsContent} keyboardShouldPersistTaps="handled">
+            <TouchableOpacity
+              accessibilityRole="button"
+              accessibilityLabel="未指定"
+              accessibilityState={{ selected: selected === "" }}
+              style={[pickerStyles.item, selected === "" && pickerStyles.itemActive]}
+              onPress={() => select("")}
+            >
+              <Text style={[pickerStyles.itemText, selected === "" && pickerStyles.itemTextActive]}>未指定</Text>
+              {selected === "" && <Ionicons name="checkmark" size={18} color={colors.primary} />}
+            </TouchableOpacity>
+            {options.map((option) => (
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel={option}
+                accessibilityState={{ selected: selected === option }}
+                key={option}
+                style={[pickerStyles.item, selected === option && pickerStyles.itemActive]}
+                onPress={() => select(option)}
+              >
+                <Text style={[pickerStyles.itemText, selected === option && pickerStyles.itemTextActive]}>{option}</Text>
+                {selected === option && <Ionicons name="checkmark" size={18} color={colors.primary} />}
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          <View style={pickerStyles.customVersion}>
+            <Text style={pickerStyles.customVersionLabel}>新版本名称</Text>
+            <View style={pickerStyles.customVersionRow}>
+              <TextInput
+                style={pickerStyles.customVersionInput}
+                value={draft}
+                onChangeText={setDraft}
+                placeholder="输入新版本名称"
+                placeholderTextColor={colors.muted}
+                returnKeyType="done"
+                onSubmitEditing={() => { if (draft.trim()) select(draft.trim()); }}
+              />
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel="使用新简历版本"
+                accessibilityState={{ disabled: !draft.trim() }}
+                disabled={!draft.trim()}
+                style={[pickerStyles.customVersionButton, !draft.trim() && pickerStyles.disabled]}
+                onPress={() => select(draft.trim())}
+              >
+                <Text style={pickerStyles.customVersionButtonText}>使用</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </View>
+    </Modal>
   );
 }
 
 function PickerModal({ visible, items, labels, selected, onSelect, onClose }: {
   visible: boolean;
-  items: string[];
-  labels?: string[];
+  items: readonly string[];
+  labels?: readonly string[];
   selected: string;
   onSelect: (v: string) => void;
   onClose: () => void;
 }) {
+  const insets = useSafeAreaInsets();
+
   return (
-    <Modal visible={visible} animationType="fade" transparent onRequestClose={onClose}>
-      <TouchableOpacity style={pickerStyles.backdrop} activeOpacity={1} onPress={onClose}>
-        <View style={pickerStyles.sheet}>
+    <Modal visible={visible} animationType="fade" transparent presentationStyle="overFullScreen" statusBarTranslucent onRequestClose={onClose}>
+      <View style={[pickerStyles.backdrop, { paddingTop: Math.max(insets.top, spacing.xl), paddingBottom: Math.max(insets.bottom, spacing.xl) }]}>
+        <TouchableOpacity accessibilityRole="button" accessibilityLabel="关闭选择器" style={StyleSheet.absoluteFill} onPress={onClose} />
+        <View testID="picker-sheet" style={pickerStyles.sheet}>
           <Text style={pickerStyles.title}>请选择</Text>
-          {items.map((item, i) => (
-            <TouchableOpacity
-              key={item}
-              style={[pickerStyles.item, selected === item && pickerStyles.itemActive]}
-              onPress={() => onSelect(item)}
-            >
-              <Text style={[pickerStyles.itemText, selected === item && pickerStyles.itemTextActive]}>
-                {labels ? labels[i] : item}
-              </Text>
-              {selected === item && <Ionicons name="checkmark" size={18} color={colors.primary} />}
-            </TouchableOpacity>
-          ))}
+          <FlatList
+            testID="picker-options-scroll-view"
+            data={items}
+            initialNumToRender={items.length}
+            style={pickerStyles.options}
+            contentContainerStyle={pickerStyles.optionsContent}
+            nestedScrollEnabled
+            showsVerticalScrollIndicator
+            keyExtractor={(item) => item}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel={labels ? labels[index] : item}
+                accessibilityState={{ selected: selected === item }}
+                style={[pickerStyles.item, selected === item && pickerStyles.itemActive]}
+                onPress={() => onSelect(item)}
+              >
+                <Text style={[pickerStyles.itemText, selected === item && pickerStyles.itemTextActive]}>
+                  {labels ? labels[index] : item}
+                </Text>
+                {selected === item && <Ionicons name="checkmark" size={18} color={colors.primary} />}
+              </TouchableOpacity>
+            )}
+          />
         </View>
-      </TouchableOpacity>
+      </View>
     </Modal>
   );
 }
 
 const pickerStyles = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: "rgba(0,0,0,0.4)", justifyContent: "center", padding: spacing.xl },
-  sheet: { backgroundColor: colors.surface, borderRadius: radius.xl, padding: spacing.lg },
+  sheet: { height: "80%", overflow: "hidden", backgroundColor: colors.surface, borderRadius: radius.xl, padding: spacing.lg },
+  resumeSheet: { height: "80%", overflow: "hidden", backgroundColor: colors.surface, borderRadius: radius.xl, padding: spacing.lg },
   title: { fontSize: 16, fontWeight: fonts.bold, color: colors.text, marginBottom: spacing.md, textAlign: "center" },
+  options: { flex: 1 },
+  optionsContent: { paddingBottom: spacing.md },
   item: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: spacing.md, paddingHorizontal: spacing.md, borderRadius: radius.md },
   itemActive: { backgroundColor: colors.primaryLight },
   itemText: { fontSize: 15, color: colors.text },
   itemTextActive: { color: colors.primaryText, fontWeight: fonts.bold },
+  customVersion: { borderTopWidth: 1, borderTopColor: colors.border, paddingTop: spacing.md, gap: spacing.sm },
+  customVersionLabel: { fontSize: 13, color: colors.muted, fontWeight: fonts.semibold },
+  customVersionRow: { flexDirection: "row", gap: spacing.sm },
+  customVersionInput: { flex: 1, minHeight: 42, borderWidth: 1, borderColor: colors.border, borderRadius: radius.md, paddingHorizontal: spacing.md, color: colors.text, backgroundColor: colors.bg },
+  customVersionButton: { minHeight: 42, paddingHorizontal: spacing.lg, borderRadius: radius.md, alignItems: "center", justifyContent: "center", backgroundColor: colors.primary },
+  customVersionButtonText: { color: colors.headerText, fontWeight: fonts.bold },
+  disabled: { opacity: 0.5 },
 });
 
 const styles = StyleSheet.create({
@@ -355,7 +439,6 @@ const styles = StyleSheet.create({
   inputPlaceholder: { fontSize: 15, color: colors.muted },
   notesInput: { minHeight: 80, paddingTop: spacing.md },
   charCount: { fontSize: 11, color: colors.muted, textAlign: "right", marginTop: -spacing.xs },
-  selectionSummary: { fontSize: 12, color: colors.primaryText },
   segRow: { flexDirection: "row", gap: spacing.sm },
   segBtn: {
     flex: 1,

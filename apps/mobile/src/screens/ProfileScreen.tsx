@@ -302,7 +302,7 @@ export default function ProfileScreen() {
             ) : (
               <View style={styles.modalContent}>
                 <HelpItem title="投递状态" text="待投递不计入总投递；面试中包含一面、二面、三面、主管面和 HR 面。" />
-                <HelpItem title="地址标签" text="地址属于个人标签库，每条投递最多选择 10 个；筛选时命中任意已选标签即可。" />
+                <HelpItem title="城市筛选" text="新增或编辑投递时选择一个城市；筛选时可同时选择多个城市，命中任一城市即可。" />
                 <HelpItem title="待跟进事项" text="一条投递可建立多个全天待办，并可从详情或日历完成、恢复、编辑和删除。" />
               </View>
             )}

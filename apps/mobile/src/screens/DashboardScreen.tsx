@@ -10,7 +10,6 @@ import {
   getReminderTasks,
   isInterviewStatus,
   listApplications,
-  matchesLocationFilter,
   todayISO,
 } from "@job-tracker/core";
 import { supabase } from "../supabaseClient";
@@ -22,6 +21,7 @@ import FilterSheet from "../components/FilterSheet";
 import EmptyState from "../components/EmptyState";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { DashboardStackParamList } from "../navigation/types";
+import { CITY_OPTIONS, matchesCityFilter } from "../applicationForm";
 
 type Props = {
   navigation: NativeStackNavigationProp<DashboardStackParamList, "DashboardMain">;
@@ -30,7 +30,7 @@ type Props = {
 interface FilterState {
   status: string | null;
   priority: string | null;
-  locationIds: string[];
+  cities: string[];
   channel: string | null;
 }
 
@@ -42,7 +42,7 @@ export default function DashboardScreen({ navigation }: Props) {
   const [reminderVisible, setReminderVisible] = useState(false);
   const [remindersEnabled, setRemindersEnabled] = useState(true);
   const [reminderLeadDays, setReminderLeadDays] = useState(0);
-  const [filters, setFilters] = useState<FilterState>({ status: null, priority: null, locationIds: [], channel: null });
+  const [filters, setFilters] = useState<FilterState>({ status: null, priority: null, cities: [], channel: null });
   const [quickFilter, setQuickFilter] = useState<QuickFilterKey>("submitted");
 
   const load = useCallback(async () => {
@@ -75,10 +75,6 @@ export default function DashboardScreen({ navigation }: Props) {
     ? getReminderTasks(applications.flatMap((application) => application.follow_up_tasks ?? []), todayISO(), reminderLeadDays)
     : [], [applications, reminderLeadDays, remindersEnabled]);
 
-  const locations = useMemo(() => {
-    const byId = new Map(applications.flatMap((application) => application.locations ?? []).map((tag) => [tag.id, tag]));
-    return [...byId.values()].sort((a, b) => a.label.localeCompare(b.label, "zh-CN"));
-  }, [applications]);
   const channels = useMemo(
     () => [...new Set(applications.map((a) => a.channel).filter(Boolean))] as string[],
     [applications],
@@ -109,7 +105,7 @@ export default function DashboardScreen({ navigation }: Props) {
     if (filters.priority) {
       result = result.filter((a) => a.priority === filters.priority);
     }
-    result = result.filter((application) => matchesLocationFilter(application, filters.locationIds));
+    result = result.filter((application) => matchesCityFilter(application, filters.cities));
     if (filters.channel) {
       result = result.filter((a) => a.channel === filters.channel);
     }
@@ -173,7 +169,7 @@ export default function DashboardScreen({ navigation }: Props) {
         onClose={() => setFilterVisible(false)}
         filters={filters}
         onApply={setFilters}
-        locations={locations}
+        cities={CITY_OPTIONS}
         channels={channels}
       />
 
