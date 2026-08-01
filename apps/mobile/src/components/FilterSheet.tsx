@@ -1,12 +1,12 @@
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors, fonts, radius, spacing } from "../theme";
-import { APPLICATION_STATUSES, PRIORITIES, type LocationTag } from "@job-tracker/core";
+import { APPLICATION_STATUSES, PRIORITIES } from "@job-tracker/core";
 import { Ionicons } from "@expo/vector-icons";
 
 interface FilterState {
   status: string | null;
   priority: string | null;
-  locationIds: string[];
+  cities: string[];
   channel: string | null;
 }
 
@@ -15,21 +15,21 @@ interface Props {
   onClose: () => void;
   filters: FilterState;
   onApply: (filters: FilterState) => void;
-  locations: LocationTag[];
+  cities: readonly string[];
   channels: string[];
 }
 
-export default function FilterSheet({ visible, onClose, filters, onApply, locations, channels }: Props) {
+export default function FilterSheet({ visible, onClose, filters, onApply, cities, channels }: Props) {
   const toggle = (key: "status" | "priority" | "channel", value: string) => {
     const current = filters[key];
     onApply({ ...filters, [key]: current === value ? null : value });
   };
 
-  const toggleLocation = (id: string) => {
-    const selected = filters.locationIds.includes(id);
+  const toggleCity = (city: string) => {
+    const selected = filters.cities.includes(city);
     onApply({
       ...filters,
-      locationIds: selected ? filters.locationIds.filter((item) => item !== id) : [...filters.locationIds, id],
+      cities: selected ? filters.cities.filter((item) => item !== city) : [...filters.cities, city],
     });
   };
 
@@ -71,22 +71,20 @@ export default function FilterSheet({ visible, onClose, filters, onApply, locati
               ))}
             </View>
 
-            {locations.length > 0 && (
-              <>
-                <Text style={styles.sectionTitle}>地址（命中任意已选标签）</Text>
-                <View style={styles.chipRow}>
-                  {locations.map((location) => (
-                    <TouchableOpacity
-                      key={location.id}
-                      style={[styles.chip, filters.locationIds.includes(location.id) && styles.chipActive]}
-                      onPress={() => toggleLocation(location.id)}
-                    >
-                      <Text style={[styles.chipText, filters.locationIds.includes(location.id) && styles.chipTextActive]}>{location.label}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              </>
-            )}
+            <Text style={styles.sectionTitle}>地址</Text>
+            <View style={styles.chipRow}>
+              {cities.map((city) => (
+                <TouchableOpacity
+                  accessibilityRole="button"
+                  accessibilityLabel={`筛选城市 ${city}`}
+                  key={city}
+                  style={[styles.chip, filters.cities.includes(city) && styles.chipActive]}
+                  onPress={() => toggleCity(city)}
+                >
+                  <Text style={[styles.chipText, filters.cities.includes(city) && styles.chipTextActive]}>{city}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
 
             {channels.length > 0 && (
               <>
@@ -108,8 +106,10 @@ export default function FilterSheet({ visible, onClose, filters, onApply, locati
 
           <View style={styles.footer}>
             <TouchableOpacity
+              accessibilityRole="button"
+              accessibilityLabel="重置筛选"
               style={styles.resetBtn}
-              onPress={() => onApply({ status: null, priority: null, locationIds: [], channel: null })}
+              onPress={() => onApply({ status: null, priority: null, cities: [], channel: null })}
             >
               <Text style={styles.resetText}>重置</Text>
             </TouchableOpacity>

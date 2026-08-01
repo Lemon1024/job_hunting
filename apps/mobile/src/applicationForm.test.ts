@@ -4,6 +4,7 @@ import {
   CITY_OPTIONS,
   collectResumeVersionOptions,
   getErrorMessage,
+  matchesCityFilter,
   normalizeChannel,
   resolveInitialCity,
 } from "./applicationForm";
@@ -11,10 +12,16 @@ import {
 describe("application form options", () => {
   it("exposes the approved city and channel choices in display order", () => {
     expect(CITY_OPTIONS).toEqual([
-      "北京", "上海", "广州", "深圳", "杭州", "成都", "重庆", "武汉", "苏州", "西安", "南京", "长沙",
-      "天津", "郑州", "青岛", "宁波", "合肥", "厦门", "福州", "济南", "惠州", "其他", "远程",
+      "北京", "上海", "广州", "深圳", "惠州", "杭州", "成都", "重庆", "武汉", "苏州", "西安", "南京",
+      "长沙", "天津", "青岛", "宁波", "合肥", "其他", "远程",
     ]);
     expect(CHANNEL_OPTIONS).toEqual(["官网投递", "内推", "招聘APP", "邮件", "线下招聘", "其他"]);
+  });
+
+  it("matches any selected city and accepts every application when no city is selected", () => {
+    expect(matchesCityFilter({ city: "惠州" }, ["深圳", "惠州"])).toBe(true);
+    expect(matchesCityFilter({ city: "上海" }, ["深圳", "惠州"])).toBe(false);
+    expect(matchesCityFilter({ city: null }, [])).toBe(true);
   });
 
   it.each(["Boss 直聘", "Boss直聘", "猎聘", "脉脉", "实习僧", "牛客网"])(

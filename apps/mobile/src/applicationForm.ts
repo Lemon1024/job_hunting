@@ -3,6 +3,7 @@ export const CITY_OPTIONS = [
   "上海",
   "广州",
   "深圳",
+  "惠州",
   "杭州",
   "成都",
   "重庆",
@@ -12,14 +13,9 @@ export const CITY_OPTIONS = [
   "南京",
   "长沙",
   "天津",
-  "郑州",
   "青岛",
   "宁波",
   "合肥",
-  "厦门",
-  "福州",
-  "济南",
-  "惠州",
   "其他",
   "远程",
 ] as const;
@@ -49,6 +45,15 @@ export function resolveInitialCity(application?: {
   );
   if (matchingLocation) return matchingLocation.label.trim();
   return locations.some((location) => location.label.trim()) ? "其他" : "";
+}
+
+export function matchesCityFilter(
+  application: { city?: string | null },
+  selectedCities: readonly string[],
+) {
+  if (selectedCities.length === 0) return true;
+  const city = application.city?.trim();
+  return city ? selectedCities.includes(city) : false;
 }
 
 export function collectResumeVersionOptions(
