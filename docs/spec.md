@@ -366,7 +366,7 @@ v0.2 已获批并建立以下自动化验证入口：
 4. `..\..\node_modules\.bin\expo.CMD export --platform android --output-dir ..\..\dist\mobile-android`：从 `apps/mobile` 执行 Android JavaScript bundle 冒烟。
 5. 平台与双账号数据隔离仍使用第 10 节和第 15.9 节的人工场景验收。
 
-项目仍没有 lint/formatter、覆盖率阈值、端到端测试或 CI workflow；新增这些能力继续属于“Ask first”。
+项目仍没有 lint/formatter、覆盖率阈值、端到端测试或应用构建/测试 CI workflow；新增这些能力继续属于“Ask first”。已获批的 Supabase 定时保活任务见第 16 节。
 
 ### 9.2 测试分层
 
@@ -619,3 +619,15 @@ pnpm.cmd --filter @job-tracker/desktop build:check
 7. 三种主题覆盖现有移动端全部页面，无不可读文字或仅靠颜色表达的状态。
 8. 两个测试账号无法访问或修改彼此的新资源或头像。
 9. 类型检查、核心测试、双端测试、桌面构建和 Android 冒烟均通过。
+
+## 16. Approved: Supabase 每周两次保活
+
+项目所有者于 2026-10-13 明确批准在现有公开仓库部署独立的运维工作流 `.github/workflows/supabase-keepalive.yml`。该授权仅覆盖保活任务及其说明，不扩展应用构建/测试 CI、依赖或数据库变更范围。
+
+- 每周一、周四北京时间 09:17 执行，对应 UTC cron `17 1 * * 1,4`；同时支持手动运行，仅在默认分支 `main` 发布后生效。
+- 使用 GitHub Secrets `SUPABASE_URL` 和 `SUPABASE_PUBLISHABLE_KEY`，后者支持 publishable 或 legacy anon key；拒绝标准高权限 key，不保存用户密码。
+- 每次正常运行仅执行一次 `GET /rest/v1/applications?select=id&limit=1`；保留现有 RLS 和表级权限，不写入业务数据，不安装应用依赖，GitHub token 权限为空。
+- 仅 HTTP 200 且单个 JSON 空数组为成功；认证、权限、响应格式或匿名数据可见性异常均失败。每次请求超时 15 秒，网络错误、429 和 5xx 最多重试两次，任务总超时 3 分钟；日志不输出 key 或响应正文。
+- 首次上线先在默认分支发布仅支持手动执行的验证版，真实运行成功后才添加定时配置。上线验收要求项目已恢复、Secrets 已配置、手动运行成功，并确认首次定时运行成功；缺少表级 SELECT grant 时停止上线，不自动放宽权限。
+- 每周两次请求不构成 Supabase 永久免暂停保证；公开仓库连续 60 天无仓库活动时，GitHub 定时工作流可能停用，需手动重新启用。任务不自动制造提交。
+- 配置、排障和停用步骤以 README 的“Supabase 免费版保活”为入口。部署状态和真实运行结果应单独核查，不因文件存在而宣称已经上线。

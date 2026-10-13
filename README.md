@@ -105,7 +105,7 @@ pnpm.cmd test
 pnpm.cmd --filter @job-tracker/desktop build:check
 ```
 
-项目目前没有 lint、formatter 或 CI，新增相关工具前应先更新工程规格。
+项目目前没有 lint、formatter 或应用构建/测试 CI。Supabase 保活工作流见下文，新增其他工具前应先更新工程规格。
 
 数据库迁移按以下顺序应用：
 
@@ -116,6 +116,42 @@ pnpm.cmd --filter @job-tracker/desktop build:check
 回滚脚本位于 `supabase/rollbacks/`。迁移和回滚必须先在隔离项目验证；所有业务表应保持 RLS 启用，并使用两个不同账号检查数据隔离。
 
 桌面端 RLS 集成测试需要配置 `SUPABASE_TEST_URL`、`SUPABASE_TEST_ANON_KEY` 以及用户 A/B 的邮箱和密码变量；未配置时该测试会跳过。测试账号不得指向生产项目。
+
+## Supabase 免费版保活
+
+`.github/workflows/supabase-keepalive.yml` 的定时配置为每周一、周四北京时间 **09:17**（UTC cron：`17 1 * * 1,4`），并提供手动运行入口。首次上线先部署仅支持手动执行的验证版；真实运行成功后才启用定时配置。每次正常运行仅查询一次 `applications` 表的 `id` 列，最多读取一行；不登录用户、不修改业务数据或 RLS，也不安装项目依赖。
+
+### 配置与上线
+
+1. 在 Supabase Dashboard 确认项目处于运行状态。已暂停时先点击 **Resume project**；保活任务不能恢复暂停的项目。
+2. 打开 [仓库 Actions Secrets](https://github.com/Lemon1024/job_hunting/settings/secrets/actions)，添加以下两个 repository secrets：
+
+   | Secret | 值 |
+   | --- | --- |
+   | `SUPABASE_URL` | Dashboard 中的项目 URL，例如 `https://your-project.supabase.co`，可带末尾 `/` |
+   | `SUPABASE_PUBLISHABLE_KEY` | `sb_publishable_...` key，或已有客户端配置中的 legacy anon key（如 `VITE_SUPABASE_ANON_KEY`） |
+
+   不使用 `sb_secret_...`、legacy `service_role` key、用户密码或 access token。工作流会拒绝标准高权限 key；不要把真实 key 写入 workflow、README 或聊天。
+3. 将工作流发布到默认分支 `main`，在 [Actions](https://github.com/Lemon1024/job_hunting/actions) 中选择 **Supabase keepalive → Run workflow**，分支选择 `main`。
+4. 确认日志显示 `Supabase database query succeeded (HTTP 200)`，并在 Supabase Logs 中检查相应的数据库 API GET 请求。首次定时运行也成功后，才算完成上线验收。
+
+查询通过 `apikey` 请求头使用匿名角色，不发送用户 JWT。现有 RLS 应使响应为 HTTP 200 和空数组 `[]`；这仍是一次数据库查询。工作流仅接受空数组，日志不输出 key 或响应正文，GitHub token 权限为空。失败会标记为 Actions failed；需在账号通知设置中启用工作流失败通知，成功时不额外发送消息。
+
+### 排障与维护
+
+| 失败情况 | 处理 |
+| --- | --- |
+| 缺少 Secrets、URL 或 key 类型无效 | 核对上述两个 Secrets，URL 必须是 HTTPS 的 `*.supabase.co` 项目地址 |
+| HTTP 401/403 | 检查客户端 key 与 `anon` 的表级 SELECT grant；缺少权限时停止上线，不自动修改授权或 RLS |
+| HTTP 404 | 检查项目状态、URL 和 `applications` 表是否存在 |
+| 网络错误、HTTP 429 或 5xx | 每次请求最多等待 15 秒，间隔 5 秒最多重试两次；最终仍失败时检查服务状态和项目是否暂停 |
+| HTTP 200，但响应非空或不是单个合法的空数组 | 检查匿名访问与 RLS；任务会报错并省略响应内容 |
+
+[Supabase 根据一周内数据库活跃度判断是否暂停](https://supabase.com/docs/guides/platform/free-project-pausing)，没有保证每周两次查询一定足够，因此本任务不能保证永久免于暂停。
+
+本仓库为公开仓库。[GitHub 会在公开仓库连续 60 天没有仓库活动时自动停用定时工作流](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)。不要把定时执行本身当作仓库活跃保证；停用后在 Actions 中重新启用，并手动运行检查。任务不会自动制造 Git 提交。
+
+如需停用，在 Actions 的 **Supabase keepalive** 菜单选择 **Disable workflow**；重新启用后执行一次手动检查。
 
 ## 构建与发布
 
